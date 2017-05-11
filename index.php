@@ -1,21 +1,25 @@
 <?php
 
 
-define('SILVER',realpath(__DIR__).'/');
-define('CORE',SILVER.'core\\');
-define('APP','\app\\');
-define('CONTROL',APP.'control\\');
-define('VIEW',APP.'view\\');
-define('DEBUG',true);
+define('SILVER', realpath(__DIR__).'/');
+define('CORE', SILVER.'core\\');
+define('APP', '\app\\');
+define('CONTROL', APP.'control\\');
+define('VIEW', APP.'view\\');
+define('DEBUG', true);
+
+require CORE.'\Function.php';
+require CORE.'\Silver.php';
+require SILVER."vendor/autoload.php";
+spl_autoload_register('core\Silver::load');
 
 if (DEBUG) {
-    ini_set('display_error','On');
-}else {
-    ini_set('display_error','Off');
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+    ini_set('display_error', 'On');
+} else {
+    ini_set('display_error', 'Off');
 }
 
-include CORE.'\function.php';
-include CORE.'\silver.php';
-spl_autoload_register('core\silver::load');
-
-core\silver::run();
+core\Silver::run();

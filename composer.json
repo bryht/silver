@@ -1,0 +1,23 @@
+{
+    "name": "bryht/Silver",
+    "description": "A Framework.",
+    "keywords": ["framework", "Silver"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "filp/whoops":"*",
+        "catfan/medoo":"*",
+        "twig/twig":"1.*"
+
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0"
+    }
+}

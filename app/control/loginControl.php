@@ -2,16 +2,14 @@
 
 namespace app\control;
 
-class loginControl{
+class LoginControl extends \core\Control{
 
 
-    public function index(){
-        p('login_index_OK');
+    public function login(){
+        $this->assign('data', 'Hello');
+        $this->display('login.html');
     }
 
-    public function display(){
-
-        echo "login";
-    }
+    
 
 }

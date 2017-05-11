@@ -1,9 +1,10 @@
-<html>
+{% extends "layout.html" %} 
+{% block content %}
 
-    <body>
-        <div>
-            Hello World
-            <?php echo $data ?>
-        </div>
-    </body>
-</html>
+<div>
+    Hello World
+    {{data}}
+     
+</div>
+
+{% endblock %}

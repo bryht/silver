@@ -2,7 +2,7 @@
 
 namespace core;
 
-class route{
+class Route{
 
     public $control;
     public $action;
@@ -14,8 +14,9 @@ class route{
             $this->control=$patharr[1];
             $this->action=$patharr[2];
         }else{
-            $this->control='index';
-            $this->action='index';
+            $conf=Conf::get_init_index();
+            $this->control=$conf['control'];
+            $this->action=$conf['action'];
         }
 
     }

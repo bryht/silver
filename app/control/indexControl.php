@@ -1,24 +1,25 @@
 <?php
 
-namespace app\control;
+namespace app\Control;
 
-class indexControl extends \core\control{
+use core\model;
 
+class IndexControl extends \core\Control
+{
 
-    public function index(){
-       
-       $model=new \core\model();
-       p($model);
-       $sql="SELECT * FROM `vote_userdata`";
-       $ret=$model->query($sql);
-       p($ret->fetchAll());
-    }
-
-
-    public function page(){
-
-        $this->assign('data','Hello');
+    public function index()
+    {
+        $model=new Model();
+        $datas = $model->select("images", "title");
+        p($datas);
+        $this->assign('data', 'Hello');
         $this->display('index.html');
     }
- 
+
+
+    public function page()
+    {
+        $this->assign('data', 'Hello');
+        $this->display('index.html');
+    }
 }
