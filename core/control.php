@@ -22,13 +22,11 @@ class Control
     //https://twig.sensiolabs.org/doc/1.x/api.html
     public function display($file)
     {
-        //$file=SILVER.VIEW.$file;
         $loader = new \Twig_Loader_Filesystem(SILVER.VIEW);
         $twig = new \Twig_Environment($loader, array(
             'cache' => SILVER.'/cache/twig/',
             'debug' => DEBUG)
         );
-      
         echo $twig->render($file, $this->assign);
 
     }

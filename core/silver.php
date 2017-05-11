@@ -25,7 +25,7 @@ class Silver
     
     public static function load($class)
     {
-        p('LOAD:'.SILVER . $class . '.php');
+        //TODO:p('LOAD:'.SILVER . $class . '.php');
         if (isset($classMap[$class])) {
             return true;
         } else {
