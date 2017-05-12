@@ -288,16 +288,17 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-logo {
-    display: inline-block;
     vertical-align: middle;
-    margin-top: -5px;
-    padding-left: 18px;
-    width: 160px;
+    margin-left: 18px;
+}
+
+.tpl-logo span {
+    color: #000;
+    font-size: 20px;
 }
 
 .tpl-logo img {
-    display: block;
-    width: 100%;
+    height: 50px;
 }
 
 .tpl-dropdown-content .task {
@@ -1491,7 +1492,9 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     padding: 6px 12px;
 }
 
-.tpl-table-images {}
+.tpl-table-images {
+    margin: 5px;
+}
 
 .tpl-table-images-content {
     width: 100%;
@@ -1593,6 +1596,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-edit-content-btn {
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -1872,11 +1876,11 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .myapp-login-logo-text span {
-    color: #53d192;
+    color: #f3c34d;
 }
 
 .myapp-login-logo-text i {
-    color: #53d192;
+    color: #f3c34d;
     font-size: 50px;
 }
 
@@ -1934,9 +1938,9 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .login-am-center .am-btn-default {
     width: 100%;
     border-radius: 6px;
-    background: #53d192;
+    background: #f3c34d;
     border: none;
-    color: #fff;
+    color: #000;
     font-size: 14px;
     line-height: 30px;
 }
