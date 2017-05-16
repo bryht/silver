@@ -8,7 +8,7 @@ class Route{
     public $action;
 
     public function __construct(){
-        $request_uri=$_SERVER['REQUEST_URI'];
+        $request_uri=$_SERVER['PATH_INFO'];
         if ($request_uri!='/') {
             $patharr=explode('/',$request_uri);
             $this->control=$patharr[1];

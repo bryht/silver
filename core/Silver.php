@@ -19,7 +19,14 @@ class Silver
         $action=$route->action;
       
         $control=new $controlClass();
-        $control->$action();
+        $requestPara= array();
+        if($_SERVER['REQUEST_METHOD'] == "GET") {
+            $requestPara=$_GET;
+        }
+        else if($_SERVER['REQUEST_METHOD']=="POST"){
+            $requestPara=$_POST;
+        }
+        $control->$action($requestPara);
     }
 
     

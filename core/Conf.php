@@ -14,7 +14,7 @@ class Conf
             'username' => 'root',
             'password' => 'liming',
             'charset' => 'utf8',
-            'prefix' => 'gallery_',
+            'prefix' => 'silver_',
         );
     }
 

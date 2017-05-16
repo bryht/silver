@@ -1,31 +1,34 @@
-{% extends "loginLayout.html" %} 
-{% block content %}
+{% extends "layoutLogin.html" %} {% block content %}
 
-  <div class="am-g myapp-login">
-	<div class="myapp-login-logo-block  tpl-login-max">
-		<div class="myapp-login-logo-text">
-			<div class="myapp-login-logo-text">
-				各种玩<span> 各种爽</span> <i class="am-icon-moon-o"></i>
-			</div>
-		</div>
+<div class="am-g myapp-login">
+    <div class="myapp-login-logo-block  tpl-login-max">
+        <div class="myapp-login-logo-text">
+            <div class="myapp-login-logo-text">
+                各种玩<span> 各种爽</span> <i class="am-icon-moon-o"></i>
+            </div>
+        </div>
 
-		<div class="login-font">
-			<span> </span>
-		</div>
-		<div class="am-u-sm-10 login-am-center">
-			<form class="am-form">
-				<fieldset>
-					<div class="am-form-group">
-						<input type="email" class="" id="doc-ipt-email-1" placeholder="输入用户名">
-					</div>
-					<div class="am-form-group">
-						<input type="password" class="" id="doc-ipt-pwd-1" placeholder="设置个密码吧">
-					</div>
-					<p><button type="submit" class="am-btn am-btn-default">登录</button></p>
-				</fieldset>
-			</form>
-		</div>
-	</div>
+        <div class="login-font">
+            <span> </span>
+        </div>
+        <div class="am-u-sm-10 login-am-center">
+            <form class="am-form" action="/login/login" method="post">
+                <fieldset>
+                    <div class="am-form-group">
+                        <input type="text" name="name" class="" id="doc-ipt-email-1" placeholder="请输入用户名">
+                    </div>
+                    <div class="am-form-group">
+                        <input type="password" name="password" class="" id="doc-ipt-pwd-1" placeholder="设置个密码吧">
+                    </div>
+                    <p><button type="submit" class="am-btn am-btn-default">登录</button></p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 </div>
 
+<script>
+    
+
+</script>
 {% endblock %}
