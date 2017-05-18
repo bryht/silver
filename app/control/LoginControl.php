@@ -25,6 +25,10 @@ class LoginControl extends \core\Control
         }
     }
 
+    public function logout(){
+        unset($_SESSION['userid']);
+    }
+
     public function checkUser($name, $password)
     {
         $userModel = new UserModel();
