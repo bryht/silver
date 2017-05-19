@@ -4,7 +4,6 @@ namespace core;
 class Control
 {
     function __construct($foo = null) {
-       
         if (session_get('user_id')==false) {
             $this->redirect('login','login');
         }
@@ -13,6 +12,7 @@ class Control
     }
 
     public $assign = array();
+    
     public function assign($name, $value)
     {
         $this->assign[$name]=$value;

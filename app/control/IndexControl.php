@@ -6,16 +6,19 @@ use core\model;
 
 class IndexControl extends \core\Control
 {
-
+    function __construct(){
+        parent::__construct();
+    }
 
     public function index()
     {
-        // $model=new Model();
-        // $datas = $model->select("images", "title");
-        // p($datas);
-        
-        $this->assign('data', 'Hello');
         $this->display('index.html');
+    }
+
+    public function add(){
+
+        
+        $this->display('index-add.html');
     }
 
 
