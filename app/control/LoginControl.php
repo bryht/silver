@@ -6,6 +6,9 @@ use app\model\UserModel;
 
 class LoginControl extends \core\Control
 {
+    function __construct($foo = null) {
+       
+    }
 
     public function login($para)
     {
@@ -13,12 +16,10 @@ class LoginControl extends \core\Control
             $this->display('login.html');
         } else {
             $res = $this->checkUser($para['name'], $para['password']);
-            if ($res>0) {
-                 
-                session_start();
-                $_SESSION['userid']=$res;
-                //TODO:跳转
-               
+            if ($res!=false) {
+                session_set('user_id',$res['id']);
+                session_set('user_name',$res['name']);
+                $this->redirect('index','index');
             } else {
                 $this->display('login.html');
             }
@@ -26,7 +27,11 @@ class LoginControl extends \core\Control
     }
 
     public function logout(){
-        unset($_SESSION['userid']);
+        if(!session_id()){
+            session_start();
+        }
+        session_destroy();
+        $this->redirect('login','login');
     }
 
     public function checkUser($name, $password)
@@ -35,9 +40,9 @@ class LoginControl extends \core\Control
         $res = $userModel->select('user', ['id','name', 'mail', 'password'],
             ['name' => $name, 'password' => $password]);
         if(count($res)>0){
-            return $res[0]['id'];
+            return $res[0];
         }else {
-            return -1;
+            return false;
         }
     }
 }

@@ -3,6 +3,14 @@ namespace core;
 
 class Control
 {
+    function __construct($foo = null) {
+       
+        if (session_get('user_id')==false) {
+            $this->redirect('login','login');
+        }
+        $this->assign('user_id',session_get('user_id'));
+        $this->assign('user_name',session_get('user_name'));
+    }
 
     public $assign = array();
     public function assign($name, $value)
@@ -29,5 +37,9 @@ class Control
         );
         echo $twig->render($file, $this->assign);
 
+    }
+
+    protected function redirect($control,$action, $requestPara= array()){
+        header("Location:/".$control.'/'.$action); 
     }
 }

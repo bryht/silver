@@ -11,4 +11,23 @@ function p($var)
     }
 }
 
+function session_set($name,$value){
+    if(!session_id()){
+        session_start();
+    }
+    $_SESSION[$name]=$value;
+}
+
+function session_get($name){
+    if(!session_id()){
+        session_start();
+    }
+    if(isset($_SESSION[$name])){
+        return $_SESSION[$name];
+    }else{
+        return false;
+    }
+}
+
+
 
