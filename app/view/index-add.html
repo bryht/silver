@@ -5,51 +5,39 @@
         <div class="tpl-block">
             <div class="am-g">
                 <div class="tpl-form-body tpl-form-line">
-                    <form class="am-form tpl-form-line-form">
+                    <form action="/index/upload" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
                          <div class="am-form-group">
                             <label for="user-weibo" class="am-u-sm-3 am-form-label">图片 <span class="tpl-form-line-small-title">Images</span></label>
                             <div class="am-u-sm-9">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img src="/app/assets/img/a5.png" alt="">
+                                        <img id="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-sm">
                                             <i class="am-icon-cloud-upload"></i> 添加图片</button>
-                                    <input id="doc-form-file" type="file" multiple>
+                                    <input id="img-file" name="img-file" type="file"  onchange="fileChanged(this)" multiple>
+                                 
                                 </div>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="user-name" class="am-u-sm-3 am-form-label">描述 <span class="tpl-form-line-small-title">Description</span></label>
                             <div class="am-u-sm-9">
-                                <input type="text" class="tpl-form-input" id="user-name" placeholder="请输入标题文字">
-                                <small>请填写标题文字10-20字左右。</small>
+                                <input id="img-description" name="img-description" type="text" class="tpl-form-input"  placeholder="请输入描述">
+                                <small>请填写描述文字10-20字左右。</small>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="user-email" class="am-u-sm-3 am-form-label">发布时间 <span class="tpl-form-line-small-title">Time</span></label>
                             <div class="am-u-sm-9">
-                                <input type="text" class="am-form-field tpl-form-no-bg" placeholder="发布时间" data-am-datepicker="" readonly/>
+                                <input type="text" id="img-time" name="img-time" class="am-form-field tpl-form-no-bg" placeholder="发布时间" data-am-datepicker="" readonly/>
                                 <small>发布时间为必填</small>
                             </div>
                         </div>
                        
                         <div class="am-form-group">
-                            <label for="user-intro" class="am-u-sm-3 am-form-label">隐藏图片</label>
-                            <div class="am-u-sm-9">
-                                <div class="tpl-switch">
-                                    <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn" checked />
-                                    <div class="tpl-switch-btn-view">
-                                        <div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success"></input>
                             </div>
                         </div>
                     </form>
@@ -61,8 +49,24 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
    
+   function fileChanged(target) {
+
+       var file=target.files[0];
+       var data=new Date(file.lastModifiedDate);
+       var lastModifiedDate=data.toLocaleDateString();
+       var name=file.name;
+       var size=file.size;
+       var type=file.type;
+       var url =  window.URL.createObjectURL(file);
+
+       document.getElementById('img-preview').src=url;
+       document.getElementById('img-time').value=lastModifiedDate;
+       document.getElementById('img-description').value=name+','+size+','+type;
+   }
+
+
 </script>
 
 {% endblock %}

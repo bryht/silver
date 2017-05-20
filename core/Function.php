@@ -3,7 +3,7 @@
 function p($var)
 {
     if (is_bool($var)) {
-            var_dump($var);
+        var_dump($var);
     } elseif (is_null($var)) {
         var_dump(null);
     } else {
@@ -11,23 +11,45 @@ function p($var)
     }
 }
 
-function session_set($name,$value){
-    if(!session_id()){
+function session_set($name, $value)
+{
+    if (!session_id()) {
         session_start();
     }
-    $_SESSION[$name]=$value;
+    $_SESSION[$name] = $value;
 }
 
-function session_get($name){
-    if(!session_id()){
+function session_get($name)
+{
+    if (!session_id()) {
         session_start();
     }
-    if(isset($_SESSION[$name])){
+    if (isset($_SESSION[$name])) {
         return $_SESSION[$name];
-    }else{
+    } else {
         return false;
     }
 }
 
+function get_upload_path($type)
+{
+    $date = new \DateTime();
+    $pathDate = $date->format('Y-m-d');
+    return '/upload/' . $type . '/' . $pathDate . '/';
+}
 
-
+function upload_file($file)
+{
+    if ($file['error'] == UPLOAD_ERR_OK) {
+        $temp_name = $file['tmp_name'];
+        $file_name = $file['name'];
+        $path = get_upload_path('img');
+        if (is_dir($path) == false) {
+            mkdir($path, 0777, \TRUE);
+        }
+        move_uploaded_file($temp_name, SILVER . $path . $file_name);
+        return array('ok' => true, 'result' => $path . $file_name);
+    } else {
+        return array('ok' => false, 'error' => '上传失败!<br/>' . $imgFile['error']);
+    }
+}
