@@ -6,6 +6,7 @@ define('CORE', SILVER.'core\\');
 define('APP', '\app\\');
 define('CONTROL', APP.'control\\');
 define('VIEW', APP.'view\\');
+define('UPLOAD', 'upload\\');
 define('DEBUG', true);
 
 require CORE.'\Function.php';
@@ -21,5 +22,4 @@ if (DEBUG) {
 } else {
     ini_set('display_error', 'Off');
 }
-
 core\Silver::run();

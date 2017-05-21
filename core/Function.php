@@ -35,7 +35,7 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    return '/upload/' . $type . '/' . $pathDate . '/';
+    return UPLOAD. $type . '\\' . $pathDate . '\\';
 }
 
 function upload_file($file)

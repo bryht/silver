@@ -6,6 +6,7 @@ class IndexControl extends CertControl
 {
     public function index()
     {
+        $this->assign('images',$this->getImages());
         $this->display('index.html');
     }
 
@@ -22,34 +23,44 @@ class IndexControl extends CertControl
         $time = $para['img-time'];
         $imgFile = $_FILES['img-file'];
 
-        // Array ( [name] => 1.jpg [type] => image/jpeg
-        //  [size] => 16139 )
         $res = \upload_file($imgFile);
         if ($res['ok']) {
-           $img['name']=$imgFile['name'];
-           $img['type']=$imgFile['type'];
-           $img['size']=$imgFile['size'];
-           $img['path']=$res['result'];
-           $img['description']=$description;
-           $res= \app\model\ImageModel::instance()->addImage($img);
-           if ($res) {
-               $this->redirect('index','index');
-           }
+            $img['name'] = $imgFile['name'];
+            $img['type'] = $imgFile['type'];
+            $img['size'] = $imgFile['size'];
+            $img['path'] = $res['result'];
+            $img['description'] = $description;
+            $res = \app\model\ImageModel::instance()->addImage($img);
+            if ($res) {
+                $this->redirect('index', 'index');
+            }
 
         } else {
             throw new Exception($res['error'], 1);
-            
+
         }
 
     }
 
-    public function getImage(){
-
-    }
-
-    public function page()
+    public function getImages()
     {
-        $this->assign('data', 'Hello');
-        $this->display('index.html');
+        $res = \app\model\ImageModel::instance()->getImages();
+        $images=array();
+        foreach ($res as $key => $value) {
+            $value['url'] = '/index/getImageUrl?id='.$value['id'];
+            $images[$key]=$value;
+        }
+        return $images;
     }
+
+    public function getImageUrl($para)
+    {
+        $res = \app\model\ImageModel::instance()->getImageById($para['id']);
+        $filePath = SILVER . $res['path'];
+        $imageForm = getimagesize($filePath)['mime'];
+        $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));
+        header('content-type:' . $imageForm);
+        echo $imageSource;
+    }
+
 }
