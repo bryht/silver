@@ -11,12 +11,19 @@ $('.tpl-left-nav-link-list').on('click', function () {
 
 
 
-//tpl-left-nav-menu
+//light the side menu
 $(function () {
 
-alert(location.pathname);  
-
-
+    var links = document.getElementsByClassName('nav-link');
+    
+    for (var index = 0; index < links.length; index++) {
+        var element = links[index];
+        if (element.pathname == location.pathname) {
+            element.setAttribute('class', 'nav-link active');
+        } else {
+            element.setAttribute('class', 'nav-link');
+        }
+    }
 });
 
 
