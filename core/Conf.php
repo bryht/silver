@@ -24,4 +24,6 @@ class Conf
             'control' => 'index',
             'action'=>'index');
     }
+
+
 }
