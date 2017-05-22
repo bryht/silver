@@ -1507,6 +1507,8 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     position: relative;
     display: block;
     width: 100%;
+    max-width: 100%;
+    height: 150px;
 }
 
 .tpl-table-images-content-i-time {
@@ -1519,7 +1521,6 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-table-images-content-i-shadow {
-    background: url(../img/lbbg.png) bottom repeat-x;
     position: absolute;
     left: 0;
     right: 0;

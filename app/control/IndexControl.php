@@ -4,9 +4,13 @@ namespace app\Control;
 
 class IndexControl extends CertControl
 {
-    public function index()
+    public function index($para)
     {
-        $this->assign('images',$this->getImages());
+        if (count($para) == 0) {
+            $para['page'] = 0;
+        }
+        $this->assign('images', $this->getImagesByPage($para['page']));
+        $this->assign('pageNav', $this->getPageNav($para['page']));
         $this->display('index.html');
     }
 
@@ -39,21 +43,40 @@ class IndexControl extends CertControl
             throw new Exception($res['error'], 1);
 
         }
-
     }
 
-    public function getImages()
+    public function getImagesByPage($pageNum, $pageSize = 6)
     {
-        $res = \app\model\ImageModel::instance()->getImages();
-        $images=array();
+        $res = \app\model\ImageModel::instance()->getImagesByPage($pageNum, $pageSize);
+        $images = array();
         foreach ($res as $key => $value) {
-            $value['url'] = '/index/getImageUrl?id='.$value['id'];
-            $images[$key]=$value;
+            $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
+            $images[$key] = $value;
         }
         return $images;
     }
 
-    public function getImageUrl($para)
+    public function getPageNav($pageNum, $pageSize = 6)
+    {
+        $res = \app\model\ImageModel::instance()->getImagesCount();
+        $pageCount = ceil($res / (float) $pageSize);
+        $pageNav = array();
+
+        array_push($pageNav, ['num' => '«', 'url' => '/index/index?page=0']);
+        for ($i = 0; $i < $pageCount; $i++) {
+            $pageActive=\FALSE;
+            if ($pageNum == $i) {
+                $pageActive = true;
+            }
+            \array_push($pageNav, ['num' => $i + 1,
+                'url' => '/index/index?page=' . $i,
+                'pageActive' => $pageActive]);
+        }
+        array_push($pageNav, ['num' => '»', 'url' => '/index/index?page=' . ($pageCount - 1)]);
+        return $pageNav;
+    }
+
+    public function getImageUrlById($para)
     {
         $res = \app\model\ImageModel::instance()->getImageById($para['id']);
         $filePath = SILVER . $res['path'];
