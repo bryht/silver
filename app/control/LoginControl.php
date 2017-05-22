@@ -21,6 +21,7 @@ class LoginControl extends \core\Control
             if ($res != false) {
                 session_set('user_id', $res['id']);
                 session_set('user_name', $res['name']);
+                session_set('user_auth', $res['auth']);
                 $this->redirect('index', 'index');
             } else {
                 $this->display('login.html');
