@@ -65,18 +65,14 @@
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
+                    {% for item in user_auth%}
                     <li class="tpl-left-nav-item">
-                        <a href="/index/index" class="nav-link active">
+                        <a href="/{{item.control}}/{{item.action}}" class="nav-link active">
                             <i class="am-icon-home"></i>
-                            <span>相册</span>
+                            <span>{{item.text}}</span>
                         </a>
                     </li>
-                    <li class="tpl-left-nav-item">
-                        <a href="/index/index" class="nav-link active">
-                            <i class="am-icon-home"></i>
-                            <span>我的相册</span>
-                        </a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

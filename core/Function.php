@@ -53,3 +53,4 @@ function upload_file($file)
         return array('ok' => false, 'error' => '上传失败!<br/>' . $imgFile['error']);
     }
 }
+
