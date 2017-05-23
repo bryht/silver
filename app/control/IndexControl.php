@@ -22,7 +22,9 @@ class IndexControl extends CertControl
     public function edit($para)
     {
         $id = $para['id'];
-        $this->display('index-edit.html');
+        $image=\app\model\ImageModel::instance()->getById($id);
+        $this->assign('image',$image);
+        $this->display('index-add.html');
     }
 
     public function delete($para)
