@@ -16,13 +16,24 @@ class IndexControl extends CertControl
 
     public function add()
     {
-
         $this->display('index-add.html');
+    }
+
+    public function edit($para)
+    {
+        $id = $para['id'];
+        $this->display('index-edit.html');
+    }
+
+    public function delete($para)
+    {
+        $id = $para['id'];
+        $res = \app\model\ImageModel::instance()->deleteById($id);
+        print_r($res);
     }
 
     public function upload($para)
     {
-        p($para);
         $description = $para['img-description'];
         $time = $para['img-time'];
         $imgFile = $_FILES['img-file'];
@@ -35,13 +46,10 @@ class IndexControl extends CertControl
             $img['path'] = $res['result'];
             $img['description'] = $description;
             $res = \app\model\ImageModel::instance()->addImage($img);
-            if ($res) {
-                $this->redirect('index', 'index');
-            }
+            $this->redirect('index', 'index');
 
         } else {
             throw new Exception($res['error'], 1);
-
         }
     }
 
@@ -64,7 +72,7 @@ class IndexControl extends CertControl
 
         array_push($pageNav, ['num' => '«', 'url' => '/index/index?page=0']);
         for ($i = 0; $i < $pageCount; $i++) {
-            $pageActive=\FALSE;
+            $pageActive = \FALSE;
             if ($pageNum == $i) {
                 $pageActive = true;
             }

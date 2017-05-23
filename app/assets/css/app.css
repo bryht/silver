@@ -1552,7 +1552,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .tpl-table-images-content-i img {
     display: block;
-    width: 100%;
+    max-width: 100%;
+    max-height: 190px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tpl-table-images-content-block {
