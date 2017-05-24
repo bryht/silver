@@ -7,18 +7,18 @@ namespace app\api;
  */
 class CertApi extends \core\Api
 {
-
-    public function __construct($foo = null)
+    public static $authArray=array();
+     
+    public function __construct($para = null)
     {
-        if (session_get('user_id') == false) {
-
-            $this->redirect('login', 'login');
+        if (isset($para['code']) == false||
+            isset(self::$authArray[$para['code']])==false) {
+            $this->error('code error. please get code first');
+            //exit();
         }
-        $this->assign('user_id', session_get('user_id'));
-        $this->assign('user_name', session_get('user_name'));
-        $authIds = session_get('user_auth');
+        //$user=self::$authArray[$para['code']];
+    
        
-        $this->assign('user_auth', $auth);
-
+        
     }
 }

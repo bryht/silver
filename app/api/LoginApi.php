@@ -16,12 +16,13 @@ class LoginApi extends \core\Api
 
             $res = \app\model\UserModel::instance()->checkUser($para['name'], $para['password']);
             if ($res != false) {
-                
-                
-                
-                $res['code'] = session_id();
-                unset($res['password']);
-                $this->success($res);
+                $resReturn['code'] = \md5($res['id'] + $res['name']);
+                $resReturn['expired'] = date('U');
+                $resReturn['id'] = $res['id'];
+                $resReturn['name'] = $res['name'];
+                CertApi::$authArray[$resReturn['code']] = $resReturn;
+                 ImageApi::$count++;
+                $this->success( CertApi::$authArray);
 
             } else {
                 $this->error('login failed');
@@ -31,7 +32,7 @@ class LoginApi extends \core\Api
 
     public function logout($para)
     {
-        
+        unset(CertApi::$authArray[$para['code']]);
         $this->success('logout success!');
     }
 }

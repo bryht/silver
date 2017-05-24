@@ -4,7 +4,7 @@ namespace app\Control;
 
 class CertControl extends \core\Control
 {
-    public function __construct($foo = null)
+    public function __construct($para = null)
     {
         if (session_get('user_id') == false) {
             $this->redirect('login', 'login');

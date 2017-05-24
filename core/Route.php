@@ -16,7 +16,6 @@ class Route
             $this->control = API.$patharr[2] . 'Api';// \app\api\indexApi
             $this->action = $patharr[3];
         } else if (count($patharr) > 1) {
-
             $this->control = CONTROL.$patharr[1] . 'Control';//\app\control\indexControl
             $this->action = $patharr[2];
         } else {

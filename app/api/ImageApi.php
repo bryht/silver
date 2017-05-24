@@ -7,6 +7,13 @@ namespace app\api;
  */
 class ImageApi extends CertApi
 {
-    
-     
+     public static $count=0;
+     public function getImages()
+     {
+        $res= \app\model\ImageModel::instance()->getImages();
+        $this->success($res);
+         p( CertApi::$authArray);
+         ImageApi::$count++;
+         p(ImageApi::$count);
+     }
 }
