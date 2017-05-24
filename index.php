@@ -5,6 +5,7 @@ define('SILVER', realpath(__DIR__).'/');
 define('CORE', SILVER.'core\\');
 define('APP', '\app\\');
 define('CONTROL', APP.'control\\');
+define('API', APP.'api\\');
 define('VIEW', APP.'view\\');
 define('UPLOAD', 'upload\\');
 define('DEBUG', true);

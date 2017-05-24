@@ -14,10 +14,10 @@ class Silver
     {
 
         $route=new Route();
-        //拼装字符串：\app\control\indexControl
-        $controlClass=CONTROL.$route->control.'Control';
+       
+        $controlClass=$route->control;
         $action=$route->action;
-      
+
         $control=new $controlClass();
         $requestPara= array();
         if($_SERVER['REQUEST_METHOD'] == "GET") {
