@@ -20,7 +20,7 @@ class LoginApi extends \core\Api
                 $resReturn['expired'] = date('U');
                 $resReturn['id'] = $res['id'];
                 $resReturn['name'] = $res['name'];
-                \core\Cache::instance()->save($resReturn['code'], $resReturn,5); //TOOD: add expire date control
+                \core\Cache::instance()->save($resReturn['code'], $resReturn); //TOOD: add expire date control
                 $this->success($resReturn);
             } else {
                 $this->error('login failed');
@@ -30,7 +30,7 @@ class LoginApi extends \core\Api
 
     public function logout($para)
     {
-        unset(CertApi::$authArray[$para['code']]);
+       \core\Cache::instance()->delete($para['code']);
         $this->success('logout success!');
     }
 }
