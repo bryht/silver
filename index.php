@@ -4,7 +4,7 @@
 define('SILVER', realpath(__DIR__).'/');
 define('CORE', SILVER.'core\\');
 define('APP', '\app\\');
-define('CACHE',APP.'cache\\');
+define('CACHE',SILVER.'cache\\');
 define('CONTROL', APP.'control\\');
 define('API', APP.'api\\');
 define('VIEW', APP.'view\\');
