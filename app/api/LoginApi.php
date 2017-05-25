@@ -20,10 +20,9 @@ class LoginApi extends \core\Api
                 $resReturn['expired'] = date('U');
                 $resReturn['id'] = $res['id'];
                 $resReturn['name'] = $res['name'];
-                CertApi::$authArray[$resReturn['code']] = $resReturn;
-                 ImageApi::$count++;
-                $this->success( CertApi::$authArray);
-
+                session_set($resReturn['code'], $resReturn); //TOOD: add expire date control
+                $this->success($resReturn);
+                \core\Cache::instance()->doSave('name', '111');
             } else {
                 $this->error('login failed');
             }

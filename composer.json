@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "filp/whoops":"*",
         "catfan/medoo":"*",
-        "twig/twig":"1.*"
+        "twig/twig":"1.*",
+        "doctrine/cache":"*"
     },
     "repositories": {
         "packagist": {

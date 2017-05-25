@@ -50,7 +50,7 @@ function upload_file($file)
         move_uploaded_file($temp_name, SILVER . $path . $file_name);
         return array('ok' => true, 'result' => $path . $file_name);
     } else {
-        return array('ok' => false, 'error' => '上传失败!<br/>' . $imgFile['error']);
+        return array('ok' => false, 'error' => 'upload file fail!<br/>' . $imgFile['error']);
     }
 }
 

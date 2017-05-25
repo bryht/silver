@@ -12,8 +12,6 @@ class ImageApi extends CertApi
      {
         $res= \app\model\ImageModel::instance()->getImages();
         $this->success($res);
-         p( CertApi::$authArray);
-         ImageApi::$count++;
-         p(ImageApi::$count);
+          
      }
 }

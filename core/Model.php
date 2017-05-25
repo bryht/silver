@@ -41,4 +41,8 @@ class Model extends \Medoo\Medoo
     {
         return $this->get($this->table, '*', ['id' => $id]);
     }
+
+    public function getAll(){
+        return $this->select($this->table,'*');
+    }
 }
