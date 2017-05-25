@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Result{
+class Log{
       
     
 
