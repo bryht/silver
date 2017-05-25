@@ -11,14 +11,12 @@ class ImageApi extends CertApi
     public function getImages($para)
     {
         $res = \app\model\ImageModel::instance()->getImages();
-        
-        $images = array();
+
         foreach ($res as $key => $value) {
-            $value['url'] = '/api/image/getImageUrlById?id=' . $value['id'].'&'.'code='.$para['code'];
-            $images[$key] = $value;
+            $res[$key]['url'] = "/api/image/getImageUrlById?id={$value['id']}&code={$para['code']}";
         }
 
-        $this->success($images);
+        $this->success($res);
 
     }
 
