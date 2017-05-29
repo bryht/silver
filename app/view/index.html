@@ -40,7 +40,7 @@
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
                                         <a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> 编辑</a>
-                                        <a href="javascript:void(0)" onclick="deleteImage({{image.id}})" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</a>
+                                        <a onclick="deleteImage('{{image.id}}')" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +74,17 @@
 
 <script>
     function deleteImage(id) {
+      
         var ok = confirm("确认删除？");
         if (ok) {
             $.get('/index/delete?id=' + id, function (res) {
-                window.location=window.location;
+                var data=JSON.parse(res);
+                if (data.ok) {
+                    window.location = window.location;
+                }else{
+                    alert(data.result);
+                }
+
             });
         }
     }

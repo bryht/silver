@@ -5,7 +5,7 @@ namespace app\api;
 /**
  * LoginApi
  */
-class LoginApi extends \core\Api
+class LoginApi extends \core\Control
 {
 
     public function login($para)

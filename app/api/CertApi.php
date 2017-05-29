@@ -1,11 +1,12 @@
 <?php
 
 namespace app\api;
+header('Access-Control-Allow-Origin: *');
 
 /**
  * LoginApi
  */
-class CertApi extends \core\Api
+class CertApi extends \core\Control
 {
     public static $authArray = array();
 
@@ -18,4 +19,5 @@ class CertApi extends \core\Api
             exit();
         }
     }
+
 }

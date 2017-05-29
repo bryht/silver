@@ -22,8 +22,8 @@ class IndexControl extends CertControl
     public function edit($para)
     {
         $id = $para['id'];
-        $image=\app\model\ImageModel::instance()->getById($id);
-        $this->assign('image',$image);
+        $image = \app\model\ImageModel::instance()->getById($id);
+        $this->assign('image', $image);
         $this->display('index-add.html');
     }
 
@@ -31,7 +31,8 @@ class IndexControl extends CertControl
     {
         $id = $para['id'];
         $res = \app\model\ImageModel::instance()->deleteById($id);
-        print_r($res);
+        $count = $res->rowCount();
+        $this->result($count > 0, $id, '删除失败！');
     }
 
     public function upload($para)
@@ -88,7 +89,7 @@ class IndexControl extends CertControl
 
     public function getImageUrlById($para)
     {
-        $res = \app\model\ImageModel::instance()->getImageById($para['id']);
+        $res = \app\model\ImageModel::instance()->getById($para['id']);
         $filePath = SILVER . $res['path'];
         $imageForm = getimagesize($filePath)['mime'];
         $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));

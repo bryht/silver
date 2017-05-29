@@ -37,9 +37,5 @@ class ImageModel extends \core\Model
         }
 
     }
-
-    public function getImagesPage($pageIndex, $pageSize)
-    {
-
-    }
+    
 }

@@ -20,12 +20,13 @@ class Model extends \Medoo\Medoo
         parent::__construct($database);
         if (is_null($tableName)) {
             //from class name 'app\model\ImageModel' get the name 'Image'
-            $this->table = substr(
-                end(
-                    explode('\\',
-                        get_called_class()
-                    )
-                ), 0, -5);
+            $this->table = strtolower(
+                substr(
+                    end(
+                        explode('\\',
+                            get_called_class()
+                        )
+                    ), 0, -5));
         } else {
             $this->table = $tableName;
         }
