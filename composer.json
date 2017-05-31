@@ -9,7 +9,8 @@
         "filp/whoops":"*",
         "catfan/medoo":"*",
         "twig/twig":"1.*",
-        "doctrine/cache":"*"
+        "doctrine/cache":"*",
+        "monolog/monolog":"*"
     },
     "repositories": {
         "packagist": {

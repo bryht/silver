@@ -12,6 +12,8 @@ class IndexControl extends CertControl
         $this->assign('images', $this->getImagesByPage($para['page']));
         $this->assign('pageNav', $this->getPageNav($para['page']));
         $this->display('index.html');
+
+
     }
 
     public function add()
