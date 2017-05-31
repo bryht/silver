@@ -3,7 +3,6 @@
 
 <div class="tpl-content-wrapper">
 
-
     <div class="tpl-portlet-components">
         <div class="tpl-block">
             <div class="am-g">
@@ -54,8 +53,8 @@
                             <div class="am-fr">
                                 <ul class="am-pagination tpl-pagination">
                                     {% for page in pageNav%}
-                                    <li class="{% if page.pageActive%}am-active {% endif %}">
-                                        <a href="{{page.url}}">{{page.num}}</a>
+                                    <li class=" {% if page.pageActive%}am-active {% endif %}">
+                                        <a class="page-nav-link" pageIndex="{{page.pageIndex}}">{{page.num}}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -73,15 +72,51 @@
 </div>
 
 <script>
+    (function () {
+
+        var links = document.getElementsByClassName('page-nav-link');
+        for (var index = 0; index < links.length; index++) {
+            var element = links[index];
+            var url = setLocationPara('page', element.getAttribute('pageIndex'));
+            element.setAttribute('href', url);
+        }
+
+    })();
+
+    function setLocationPara(name, value) {
+        var url = '';
+        //?category=me&page=0
+        var search = location.search;
+        if (search != '') {
+            var nameIndex = search.indexOf(name);
+            if (nameIndex > 0) {
+                var nameValue = '';
+                var sign = search.substr(nameIndex).indexOf('&');
+                if (sign == -1) {
+                    nameValue = search.substr(nameIndex)
+                }
+                else {
+                    var signIndex = nameIndex + sign;
+                    nameValue = search.substring(nameIndex, signIndex);
+                }
+                url = location.href.replace(nameValue, name + '=' + value);
+            } else {
+                url = location.href + '&' + name + '=' + value;
+            }
+        } else {
+            url = location.href + '?' + name + '=' + value;
+        }
+        return url;
+    }
+
     function deleteImage(id) {
-      
         var ok = confirm("确认删除？");
         if (ok) {
             $.get('/index/delete?id=' + id, function (res) {
-                var data=JSON.parse(res);
+                var data = JSON.parse(res);
                 if (data.ok) {
                     window.location = window.location;
-                }else{
+                } else {
                     alert(data.result);
                 }
 

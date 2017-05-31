@@ -22,7 +22,7 @@ class LoginControl extends \core\Control
                 session_set('user_id', $res['id']);
                 session_set('user_name', $res['name']);
                 session_set('user_auth', $res['auth']);
-                $this->redirect('index', 'index');
+                $this->redirect('index', 'index',['category'=>'main']);//default is main category
             } else {
                 $this->display('login.html');
             }

@@ -15,10 +15,9 @@ $('.tpl-left-nav-link-list').on('click', function () {
 $(function () {
 
     var links = document.getElementsByClassName('nav-link');
-    
     for (var index = 0; index < links.length; index++) {
         var element = links[index];
-        if (element.pathname == location.pathname) {
+        if (location.href.indexOf(element.getAttribute('href')) > 0) {
             element.setAttribute('class', 'nav-link active');
         } else {
             element.setAttribute('class', 'nav-link');

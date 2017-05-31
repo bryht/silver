@@ -28,14 +28,14 @@ class ImageModel extends \core\Model
 
     public function getImageById($id)
     {
-
         $res = $this->select('image', '*', ['id' => $id]);
         if (count($res) == 1) {
             return $res[0];
         } else {
             throw new Exception("Error:" . $res, 1);
         }
-
     }
+
+    
     
 }

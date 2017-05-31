@@ -58,6 +58,14 @@ class Control
 
     protected function redirect($control, $action, $requestPara = array())
     {
-        header("Location:/" . $control . '/' . $action);
+        $paraString='';
+        if (count($requestPara)>0) {
+            $paraString='?';
+            foreach ($requestPara as $key => $value) {
+                $paraString.=$key.'='.$value.'&';
+            }
+            $paraString=rtrim($paraString,'&');
+        }
+        header("Location:/" . $control . '/' . $action.$paraString);
     }
 }
