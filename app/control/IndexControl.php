@@ -97,4 +97,19 @@ class IndexControl extends CertControl
         echo $imageSource;
     }
 
+    public function galleryAdd($para)
+    {
+        $this->display('gallery-add.html');
+    }
+
+    public function galleryUpdate($para){
+        $data['name']=$para['gallery-name'];
+        $data['music_link']=$para['music-link'];
+        $data['create_time']=time();
+        $data['user_id']=session_get('user_id');
+        $res=\app\model\GalleryModel::instance()->insertObj($data);
+        if ($res>0) {
+            $this->redirect('index','index');
+        }
+    }
 }
