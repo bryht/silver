@@ -1731,9 +1731,6 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     text-align: right;
 }
 
-.tpl-form-line-form .am-form-group {
-    /*padding: 20px 0;*/
-}
 
 .tpl-form-line-form .am-form-label .tpl-form-line-small-title {
     color: #999;
@@ -1919,11 +1916,31 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .myapp-login .am-form-group {
     margin-bottom: 0;
+    text-align: center;
 }
+
+.login-am-center .am-form .am-form-group-register input{
+    border-radius: 6px 6px 6px 6px;
+    margin-top: 10px;
+}
+
+.login-am-center .am-form .am-form-group-register label{
+    color: #ff0000;
+    width:100%;
+    text-align: center;
+}
+
+
 
 .login-am-center {
     margin: 0 auto;
     float: none;
+}
+
+.login-am-center .am-form .am-form-group a{
+    color: lightyellow;
+    font-size: 10px;
+    text-align: center;
 }
 
 .login-am-center .am-form input {

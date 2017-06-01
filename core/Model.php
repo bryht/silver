@@ -33,6 +33,12 @@ class Model extends \Medoo\Medoo
 
     }
 
+    public function insertObj($datas)
+    {
+        $res = $this->insert($this->table, $datas);
+        return $res->rowCount();
+    }
+
     public function deleteById($id)
     {
         return $this->delete($this->table, ['id' => $id]);
@@ -43,7 +49,8 @@ class Model extends \Medoo\Medoo
         return $this->get($this->table, '*', ['id' => $id]);
     }
 
-    public function getAll(){
-        return $this->select($this->table,'*');
+    public function getAll()
+    {
+        return $this->select($this->table, '*');
     }
 }

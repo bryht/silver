@@ -1,0 +1,49 @@
+{% extends "layout-login.html" %} {% block content %}
+
+<div class="am-g myapp-login">
+    <div class="myapp-login-logo-block  tpl-login-max">
+        <div class="myapp-login-logo-text">
+            <div class="myapp-login-logo-text">
+                Register
+            </div>
+        </div>
+
+        <div class="login-font">
+            <span> </span>
+        </div>
+        <div class="am-u-sm-10 login-am-center">
+            <form class="am-form" action="/login/register" method="post">
+                <fieldset>
+                    <div class="am-form-group-register">
+                        <input type="text" name="mail" class=""  placeholder="Please input your mail">
+                    </div>
+                    <div class="am-form-group-register">
+                        <input type="text" name="name" class="" placeholder="Please input your username">
+                    </div>
+                    <div class="am-form-group-register">
+                        <input type="password" name="password" class="" placeholder="Please input your password">
+                    </div>
+                     <div class="am-form-group-register">
+                        <input type="password"  class="" placeholder="Please input your password">
+                    </div>
+
+                    <p><button type="submit" class="am-btn am-btn-default">Register</button></p>
+                    <div class="am-form-group-register">
+                         <label>{{message}}</label>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var message='{{message}}';
+    if (message=='Register success!') {
+        setTimeout(function() {
+            location.href='/login/login';
+        }, 1000);
+    }
+
+</script>
+{% endblock %}

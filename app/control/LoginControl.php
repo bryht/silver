@@ -11,18 +11,39 @@ class LoginControl extends \core\Control
 
     }
 
+    public function register($para)
+    {
+        if (empty($para)) {
+            $this->assign('message', '');
+            $this->display('register.html');
+        } else {
+            $check = UserModel::instance()->checkRegister($para['name'], $para['mail']);
+            if ($check == true) {
+                $this->assign('message', 'User or Mail alerady exist!');
+                $this->display('register.html');
+                return;
+            }
+
+            $res = UserModel::instance()->insertObj($para);
+            if ($res > 0) {
+                $this->assign('message', 'Register success!');
+                $this->display('register.html');
+            }
+        }
+    }
+
     public function login($para)
     {
         if (empty($para)) {
             $this->display('login.html');
         } else {
-           
+
             $res = UserModel::instance()->checkUser($para['name'], $para['password']);
             if ($res != false) {
                 session_set('user_id', $res['id']);
                 session_set('user_name', $res['name']);
                 session_set('user_auth', $res['auth']);
-                $this->redirect('index', 'index',['category'=>'main']);//default is main category
+                $this->redirect('index', 'index', ['category' => 'main']); //default is main category
             } else {
                 $this->display('login.html');
             }
@@ -38,5 +59,4 @@ class LoginControl extends \core\Control
         $this->redirect('login', 'login');
     }
 
-   
 }

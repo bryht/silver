@@ -19,7 +19,7 @@ class Silver
         } else if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $requestPara = $_POST;
         }
-
+        
         $route = new Route();
         $control = new $route->control($requestPara);
         $action = $route->action;
