@@ -1,19 +1,20 @@
 <?php
 
 define('SILVER', realpath(__DIR__) . '/');
-define('CORE', SILVER . 'core\\');
 define('APP', '\app\\');
-define('CACHE', SILVER . 'cache\\');
-define('LOG', CACHE . 'log\\');
-define('CONTROL', APP . 'control\\');
 define('API', APP . 'api\\');
+define('CONTROL', APP . 'control\\');
 define('VIEW', APP . 'view\\');
-define('UPLOAD', 'upload\\');
+define('CACHE', '\cache\\');
+define('LOG', CACHE . 'log\\');
+define('CORE', '\core\\');
+define('UPLOAD', '\upload\\');
+define('VENDOR', '\vendor\\');
 define('DEBUG', true);
 
 require CORE . '\Function.php';
 require CORE . '\Silver.php';
-require SILVER . "vendor\autoload.php";
+require VENDOR . '\autoload.php';
 
 spl_autoload_register('core\Silver::load');
 
