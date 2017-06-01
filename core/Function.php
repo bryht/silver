@@ -11,6 +11,26 @@ function p($var)
     }
 }
 
+function errorHandler($errno, $errstr, $errfile, $errline)
+{
+    $arr = array(
+        '[' . date('Y-m-d H-i-s') . ']',
+        $errno,
+        '|',
+        $errstr,
+        $errfile,
+        'line:' . $errline,
+    );
+    //formate：  [time] [errorNum or errorType] | errstr errorfile lineNum
+    error_log(implode(' ', $arr) . "\r\n", 3, LOG.date('Y-m-d').'.log', 'extra');
+}
+
+function fatalErrorHandler()
+{
+    $e = error_get_last();
+    errorHandler($e['type'], $e['message'], $e['file'], $e['line']);
+}
+
 function session_set($name, $value)
 {
     if (!session_id()) {
@@ -50,7 +70,7 @@ function upload_file($file)
         move_uploaded_file($temp_name, SILVER . $path . $file_name);
         return array('ok' => true, 'result' => $path . $file_name);
     } else {
-        return array('ok' => false, 'error' => 'upload file fail!<br/>' . $imgFile['error']);
+        return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
     }
 }
 
