@@ -10,7 +10,7 @@ define('LOG', CACHE . 'log\\');
 define('CORE', '\core\\');
 define('UPLOAD', '\upload\\');
 define('VENDOR', '\vendor\\');
-define('DEBUG', false);
+define('DEBUG', true);
 
 require CORE . '\Function.php';
 require CORE . '\Silver.php';

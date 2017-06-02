@@ -492,12 +492,20 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     height: 50px;
     padding: 25px 15px 10px;
     color: #5C9ACF;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 600;
 }
 
+.tpl-add-btn{
+    line-height: 40px;
+    font-size: 10px;
+    float: right;
+}
+
+
 .tpl-left-nav-list {
     width: 235px;
+    margin-top:15px;
 }
 
 .tpl-left-nav-item {}
@@ -1979,6 +1987,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     margin-top: 20px;
     margin-bottom: 40px;
 }
+
 
 @media screen and (max-width: 1000px) {
     .tpl-left-nav-hover {

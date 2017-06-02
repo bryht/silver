@@ -105,11 +105,14 @@ class IndexControl extends CertControl
     public function galleryUpdate($para){
         $data['name']=$para['gallery-name'];
         $data['music_link']=$para['music-link'];
-        $data['create_time']=time();
+        $data['create_time']=date('Y-m-d H:i:s');
         $data['user_id']=session_get('user_id');
+         
         $res=\app\model\GalleryModel::instance()->insertObj($data);
         if ($res>0) {
             $this->redirect('index','index');
+        }else {
+            $this->redirect500(serialize($res));
         }
     }
 }

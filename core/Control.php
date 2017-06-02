@@ -68,4 +68,10 @@ class Control
         }
         header("Location:/" . $control . '/' . $action.$paraString);
     }
+
+    public function redirect500($message='')
+    {
+        $this->assign('message',$message);
+        $this->display('500.html');
+    }
 }
