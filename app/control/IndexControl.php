@@ -14,6 +14,14 @@ class IndexControl extends CertControl
         $this->display('index.html');
     }
 
+    public function album($para){
+        $category=$para['category'];
+        $where=$para['where'];
+        $page=$para['page'];
+
+
+    }
+
     public function add()
     {
         $this->display('index-add.html');
