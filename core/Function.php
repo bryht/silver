@@ -22,7 +22,10 @@ function errorHandler($errno, $errstr, $errfile, $errline)
         'line:' . $errline,
     );
     //formate：  [time] [errorNum or errorType] | errstr errorfile lineNum
-    error_log(implode(' ', $arr) . "\r\n", 3, LOG.date('Y-m-d').'.log', 'extra');
+    if (is_dir(LOG) == false) {
+        mkdir(LOG, 0777, \TRUE);
+    }
+    error_log(implode(' ', $arr) . "\r\n", 3, LOG . date('Y-m-d') . '.log', 'extra');
 }
 
 function fatalErrorHandler()
@@ -55,7 +58,7 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    return UPLOAD. $type . '\\' . $pathDate . '\\';
+    return UPLOAD . $type . '\\' . $pathDate . '\\';
 }
 
 function upload_file($file)
@@ -73,4 +76,3 @@ function upload_file($file)
         return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
     }
 }
-

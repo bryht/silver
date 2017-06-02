@@ -5,12 +5,12 @@ define('APP', '\app\\');
 define('API', APP . 'api\\');
 define('CONTROL', APP . 'control\\');
 define('VIEW', APP . 'view\\');
-define('CACHE', '\cache\\');
+define('CACHE', SILVER.'\cache\\');
 define('LOG', CACHE . 'log\\');
 define('CORE', '\core\\');
 define('UPLOAD', '\upload\\');
 define('VENDOR', '\vendor\\');
-define('DEBUG', true);
+define('DEBUG', false);
 
 require CORE . '\Function.php';
 require CORE . '\Silver.php';
@@ -24,7 +24,7 @@ if (DEBUG) {
     $whoops->register();
 
 } else {
-    error_reporting(0);
+    //error_reporting(0);
     set_error_handler('errorHandler');
     register_shutdown_function('fatalErrorHandler');
 }
