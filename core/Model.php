@@ -53,4 +53,39 @@ class Model extends \Medoo\Medoo
     {
         return $this->select($this->table, '*');
     }
+
+    public function getItemsByPage($pageNum = 0, $pageSize = 0, $order = ['id' => 'DESC'], $where = NULL)
+    {
+        $condiation = [
+            'ORDER' => $order,
+            'LIMIT' => [$pageNum * $pageSize, $pageSize]
+        ];
+        if (isset($where)) {
+           foreach ($where as $key => $value) {
+               $condiation[$key]=$value;
+           }
+        }
+        $res = $this->select($this->table, '*',$condiation);
+        return $res;
+    }
+
+    public function getNavByPage($pageNum=0, $pageSize = 0,$where = NULL){
+        $count = $this->count($this->table,$where);
+        $pageCount = ceil($count / (float) $pageSize);
+        $pageNav = array();
+        array_push($pageNav, ['num' => '«', 'pageIndex' => '0']);
+        for ($i = 0; $i < $pageCount; $i++) {
+            array_push($pageNav, ['num' => $i + 1,
+                'pageIndex' => $i,
+                'pageActive' => $pageNum == $i]);
+        }
+        array_push($pageNav, ['num' => '»', 'pageIndex' => ($pageCount - 1)]);
+        return $pageNav;
+    }
+
+    public function getCount()
+    {
+        $res = $this->count($this->table);
+        return $res;
+    }
 }

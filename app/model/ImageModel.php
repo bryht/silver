@@ -15,16 +15,6 @@ class ImageModel extends \core\Model
         return $res;
     }
 
-    public function getImagesByPage($pageNum = 0, $pageSize = 0)
-    {
-        $res = $this->select('image', ['id', 'name', 'description'], ['ORDER' => ['id'=>'DESC'], 'LIMIT' => [$pageNum*$pageSize, $pageSize]]);
-        return $res;
-    }
-
-    public function getImagesCount(){
-        $res=$this->count('image');
-        return $res;
-    }
 
     public function getImageById($id)
     {

@@ -66,7 +66,7 @@ class IndexControl extends CertControl
 
     public function getImagesByPage($pageNum, $pageSize = 6)
     {
-        $res = \app\model\ImageModel::instance()->getImagesByPage($pageNum, $pageSize);
+        $res = \app\model\ImageModel::instance()->getItemsByPage($pageNum, $pageSize);
         $images = array();
         foreach ($res as $key => $value) {
             $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
@@ -77,21 +77,7 @@ class IndexControl extends CertControl
 
     public function getPageNav($pageNum, $pageSize = 6)
     {
-        $res = \app\model\ImageModel::instance()->getImagesCount();
-        $pageCount = ceil($res / (float) $pageSize);
-        $pageNav = array();
-
-        array_push($pageNav, ['num' => '«', 'pageIndex' => '0']);
-        for ($i = 0; $i < $pageCount; $i++) {
-            $pageActive = \FALSE;
-            if ($pageNum == $i) {
-                $pageActive = true;
-            }
-            \array_push($pageNav, ['num' => $i + 1,
-                'pageIndex' => $i,
-                'pageActive' => $pageActive]);
-        }
-        array_push($pageNav, ['num' => '»', 'pageIndex' => ($pageCount - 1)]);
+        $pageNav = \app\model\ImageModel::instance()->getNavByPage($pageNum, $pageSize);
         return $pageNav;
     }
 
