@@ -8,7 +8,7 @@ define('VIEW', APP . 'view\\');
 define('CACHE', SILVER.'\cache\\');
 define('LOG', CACHE . 'log\\');
 define('CORE', '\core\\');
-define('UPLOAD', '\upload\\');
+define('UPLOAD','\upload\\');
 define('VENDOR', '\vendor\\');
 define('DEBUG', true);
 

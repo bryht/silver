@@ -1,6 +1,4 @@
 {% extends "layout-main.html" %} {% block content %}
-
-
 <div class="tpl-content-wrapper">
 
     <div class="tpl-portlet-components">
@@ -9,7 +7,7 @@
                 <div class="am-u-sm-12 am-u-md-6">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <a type="button" class="am-btn am-btn-default am-btn-success" href="/index/add"><span class="am-icon-plus"></span> New Photo</a>
+                            <a id="add-image" type="button"  class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> New Photo</a>
                         </div>
                     </div>
                 </div>
@@ -70,44 +68,22 @@
     </div>
 
 </div>
-
+{% endblock %} {% block javascript %}
 <script>
-    (function () {
-
+    (function (document) {
         var links = document.getElementsByClassName('page-nav-link');
         for (var index = 0; index < links.length; index++) {
             var element = links[index];
-            var url = setLocationPara('page', element.getAttribute('pageIndex'));
+            var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
             element.setAttribute('href', url);
         }
 
-    })();
+        
+        var album_id = urlUtil.getQueryValue('album_id');
 
-    function setLocationPara(name, value) {
-        var url = '';
-        //?category=me&page=0
-        var search = location.search;
-        if (search != '') {
-            var nameIndex = search.indexOf(name);
-            if (nameIndex > 0) {
-                var nameValue = '';
-                var sign = search.substr(nameIndex).indexOf('&');
-                if (sign == -1) {
-                    nameValue = search.substr(nameIndex)
-                }
-                else {
-                    var signIndex = nameIndex + sign;
-                    nameValue = search.substring(nameIndex, signIndex);
-                }
-                url = location.href.replace(nameValue, name + '=' + value);
-            } else {
-                url = location.href + '&' + name + '=' + value;
-            }
-        } else {
-            url = location.href + '?' + name + '=' + value;
-        }
-        return url;
-    }
+        $('#add-image')[0].setAttribute('href','/index/add?album_id='+album_id);
+
+    })(document);
 
     function deleteImage(id) {
         var ok = confirm("确认删除？");
@@ -125,5 +101,4 @@
     }
 
 </script>
-
 {% endblock %}

@@ -10,7 +10,7 @@ class ImageApi extends CertApi
     public static $count = 0;
     public function getImages($para)
     {
-        $res = \app\model\ImageModel::instance()->getImages();
+        $res = \app\model\ImageModel::instance()->getAll();
         foreach ($res as $key => $value) {
             $res[$key]['url'] = "/api/image/getImageUrlById?id={$value['id']}&code={$para['code']}";
         }
@@ -19,7 +19,7 @@ class ImageApi extends CertApi
 
     public function getImageUrlById($para)
     {
-        $res = \app\model\ImageModel::instance()->getImageById($para['id']);
+        $res = \app\model\ImageModel::instance()->getById($para['id']);
         $filePath = SILVER . $res['path'];
         $imageForm = getimagesize($filePath)['mime'];
         $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));

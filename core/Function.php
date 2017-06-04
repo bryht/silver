@@ -67,10 +67,10 @@ function upload_file($file)
         $temp_name = $file['tmp_name'];
         $file_name = $file['name'];
         $path = get_upload_path('img');
-        if (is_dir($path) == false) {
-            mkdir($path, 0777, \TRUE);
+        if (is_dir(SILVER.$path) == false) {
+            mkdir(SILVER.$path, 0777, \TRUE);
         }
-        move_uploaded_file($temp_name, SILVER . $path . $file_name);
+        move_uploaded_file($temp_name, SILVER.$path . $file_name);
         return array('ok' => true, 'result' => $path . $file_name);
     } else {
         return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);

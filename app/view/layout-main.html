@@ -61,18 +61,28 @@
 
         <div class="tpl-left-nav tpl-left-nav-hover">
             <div class="tpl-left-nav-title">
-                Album
-                <a type="button" href="/index/galleryAdd" class="tpl-add-btn"><span class="am-icon-plus">  New Album</span></a>
+
+                <a type="button" href="/index/albumAdd" class="tpl-add-btn"><span class="am-icon-plus">  New Album</span></a>
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
                     {% for item in user_auth %}
                     <li class="tpl-left-nav-item">
-                        <a href="/{{item.control}}/{{item.action}}" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="am-icon-home"></i>
                             <span>{{item.text}}</span>
-                            
+                            <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
                         </a>
+                        <div id='sub-menu-{{item.flag}}'>
+                            <!--<ul class="tpl-left-nav-sub-menu" style="display:block">
+                            <li>
+                                <a href="table-font-list.html" class="active">
+                                    <i class="am-icon-angle-right"></i>
+                                    <span>文字表格</span>
+                                </a>
+                            </li>
+                            </ul>-->
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
@@ -86,7 +96,34 @@
     <script src="/app/assets/js/jquery.min.js "></script>
     <script src="/app/assets/js/amazeui.min.js "></script>
     <script src="/app/assets/js/iscroll.js "></script>
+    <script src="/app/assets/js/util.js"></script>
     <script src="/app/assets/js/app.js "></script>
+    <script>
+        (function (document) {
+            
+            var subMenu = $('#sub-menu-main');
+             var album_id = urlUtil.getQueryValue('album_id');
+            $.getJSON('/index/getAlbum', function (data) {
+                if (data.ok) {
+                    var result = data.result;
+                    var album = "<ul class='tpl-left-nav-sub-menu' style='display:block'><li>";
+                    for (var index = 0; index < result.length; index++) {
+                        var element = result[index];
+                        var flag = parseInt(album_id) == parseInt(element.id) ? 'active' : '';
+                        album += [
+                            "<a href='/index/index?album_id=" + element.id + "' class='" + flag + "'>",
+                            "<i class='am-icon-angle-right'></i>",
+                            "<span>" + element.name + "</span>",
+                            "</a>"
+                        ].join('');
+                    }
+                    album += "</li></ul>";
+                    subMenu.html(album);
+                }
+            })
+        })(document);
+    </script>
+    {% block javascript %} {% endblock %}
 </body>
 
 </html>

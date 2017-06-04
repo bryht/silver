@@ -36,7 +36,11 @@ class Model extends \Medoo\Medoo
     public function insertObj($datas)
     {
         $res = $this->insert($this->table, $datas);
-        return $res->rowCount();
+        if ($res->rowCount() > 0) {
+            return $this->id();
+        } else {
+            return $res;
+        }
     }
 
     public function deleteById($id)
@@ -54,23 +58,24 @@ class Model extends \Medoo\Medoo
         return $this->select($this->table, '*');
     }
 
-    public function getItemsByPage($pageNum = 0, $pageSize = 0, $order = ['id' => 'DESC'], $where = NULL)
+    public function getItemsByPage($pageNum = 0, $pageSize = 0, $where = null, $order = ['id' => 'DESC'])
     {
         $condiation = [
             'ORDER' => $order,
-            'LIMIT' => [$pageNum * $pageSize, $pageSize]
+            'LIMIT' => [$pageNum * $pageSize, $pageSize],
         ];
         if (isset($where)) {
-           foreach ($where as $key => $value) {
-               $condiation[$key]=$value;
-           }
+            foreach ($where as $key => $value) {
+                $condiation[$key] = $value;
+            }
         }
-        $res = $this->select($this->table, '*',$condiation);
+        $res = $this->select($this->table, '*', $condiation);
         return $res;
     }
 
-    public function getNavByPage($pageNum=0, $pageSize = 0,$where = NULL){
-        $count = $this->count($this->table,$where);
+    public function getNavByPage($pageNum = 0, $pageSize = 0, $where = null)
+    {
+        $count = $this->count($this->table, $where);
         $pageCount = ceil($count / (float) $pageSize);
         $pageNav = array();
         array_push($pageNav, ['num' => '«', 'pageIndex' => '0']);

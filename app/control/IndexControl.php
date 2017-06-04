@@ -9,17 +9,22 @@ class IndexControl extends CertControl
         if (isset($para['page']) == false) {
             $para['page'] = 0;
         }
-        $this->assign('images', $this->getImagesByPage($para['page']));
-        $this->assign('pageNav', $this->getPageNav($para['page']));
+        $where = ['album_id' => 0];
+        if (isset($para['album_id'])) {
+            //TODO judge the user have the right to access the album
+            $where = ['album_id' => $para['album_id']];
+        }
+
+        $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
+        $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
         $this->display('index.html');
     }
 
-    public function album($para){
-        $category=$para['category'];
-        $where=$para['where'];
-        $page=$para['page'];
-
-
+    public function getAlbum()
+    {
+        $userId = session_get('user_id');
+        $res = \app\model\AlbumModel::instance()->getAlbumsByUserId($userId);
+        $this->result(count($res) > 0, $res, $res);
     }
 
     public function add()
@@ -47,6 +52,7 @@ class IndexControl extends CertControl
     {
         $description = $para['img-description'];
         $time = $para['img-time'];
+        $albumId = $para['album_id'];
         $imgFile = $_FILES['img-file'];
 
         $res = \upload_file($imgFile);
@@ -55,18 +61,21 @@ class IndexControl extends CertControl
             $img['type'] = $imgFile['type'];
             $img['size'] = $imgFile['size'];
             $img['path'] = $res['result'];
+            $img['user_id'] = session_get('user_id');
+            $img['album_id'] = $albumId;
+            $img['create_time'] = $time;
             $img['description'] = $description;
-            $res = \app\model\ImageModel::instance()->addImage($img);
-            $this->redirect('index', 'index');
+            $res = \app\model\ImageModel::instance()->insertObj($img);
+            $this->redirect('index', 'index',['album_id' => $albumId]);
 
         } else {
             throw new Exception($res['error'], 1);
         }
     }
 
-    public function getImagesByPage($pageNum, $pageSize = 6)
+    public function getImagesByPage($pageNum, $pageSize = 6, $where = null)
     {
-        $res = \app\model\ImageModel::instance()->getItemsByPage($pageNum, $pageSize);
+        $res = \app\model\ImageModel::instance()->getItemsByPage($pageNum, $pageSize, $where);
         $images = array();
         foreach ($res as $key => $value) {
             $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
@@ -75,9 +84,9 @@ class IndexControl extends CertControl
         return $images;
     }
 
-    public function getPageNav($pageNum, $pageSize = 6)
+    public function getPageNav($pageNum, $pageSize = 6, $where = null)
     {
-        $pageNav = \app\model\ImageModel::instance()->getNavByPage($pageNum, $pageSize);
+        $pageNav = \app\model\ImageModel::instance()->getNavByPage($pageNum, $pageSize, $where);
         return $pageNav;
     }
 
@@ -91,22 +100,23 @@ class IndexControl extends CertControl
         echo $imageSource;
     }
 
-    public function galleryAdd($para)
+    public function albumAdd($para)
     {
-        $this->display('gallery-add.html');
+        $this->display('album-add.html');
     }
 
-    public function galleryUpdate($para){
-        $data['name']=$para['gallery-name'];
-        $data['music_link']=$para['music-link'];
-        $data['create_time']=date('Y-m-d H:i:s');
-        $data['user_id']=session_get('user_id');
-         
-        $res=\app\model\GalleryModel::instance()->insertObj($data);
-        if ($res>0) {
-            $this->redirect('index','index');
-        }else {
-            $this->redirect500(serialize($res));
+    public function albumUpdate($para)
+    {
+        $data['name'] = $para['gallery-name'];
+        $data['music_link'] = $para['music-link'];
+        $data['create_time'] = date('Y-m-d H:i:s');
+        $data['create_userid'] = session_get('user_id');
+        $data['user_id'] = ',' . intval(session_get('user_id')) . ',';
+        $res = \app\model\AlbumModel::instance()->insertObj($data);
+        if (intval($res) > 0) {
+            $this->redirect('index', 'index', ['album_id' => $res]);
+        } else {
+            $this->redirect500(implode('|', $res->errorInfo()));
         }
     }
 }

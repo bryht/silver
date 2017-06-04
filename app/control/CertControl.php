@@ -14,7 +14,7 @@ class CertControl extends \core\Control
         $authIds=session_get('user_auth');
         $auth=\app\model\MenuModel::instance()->getMenusByIds($authIds);
         $this->assign('user_auth',$auth);
-  
+        
     }
 
 
