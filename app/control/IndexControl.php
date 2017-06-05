@@ -66,7 +66,7 @@ class IndexControl extends CertControl
             $img['create_time'] = $time;
             $img['description'] = $description;
             $res = \app\model\ImageModel::instance()->insertObj($img);
-            $this->redirect('index', 'index',['album_id' => $albumId]);
+            $this->redirect('index', 'index', ['album_id' => $albumId]);
 
         } else {
             throw new Exception($res['error'], 1);
@@ -105,7 +105,16 @@ class IndexControl extends CertControl
         $this->display('album-add.html');
     }
 
-    public function albumUpdate($para)
+    public function albumEdit($para)
+    {
+        $id = $para['album_id'];
+        $res = \app\model\AlbumModel::instance()->getById($id);
+
+        $this->assign('album', $res);
+        $this->display('album-edit.html');
+    }
+
+    public function albumInsert($para)
     {
         $data['name'] = $para['gallery-name'];
         $data['music_link'] = $para['music-link'];
@@ -115,6 +124,31 @@ class IndexControl extends CertControl
         $res = \app\model\AlbumModel::instance()->insertObj($data);
         if (intval($res) > 0) {
             $this->redirect('index', 'index', ['album_id' => $res]);
+        } else {
+            $this->redirect500(implode('|', $res->errorInfo()));
+        }
+    }
+
+    public function albumUpdate($para)
+    {
+        $data['id'] = $para['album_id'];
+        $data['name'] = $para['gallery-name'];
+        $data['music_link'] = $para['music-link'];
+
+        $res = \app\model\AlbumModel::instance()->updateObj($data);
+        if (intval($res) > 0) {
+            $this->redirect('index', 'index', ['album_id' => $res]);
+        } else {
+            $this->redirect500(implode('|', $res->errorInfo()));
+        }
+    }
+
+    public function albumDelete($para)
+    {
+        $id = $para['album_id'];
+        $res = \app\model\AlbumModel::instance()->deleteById($id);
+        if ($res->rowCount() > 0) {
+            $this->redirect('index', 'index', ['album_id' =>-1]);
         } else {
             $this->redirect500(implode('|', $res->errorInfo()));
         }

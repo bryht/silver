@@ -33,9 +33,19 @@ class Model extends \Medoo\Medoo
 
     }
 
-    public function insertObj($datas)
+    public function insertObj($data)
     {
-        $res = $this->insert($this->table, $datas);
+        $res = $this->insert($this->table, $data);
+        if ($res->rowCount() > 0) {
+            return $this->id();
+        } else {
+            return $res;
+        }
+    }
+
+    public function updateObj($data, $where=null)
+    {
+        $res = $this->update($this->table, $data, $where);
         if ($res->rowCount() > 0) {
             return $this->id();
         } else {

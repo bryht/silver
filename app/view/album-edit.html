@@ -5,11 +5,12 @@
         <div class="tpl-block">
             <div class="am-g">
                 <div class="tpl-form-body tpl-form-line">
-                    <form action="/index/albumInsert" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                    <form action="/index/albumUpdate" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
                         <div class="am-form-group">
                             <label for="user-email" class="am-u-sm-3 am-form-label">Gallery Name</label>
                             <div class="am-u-sm-9">
                                 <input type="text" id="gallery-name" name="gallery-name" class="tpl-form-input" placeholder="please input the gallery name"
+                                value="{{album.name}}"
                                 />
                             </div>
                         </div>
@@ -17,7 +18,7 @@
                             <label for="user-email" class="am-u-sm-3 am-form-label">Gallery Music Link</label>
                             <div class="am-u-sm-9">
                                 <input type="text" id="gallery-name" name="music-link" class="tpl-form-input" placeholder="please input the 163 music link"
-                                  />
+                                 value="{{album.music_link}}" />
                             </div>
                         </div>
                         <div class="am-form-group">
@@ -25,6 +26,7 @@
                                 <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success"></input>
                             </div>
                         </div>
+                        <input type="text" name="album_id" value="{{album.id}}" style="display:none"/>
                     </form>
 
                 </div>
