@@ -153,4 +153,25 @@ class IndexControl extends CertControl
             $this->redirect500(implode('|', $res->errorInfo()));
         }
     }
+
+    public function userUpdate($para)
+    {
+        $name=$para['user-name'];
+        $imgFile = $_FILES['img-file'];
+        $album_id = $para['album_id'];
+
+        $res = \upload_file($imgFile);
+        if ($res['ok']) {
+            
+            $user['path'] = $res['result'];
+            $user['user_id'] = session_get('user_id');
+            $user['name'] =$name;
+          
+            $res = \app\model\UserModel::instance()->updateObj($user);
+            $this->redirect('index', 'index', ['album_id' => $album_id]);
+
+        } else {
+            throw new Exception($res['error'], 1);
+        }
+    }
 }
