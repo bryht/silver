@@ -17,6 +17,11 @@ class ImageApi extends CertApi
         $this->success($res);
     }
 
+    public function getImagesByAlbumId($para){
+        $res=\app\model\ImageModel::instance()->getImagesByAlbumId($para['album_id']);
+        $this->result(count($res)>0,$res,$res->errorInfo());
+    }
+
     public function getImageUrlById($para)
     {
         $res = \app\model\ImageModel::instance()->getById($para['id']);
