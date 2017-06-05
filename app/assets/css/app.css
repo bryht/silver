@@ -1964,6 +1964,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     border-radius: 6px 6px 0px 0px;
 }
 
+.am-btn-toolbar .am-btn-group .am-btn-default{
+    margin-left: 10px;
+}
+
 .login-am-center .am-btn-default {
     width: 100%;
     border-radius: 6px;

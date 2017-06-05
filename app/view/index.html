@@ -4,13 +4,20 @@
     <div class="tpl-portlet-components">
         <div class="tpl-block">
             <div class="am-g">
-                <div class="am-u-sm-12 am-u-md-6">
+                 
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
-                            <a id="add-image" type="button"  class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> New Photo</a>
+                            <a id="add-image" type="button" class="am-btn am-btn-default am-btn-success">
+                                <span class="am-icon-plus"></span> New Photo</a>
+                            <a id="eidt-album" type="button" class="am-btn am-btn-default am-btn-warning">
+                                <span class="am-icon-edit"></span> Edit Album</a>
+                            <a id="delete-album" type="button" class="am-btn am-btn-default am-btn-danger">
+                                <span class="am-icon-recycle"></span> Delete Album</a>
+                            <a id="show-album" type="button" class="am-btn am-btn-default am-btn-secondary">
+                                <span class="am-icon-tv"></span> Show Album</a>
                         </div>
                     </div>
-                </div>
+               
 
             </div>
             <div class="am-g">
@@ -18,12 +25,12 @@
                     {% for image in images%}
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
                         <div class="tpl-table-images-content">
-                            <div class="tpl-table-images-content-i-time">发布时间：2016-09-12</div>
+                            <div class="tpl-table-images-content-i-time">Create Time：{{image.create_time}}</div>
 
                             <a href="javascript:;" class="tpl-table-images-content-i">
                                 <div class="tpl-table-images-content-i-info">
                                     <span class="ico">
-                                    <img src="/app/assets/img/user01.png" alt="">发布者
+                                    <img src="/app/assets/img/user01.png" alt="">Publisher
                                  </span>
 
                                 </div>
@@ -36,8 +43,8 @@
                                 </div>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
-                                        <a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> 编辑</a>
-                                        <a onclick="deleteImage('{{image.id}}')" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</a>
+                                        <!--<a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> Edit</a>-->
+                                        <a onclick="deleteImage('{{image.id}}')" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -78,10 +85,10 @@
             element.setAttribute('href', url);
         }
 
-        
+
         var album_id = urlUtil.getQueryValue('album_id');
 
-        $('#add-image')[0].setAttribute('href','/index/add?album_id='+album_id);
+        $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
 
     })(document);
 
