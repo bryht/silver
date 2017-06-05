@@ -229,3 +229,11 @@ var urlUtil = {
         return url;
     }
 }
+
+
+var formUtil={
+    checkEmail:function (input) {
+        
+    }
+
+}

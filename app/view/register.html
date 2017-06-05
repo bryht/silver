@@ -12,38 +12,56 @@
             <span> </span>
         </div>
         <div class="am-u-sm-10 login-am-center">
-            <form class="am-form" action="/login/register" method="post">
+            <form id="register-form" class="am-form" onsubmit="return onCheck()"  action="/login/register" method="post">
                 <fieldset>
                     <div class="am-form-group-register">
-                        <input type="text" name="mail" class=""  placeholder="Please input your mail">
+                        <input type="email" name="mail" class="" placeholder="Please input your mail" required>
                     </div>
                     <div class="am-form-group-register">
-                        <input type="text" name="name" class="" placeholder="Please input your username">
+                        <input type="text" name="name" class="" placeholder="Please input your username" required>
                     </div>
                     <div class="am-form-group-register">
-                        <input type="password" name="password" class="" placeholder="Please input your password">
+                        <input id="password1" type="password" name="password" class="" placeholder="Please input your password" required>
                     </div>
-                     <div class="am-form-group-register">
-                        <input type="password"  class="" placeholder="Please input your password">
+                    <div class="am-form-group-register">
+                        <input id="password2" type="password" class="" placeholder="Please input your password" required>
                     </div>
 
-                    <p><button type="submit" class="am-btn am-btn-default">Register</button></p>
+                    <p><button id="form-submit-btn" type="submit" class="am-btn am-btn-default">Register</button></p>
                     <div class="am-form-group-register">
-                         <label>{{message}}</label>
+                        <label>{{message}}</label>
                     </div>
+                    <div class="am-form-group">
+                        <a href="/login/login">I already have a membership</a>
+                    </div>
+
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
 
+
+{% endblock %} {% block javascript %}
 <script>
-    var message='{{message}}';
-    if (message=='Register success!') {
-        setTimeout(function() {
-            location.href='/login/login';
+    var message = '{{message}}';
+    if (message == 'Register success!') {
+        setTimeout(function () {
+            location.href = '/login/login';
         }, 1000);
     }
 
+    function onCheck() {
+        var val1=$('#password1').val();
+        var val2=$('#password2').val();
+        if (val1==val2) {
+            return true;
+        }else{
+            alert('password should be same!');
+            return false;
+        }
+    }
+
 </script>
+
 {% endblock %}
