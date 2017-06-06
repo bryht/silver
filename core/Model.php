@@ -46,11 +46,16 @@ class Model extends \Medoo\Medoo
     public function updateObj($data, $where=null)
     {
         $res = $this->update($this->table, $data, $where);
+       
         if ($res->rowCount() > 0) {
-            return $this->id();
+            return true;
         } else {
             return $res;
         }
+    }
+
+    public function updateObjById($data,$id){
+        return $this->updateObj($data,['id'=>$id]);
     }
 
     public function deleteById($id)

@@ -13,8 +13,15 @@ class IndexControl extends CertControl
         if (isset($para['album_id'])) {
             //TODO judge the user have the right to access the album
             $where = ['album_id' => $para['album_id']];
+            $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
+            if ($album) {
+                if (strpos( $album['music_link'],'music.163.com') ==0) {
+                    $album['music_link'] = '//music.163.com/outchain/player?height=32';
+                }
+            }
         }
 
+        $this->assign('album', $album);
         $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
         $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
         $this->display('index.html');
@@ -122,7 +129,7 @@ class IndexControl extends CertControl
         $data['create_userid'] = session_get('user_id');
         $data['user_id'] = ',' . intval(session_get('user_id')) . ',';
         $res = \app\model\AlbumModel::instance()->insertObj($data);
-        if (intval($res) > 0) {
+        if ($res > 0) {
             $this->redirect('index', 'index', ['album_id' => $res]);
         } else {
             $this->redirect500(implode('|', $res->errorInfo()));
@@ -135,9 +142,9 @@ class IndexControl extends CertControl
         $data['name'] = $para['gallery-name'];
         $data['music_link'] = $para['music-link'];
 
-        $res = \app\model\AlbumModel::instance()->updateObj($data);
-        if (intval($res) > 0) {
-            $this->redirect('index', 'index', ['album_id' => $res]);
+        $res = \app\model\AlbumModel::instance()->updateObjById($data, $data['id']);
+        if ($res) {
+            $this->redirect('index', 'index', ['album_id' => $data['id']]);
         } else {
             $this->redirect500(implode('|', $res->errorInfo()));
         }
@@ -147,26 +154,29 @@ class IndexControl extends CertControl
     {
         $id = $para['album_id'];
         $res = \app\model\AlbumModel::instance()->deleteById($id);
-        if ($res->rowCount() > 0) {
-            $this->redirect('index', 'index', ['album_id' =>-1]);
+        $albumIds = \app\model\AlbumModel::instance()->getAlbumsByUserId(session_get('user_id'));
+        if (count($albumIds) > 0) {
+            $firstAlbumId = $albumIds[0]['id'];
         } else {
-            $this->redirect500(implode('|', $res->errorInfo()));
+            $firstAlbumId = -1;
         }
+        $this->result($res->rowCount() > 0, $firstAlbumId, '删除失败！');
+
     }
 
     public function userUpdate($para)
     {
-        $name=$para['user-name'];
+        $name = $para['user-name'];
         $imgFile = $_FILES['img-file'];
         $album_id = $para['album_id'];
 
         $res = \upload_file($imgFile);
         if ($res['ok']) {
-            
+
             $user['path'] = $res['result'];
             $user['user_id'] = session_get('user_id');
-            $user['name'] =$name;
-          
+            $user['name'] = $name;
+
             $res = \app\model\UserModel::instance()->updateObj($user);
             $this->redirect('index', 'index', ['album_id' => $album_id]);
 
