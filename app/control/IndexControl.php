@@ -15,7 +15,7 @@ class IndexControl extends CertControl
             $where = ['album_id' => $para['album_id']];
             $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
             if ($album) {
-                if (strpos( $album['music_link'],'music.163.com') ==0) {
+                if (strpos($album['music_link'], 'music.163.com') == 0) {
                     $album['music_link'] = '';
                 }
             }
@@ -164,24 +164,32 @@ class IndexControl extends CertControl
 
     }
 
+    public function userEdit($para)
+    {
+        $id = session_get('user_id');
+        $res = \app\model\UserModel::instance()->getById($id);
+
+        $this->assign('user', $res);
+        $this->display('user-edit.html');
+       
+    }
+
     public function userUpdate($para)
     {
         $name = $para['user-name'];
         $imgFile = $_FILES['img-file'];
-        $album_id = $para['album_id'];
-
         $res = \upload_file($imgFile);
         if ($res['ok']) {
 
-            $user['path'] = $res['result'];
-            $user['user_id'] = session_get('user_id');
+            $user['image_path'] = $res['result'];
+            $user['id'] = session_get('user_id');
             $user['name'] = $name;
 
-            $res = \app\model\UserModel::instance()->updateObj($user);
-            $this->redirect('index', 'index', ['album_id' => $album_id]);
+            $res = \app\model\UserModel::instance()->updateObjById($user,$user['id']);
+            goback();
 
         } else {
-            throw new Exception($res['error'], 1);
+             $this->redirect500(implode('|', $res['error']));
         }
     }
 }

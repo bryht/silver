@@ -76,3 +76,8 @@ function upload_file($file)
         return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
     }
 }
+
+function goback()
+{
+     echo "<script>history.go(-1);</script>";
+}
