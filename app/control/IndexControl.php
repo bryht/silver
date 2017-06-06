@@ -16,7 +16,7 @@ class IndexControl extends CertControl
             $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
             if ($album) {
                 if (strpos( $album['music_link'],'music.163.com') ==0) {
-                    $album['music_link'] = '//music.163.com/outchain/player?height=32';
+                    $album['music_link'] = '';
                 }
             }
         }
