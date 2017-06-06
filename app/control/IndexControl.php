@@ -171,25 +171,28 @@ class IndexControl extends CertControl
 
         $this->assign('user', $res);
         $this->display('user-edit.html');
-       
+
     }
 
     public function userUpdate($para)
     {
         $name = $para['user-name'];
         $imgFile = $_FILES['img-file'];
-        $res = \upload_file($imgFile);
-        if ($res['ok']) {
-
-            $user['image_path'] = $res['result'];
-            $user['id'] = session_get('user_id');
-            $user['name'] = $name;
-
-            $res = \app\model\UserModel::instance()->updateObjById($user,$user['id']);
-            goback();
-
+        if ($imgFile['size'] > 0) {
+            $res = \upload_file($imgFile);
+            if ($res['ok']) {
+                $user['avatar'] = $res['result'];
+            } else {
+                $this->redirect500(implode('|', $res['error']));
+            }
+        }
+        $user['id'] = session_get('user_id');
+        $user['name'] = $name;
+        $resUpdate = \app\model\UserModel::instance()->updateObjById($user, $user['id']);
+        if ($resUpdate) {
+            goback(-2);
         } else {
-             $this->redirect500(implode('|', $res['error']));
+            $this->redirect500(implode('|', $resUpdate->errorInfo()));
         }
     }
 }

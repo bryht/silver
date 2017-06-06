@@ -77,7 +77,7 @@ function upload_file($file)
     }
 }
 
-function goback()
+function goback($step=-1)
 {
-     echo "<script>history.go(-1);</script>";
+     echo "<script>history.go(".$step.");</script>";
 }
