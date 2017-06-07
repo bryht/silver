@@ -82,7 +82,7 @@ class IndexControl extends CertControl
 
     public function getImagesByPage($pageNum, $pageSize = 6, $where = null)
     {
-        $res = \app\model\ImageModel::instance()->getItemsByPage($pageNum, $pageSize, $where);
+        $res = \app\model\ImageModel::instance()->getImagesByPage($pageNum, $pageSize, $where);
         $images = array();
         foreach ($res as $key => $value) {
             $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
