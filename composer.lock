@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "catfan/medoo",
-            "version": "v1.4.3",
+            "version": "v1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "00b28046376880e1a7bd3026fa06b4e261bce3fd"
+                "reference": "bcabbef4d8355d52fc4d19f17463e5e816c9ef44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/catfan/Medoo/00b28046376880e1a7bd3026fa06b4e261bce3fd.zip",
-                "reference": "00b28046376880e1a7bd3026fa06b4e261bce3fd",
+                "url": "https://files.phpcomposer.com/files/catfan/Medoo/bcabbef4d8355d52fc4d19f17463e5e816c9ef44.zip",
+                "reference": "bcabbef4d8355d52fc4d19f17463e5e816c9ef44",
                 "shasum": ""
             },
             "require": {
@@ -63,7 +63,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2017-05-22T04:39:48+00:00"
+            "time": "2017-06-02T15:25:04+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -137,16 +137,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.8",
+            "version": "2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3"
+                "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/filp/whoops/f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3.zip",
-                "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
+                "url": "https://files.phpcomposer.com/files/filp/whoops/b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f.zip",
+                "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2017-03-07T09:04:45+00:00"
+            "time": "2017-06-03T18:33:07+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -323,20 +323,20 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.33.2",
+            "version": "v1.34.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927"
+                "reference": "55e4beb721a044db9e31ae0470024fc205b6a008"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/twigphp/Twig/dd6ca96227917e1e85b41c7c3cc6507b411e0927.zip",
-                "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927",
+                "url": "https://files.phpcomposer.com/files/twigphp/Twig/55e4beb721a044db9e31ae0470024fc205b6a008.zip",
+                "reference": "55e4beb721a044db9e31ae0470024fc205b6a008",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.7"
+                "php": ">=5.3.3"
             },
             "require-dev": {
                 "psr/container": "^1.0",
@@ -346,12 +346,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.33-dev"
+                    "dev-master": "1.34-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
                     "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -381,7 +384,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-04-20T17:39:48+00:00"
+            "time": "2017-06-06T03:56:50+00:00"
         }
     ],
     "packages-dev": [

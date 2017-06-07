@@ -49,69 +49,6 @@
         ]
     },
     {
-        "name": "filp/whoops",
-        "version": "2.1.8",
-        "version_normalized": "2.1.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/filp/whoops.git",
-            "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://files.phpcomposer.com/files/filp/whoops/f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3.zip",
-            "reference": "f2950be7da8b8d6c4e77821b6c9d486e36cdc4f3",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9 || ^7.0",
-            "psr/log": "^1.0.1"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "^4.8 || ^5.0",
-            "symfony/var-dumper": "^2.6 || ^3.0"
-        },
-        "suggest": {
-            "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
-            "whoops/soap": "Formats errors as SOAP responses"
-        },
-        "time": "2017-03-07T09:04:45+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Whoops\\": "src/Whoops/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Filipe Dobreira",
-                "homepage": "https://github.com/filp",
-                "role": "Developer"
-            }
-        ],
-        "description": "php error handling for cool kids",
-        "homepage": "https://filp.github.io/whoops/",
-        "keywords": [
-            "error",
-            "exception",
-            "handling",
-            "library",
-            "whoops",
-            "zf2"
-        ]
-    },
-    {
         "name": "squizlabs/php_codesniffer",
         "version": "3.0.0",
         "version_normalized": "3.0.0.0",
@@ -162,70 +99,6 @@
         "keywords": [
             "phpcs",
             "standards"
-        ]
-    },
-    {
-        "name": "twig/twig",
-        "version": "v1.33.2",
-        "version_normalized": "1.33.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twigphp/Twig.git",
-            "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://files.phpcomposer.com/files/twigphp/Twig/dd6ca96227917e1e85b41c7c3cc6507b411e0927.zip",
-            "reference": "dd6ca96227917e1e85b41c7c3cc6507b411e0927",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.7"
-        },
-        "require-dev": {
-            "psr/container": "^1.0",
-            "symfony/debug": "~2.7",
-            "symfony/phpunit-bridge": "~3.3@dev"
-        },
-        "time": "2017-04-20T17:39:48+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.33-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Twig_": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com",
-                "homepage": "http://fabien.potencier.org",
-                "role": "Lead Developer"
-            },
-            {
-                "name": "Armin Ronacher",
-                "email": "armin.ronacher@active-4.com",
-                "role": "Project Founder"
-            },
-            {
-                "name": "Twig Team",
-                "homepage": "http://twig.sensiolabs.org/contributors",
-                "role": "Contributors"
-            }
-        ],
-        "description": "Twig, the flexible, fast, and secure template language for PHP",
-        "homepage": "http://twig.sensiolabs.org",
-        "keywords": [
-            "templating"
         ]
     },
     {
@@ -298,67 +171,6 @@
         "keywords": [
             "cache",
             "caching"
-        ]
-    },
-    {
-        "name": "catfan/medoo",
-        "version": "v1.4.3",
-        "version_normalized": "1.4.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/catfan/Medoo.git",
-            "reference": "00b28046376880e1a7bd3026fa06b4e261bce3fd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://files.phpcomposer.com/files/catfan/Medoo/00b28046376880e1a7bd3026fa06b4e261bce3fd.zip",
-            "reference": "00b28046376880e1a7bd3026fa06b4e261bce3fd",
-            "shasum": ""
-        },
-        "require": {
-            "ext-pdo": "*",
-            "php": ">=5.4"
-        },
-        "suggest": {
-            "ext-pdo_dblib": "For MSSQL or Sybase database on Linux/UNIX platform",
-            "ext-pdo_mysql": "For MySQL or MariaDB database",
-            "ext-pdo_oci": "For Oracle database",
-            "ext-pdo_oci8": "For Oracle version 8 database",
-            "ext-pdo_pqsql": "For PostgreSQL database",
-            "ext-pdo_sqlite": "For SQLite database",
-            "ext-pdo_sqlsrv": "For MSSQL database on Windows platform"
-        },
-        "time": "2017-05-22T04:39:48+00:00",
-        "type": "framework",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Medoo\\": "/src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Angel Lai",
-                "email": "angel@catfan.me"
-            }
-        ],
-        "description": "The lightest PHP database framework to accelerate development",
-        "homepage": "https://medoo.in",
-        "keywords": [
-            "database",
-            "lightweight",
-            "mariadb",
-            "mssql",
-            "mysql",
-            "oracle",
-            "php framework",
-            "postgresql",
-            "sql",
-            "sqlite"
         ]
     },
     {
@@ -439,6 +251,197 @@
             "log",
             "logging",
             "psr-3"
+        ]
+    },
+    {
+        "name": "filp/whoops",
+        "version": "2.1.9",
+        "version_normalized": "2.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/filp/whoops.git",
+            "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/filp/whoops/b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f.zip",
+            "reference": "b238974e1c7cc1859b0c16ddc1c02ecb70ecc07f",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9 || ^7.0",
+            "psr/log": "^1.0.1"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "^4.8 || ^5.0",
+            "symfony/var-dumper": "^2.6 || ^3.0"
+        },
+        "suggest": {
+            "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
+            "whoops/soap": "Formats errors as SOAP responses"
+        },
+        "time": "2017-06-03T18:33:07+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Whoops\\": "src/Whoops/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Filipe Dobreira",
+                "homepage": "https://github.com/filp",
+                "role": "Developer"
+            }
+        ],
+        "description": "php error handling for cool kids",
+        "homepage": "https://filp.github.io/whoops/",
+        "keywords": [
+            "error",
+            "exception",
+            "handling",
+            "library",
+            "whoops",
+            "zf2"
+        ]
+    },
+    {
+        "name": "catfan/medoo",
+        "version": "v1.4.4",
+        "version_normalized": "1.4.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/catfan/Medoo.git",
+            "reference": "bcabbef4d8355d52fc4d19f17463e5e816c9ef44"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/catfan/Medoo/bcabbef4d8355d52fc4d19f17463e5e816c9ef44.zip",
+            "reference": "bcabbef4d8355d52fc4d19f17463e5e816c9ef44",
+            "shasum": ""
+        },
+        "require": {
+            "ext-pdo": "*",
+            "php": ">=5.4"
+        },
+        "suggest": {
+            "ext-pdo_dblib": "For MSSQL or Sybase database on Linux/UNIX platform",
+            "ext-pdo_mysql": "For MySQL or MariaDB database",
+            "ext-pdo_oci": "For Oracle database",
+            "ext-pdo_oci8": "For Oracle version 8 database",
+            "ext-pdo_pqsql": "For PostgreSQL database",
+            "ext-pdo_sqlite": "For SQLite database",
+            "ext-pdo_sqlsrv": "For MSSQL database on Windows platform"
+        },
+        "time": "2017-06-02T15:25:04+00:00",
+        "type": "framework",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Medoo\\": "/src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Angel Lai",
+                "email": "angel@catfan.me"
+            }
+        ],
+        "description": "The lightest PHP database framework to accelerate development",
+        "homepage": "https://medoo.in",
+        "keywords": [
+            "database",
+            "lightweight",
+            "mariadb",
+            "mssql",
+            "mysql",
+            "oracle",
+            "php framework",
+            "postgresql",
+            "sql",
+            "sqlite"
+        ]
+    },
+    {
+        "name": "twig/twig",
+        "version": "v1.34.2",
+        "version_normalized": "1.34.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twigphp/Twig.git",
+            "reference": "55e4beb721a044db9e31ae0470024fc205b6a008"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/twigphp/Twig/55e4beb721a044db9e31ae0470024fc205b6a008.zip",
+            "reference": "55e4beb721a044db9e31ae0470024fc205b6a008",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "psr/container": "^1.0",
+            "symfony/debug": "~2.7",
+            "symfony/phpunit-bridge": "~3.3@dev"
+        },
+        "time": "2017-06-06T03:56:50+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.34-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_": "lib/"
+            },
+            "psr-4": {
+                "Twig\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Armin Ronacher",
+                "email": "armin.ronacher@active-4.com",
+                "role": "Project Founder"
+            },
+            {
+                "name": "Twig Team",
+                "homepage": "http://twig.sensiolabs.org/contributors",
+                "role": "Contributors"
+            }
+        ],
+        "description": "Twig, the flexible, fast, and secure template language for PHP",
+        "homepage": "http://twig.sensiolabs.org",
+        "keywords": [
+            "templating"
         ]
     }
 ]

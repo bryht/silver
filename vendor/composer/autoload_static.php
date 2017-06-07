@@ -11,6 +11,10 @@ class ComposerStaticInitaf084eadbc42bde313c9a2602d698fb8
         array (
             'Whoops\\' => 7,
         ),
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -30,6 +34,10 @@ class ComposerStaticInitaf084eadbc42bde313c9a2602d698fb8
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
+        ),
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
         'Psr\\Log\\' => 
         array (

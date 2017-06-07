@@ -32,4 +32,11 @@ class ImageApi extends CertApi
         echo $imageSource;
     }
 
+    /*TODO:TEst*/
+    public function getImagesByPage($para)
+    {
+        $res= \app\model\ImageModel::instance()->getImagesByPage(0,6);
+        p($res);
+    }
+
 }
