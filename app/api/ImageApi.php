@@ -38,5 +38,11 @@ class ImageApi extends CertApi
         $res= \app\model\ImageModel::instance()->getImagesByPage(0,6);
         p($res);
     }
+    
+    /*TODO:TEst*/
+    public function getUsersByAlbumId(){
+        $res=\app\model\UserModel::instance()->getUsersByAlbumId(7);
+        p($res);
+    }
 
 }
