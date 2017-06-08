@@ -6,6 +6,6 @@ class UserApi extends \core\Control
 {
     public function getAlbumUsers($para)
     {
-        $resUsers=
+        
     }
 }
