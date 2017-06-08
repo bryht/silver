@@ -9,5 +9,4 @@ class AlbumModel extends \core\Model
         $where=','.intval($userid).',';
         return $this->select('album','*', ['user_id[~]' => $where]);
     }
-
 }

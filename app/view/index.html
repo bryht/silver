@@ -8,15 +8,14 @@
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                         <a id="add-image" type="button" class="am-btn am-btn-default am-btn-success">
-                                <span class="am-icon-plus"></span> New Photo</a>
+                            <span class="am-icon-plus"></span> New Photo</a>
                         <a id="eidt-album" type="button" class="am-btn am-btn-default am-btn-warning">
-                                <span class="am-icon-edit"></span> Edit Album</a>
+                            <span class="am-icon-edit"></span> Edit Album</a>
                         <a id="delete-album" type="button" class="am-btn am-btn-default am-btn-danger">
-                                <span class="am-icon-recycle"></span> Delete Album</a>
+                            <span class="am-icon-recycle"></span> Delete Album</a>
                         <a id="show-album" type="button" class="am-btn am-btn-default am-btn-secondary">
-                                <span class="am-icon-tv"></span> Show Album</a>
-                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;"
-                         width=298 height=52 src="{{album.music_link}}"></iframe>
+                            <span class="am-icon-tv"></span> Show Album</a>
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;" width=298 height=52 src="{{album.music_link}}"></iframe>
                     </div>
 
                 </div>
@@ -31,12 +30,7 @@
                             <div class="tpl-table-images-content-i-time">Create Time：{{image.create_time}}</div>
 
                             <a href="javascript:;" class="tpl-table-images-content-i">
-                                <div class="tpl-table-images-content-i-info">
-                                    <span class="ico">
-                                    <img src="{{image.avatar}}" alt="">{{image.username}}
-                                 </span>
 
-                                </div>
                                 <span class="tpl-table-images-content-i-shadow"></span>
                                 <img src="{{image.url}}" alt="">
                             </a>
@@ -49,6 +43,11 @@
                                         <!--<a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> Edit</a>-->
                                         <a onclick="deleteImage('{{image.id}}')" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> Delete</a>
                                     </div>
+                                </div>
+                                <div class="tpl-table-images-content-i-info">
+                                    <span class="ico">
+                                        <img src="{{image.avatar}}" alt="">{{image.username}}
+                                    </span>
                                 </div>
                             </div>
                         </div>

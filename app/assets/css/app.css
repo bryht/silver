@@ -1547,7 +1547,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .tpl-table-images-content-i-info span.ico {
     line-height: 40px;
     display: inline-block;
-    color: #fff;
+    color: #000;
     font-size: 14px;
 }
 

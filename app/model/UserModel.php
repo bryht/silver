@@ -25,4 +25,10 @@ class UserModel extends \core\Model
         return $res > 0;
     }
 
+    public function getUserListByIds($ids)
+    {
+        $res=$this->select($this->table,['name','avatar'],['id'=>$ids]);
+        return $res;
+    }
+
 }
