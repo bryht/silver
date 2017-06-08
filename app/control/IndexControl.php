@@ -19,9 +19,12 @@ class IndexControl extends CertControl
                     $album['music_link'] = '';
                 }
             }
+
+            $albumUsers=\app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
         }
 
         $this->assign('album', $album);
+        $this->assign('albumUsers',$albumUsers);
         $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
         $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
         $this->display('index.html');
