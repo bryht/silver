@@ -15,16 +15,16 @@
             <form id="register-form" class="am-form" onsubmit="return onCheck()"  action="/login/register" method="post">
                 <fieldset>
                     <div class="am-form-group-register">
-                        <input type="email" name="mail" class="" placeholder="Please input your mail" required>
+                        <input type="email" name="mail" class="" placeholder="Please input your email address" required>
                     </div>
                     <div class="am-form-group-register">
-                        <input type="text" name="name" class="" placeholder="Please input your username" required>
+                        <input type="text" name="name" class="" placeholder="Please input your user name" required>
                     </div>
                     <div class="am-form-group-register">
                         <input id="password1" type="password" name="password" class="" placeholder="Please input your password" required>
                     </div>
                     <div class="am-form-group-register">
-                        <input id="password2" type="password" class="" placeholder="Please input your password" required>
+                        <input id="password2" type="password" class="" placeholder="Please input your password again" required>
                     </div>
 
                     <p><button id="form-submit-btn" type="submit" class="am-btn am-btn-default">Register</button></p>
@@ -32,7 +32,7 @@
                         <label>{{message}}</label>
                     </div>
                     <div class="am-form-group">
-                        <a href="/login/login">I already have a membership</a>
+                        <a href="/login/login">I already have an account</a>
                     </div>
 
                 </fieldset>
