@@ -29,8 +29,8 @@
                         <div class="am-form-group">
                             <label for="user-email" class="am-u-sm-3 am-form-label">Publish Time</label>
                             <div class="am-u-sm-9">
-                                <input type="text" id="img-time" name="img-time" class="am-form-field tpl-form-no-bg" placeholder="Please input the photo time" data-am-datepicker=""
-                                    readonly/>
+                                <input type="text" id="img-time" name="img-time" class="am-form-field tpl-form-no-bg" placeholder="Please input the photo time"
+                                    data-am-datepicker="" readonly/>
                             </div>
                         </div>
                         <input id="album_id" name="album_id" type="text" style="display:none">
@@ -72,11 +72,72 @@
         var name = file.name;
         var size = file.size;
         var type = file.type;
-        var url = window.URL.createObjectURL(file);
+        
+        //if (size > 1000 * 1000) {
+        clipImage(file, function (url) {
+            //var url = window.URL.createObjectURL(file);
+            
+            document.getElementById('img-preview').src = url;
 
-        document.getElementById('img-preview').src = url;
+            debugger;
+        });
+        //}
+
+
+
+
         document.getElementById('img-time').value = lastModifiedDate;
         document.getElementById('img-description').value = name + ',' + size + ',' + type;
+    }
+
+    function clipImage(file, callback) {
+        var maxWidth = 800;
+        var maxHeight = 800;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+
+            downscaleImage(e.target.result, 50,null,null,function (url) {
+                callback(url);
+            });
+
+        }
+        reader.readAsDataURL(file);
+
+
+    }
+
+    function downscaleImage(dataUrl, newWidth, imageType, imageArguments,completed) {
+
+        var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+
+        // Provide default values
+        imageType = imageType || "image/jpeg";
+        imageArguments = imageArguments || 0.7;
+
+        // Create a temporary image so that we can compute the height of the downscaled image.
+        image = new Image();
+        image.src = dataUrl;
+        image.onload = function () {
+            oldWidth = image.width;
+            oldHeight = image.height;
+            imageLoadCompleted();
+        };
+
+        var imageLoadCompleted = function (params) {
+            newHeight = Math.floor(oldHeight / oldWidth * newWidth)
+
+            // Create a temporary canvas to draw the downscaled image on.
+            canvas = document.createElement("canvas");
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // Draw the downscaled image on the canvas and return the new data URL.
+            ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0, newWidth, newHeight);
+            newDataUrl = canvas.toDataURL(imageType, imageArguments);
+            completed(newDataUrl);
+        }
+
     }
 
 </script>
