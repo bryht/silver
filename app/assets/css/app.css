@@ -1537,11 +1537,7 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-table-images-content-i-info {
-    position: absolute;
-    left: 10px;
-    right: 0;
-    bottom: 10px;
-    z-index: 2;
+   text-align: left;
 }
 
 .tpl-table-images-content-i-info span.ico {
@@ -1610,6 +1606,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .tpl-edit-content-btn {
     margin-top: 10px;
     width: 100%;
+}
+
+.tpl-edit-content-btn a{
+    font-size: 10px;
 }
 
 .tpl-edit-content-btn button {

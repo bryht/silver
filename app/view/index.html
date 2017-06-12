@@ -16,15 +16,15 @@
                         <a id="show-album" type="button" class="am-btn am-btn-default am-btn-secondary">
 
                             <span class="am-icon-tv"></span> Show Album</a>
-                       
+
                         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;float:left;" width=298 height=52
                             src="{{album.music_link}}"></iframe>
 
-                        {% for user in albumUsers%}
+                        <a id="edit-musiclink" class="am-btn">
+                            <span class="am-icon-edit"></span></a> {% for user in albumUsers%}
 
                         <div class="album-users">
-                            <img src="{{user.avatar}}">      
-                             {{user.name}}
+                            <img src="{{user.avatar}}"> {{user.name}}
                         </div>
                         {% endfor %}
                     </div>
@@ -52,13 +52,14 @@
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
                                         <!--<a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> Edit</a>-->
-                                        <a onclick="deleteImage('{{image.id}}')" type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> Delete</a>
+
+                                        <div class="tpl-table-images-content-i-info">
+                                            <span class="ico">
+                                                 <img src="{{image.avatar}}" alt="">{{image.username}}
+                                         </span>
+                                        </div>
+                                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a>
                                     </div>
-                                </div>
-                                <div class="tpl-table-images-content-i-info">
-                                    <span class="ico">
-                                        <img src="{{image.avatar}}" alt="">{{image.username}}
-                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +105,7 @@
         $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
         $('#eidt-album')[0].setAttribute('href', '/index/albumEdit?album_id=' + album_id);
         $('#delete-album').click(function () { deleteAlbum(album_id) });
-
+        $('#edit-musiclink')[0].setAttribute('href', '/index/albumEdit?album_id=' + album_id);
     })(document);
 
     function deleteImage(id) {
