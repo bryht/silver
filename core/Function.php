@@ -67,17 +67,24 @@ function upload_file($file)
         $temp_name = $file['tmp_name'];
         $file_name = $file['name'];
         $path = get_upload_path('img');
-        if (is_dir(SILVER.$path) == false) {
-            mkdir(SILVER.$path, 0777, \TRUE);
+        if (is_dir(SILVER . $path) == false) {
+            mkdir(SILVER . $path, 0777, \TRUE);
         }
-        move_uploaded_file($temp_name, SILVER.$path . $file_name);
+        move_uploaded_file($temp_name, SILVER . $path . $file_name);
         return array('ok' => true, 'result' => $path . $file_name);
     } else {
         return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
     }
 }
 
-function goback($step=-1)
+function base64_to_file($pathName,$base64Url)
 {
-     echo "<script>history.go(".$step.");</script>";
+    $url = explode(',',$base64Url);
+    $size = file_put_contents($pathName, base64_decode($url[1]));
+    return $size;
+}
+
+function goback($step = -1)
+{
+    echo "<script>history.go(" . $step . ");</script>";
 }

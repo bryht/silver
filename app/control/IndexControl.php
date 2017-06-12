@@ -63,8 +63,10 @@ class IndexControl extends CertControl
         $description = $para['img-description'];
         $time = $para['img-time'];
         $albumId = $para['album_id'];
-        $imgFile = $para['img-file'];
-p($imgFile);
+        $imageSource = $para['img-source'];
+ 
+        $size=base64_to_file(UPLOAD.'a.jpg',$imageSource);
+        
         // $res = \upload_file($imgFile);
         // if ($res['ok']) {
         //     $img['name'] = $imgFile['name'];
@@ -77,7 +79,6 @@ p($imgFile);
         //     $img['description'] = $description;
         //     $res = \app\model\ImageModel::instance()->insertObj($img);
         //     $this->redirect('index', 'index', ['album_id' => $albumId]);
-
         // } else {
         //     throw new Exception($res['error'], 1);
         // }

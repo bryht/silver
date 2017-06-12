@@ -11,7 +11,8 @@
                             <div class="am-u-sm-9">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img id="img-preview"  name="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
+                                        <img id="img-preview" name="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
+                                        <input id="img-source" name="img-source" type="text" style="display:none">
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-sm">
                                             <i class="am-icon-cloud-upload"></i> Add Photo</button>
@@ -72,73 +73,57 @@
         var name = file.name;
         var size = file.size;
         var type = file.type;
-        
+
         //if (size > 1000 * 1000) {
         clipImage(file, function (url) {
-            //var url = window.URL.createObjectURL(file);
-            
             document.getElementById('img-preview').src = url;
+            document.getElementById('img-source').value = url;
 
-            debugger;
         });
-        //}
-
-
-
-
+      
         document.getElementById('img-time').value = lastModifiedDate;
         document.getElementById('img-description').value = name + ',' + size + ',' + type;
     }
 
     function clipImage(file, callback) {
+        var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
         var maxWidth = 800;
         var maxHeight = 800;
+        var newWidth=100;
+        var imageType = imageType || "image/jpeg";
+        var imageArguments = imageArguments || 1.0;
         var reader = new FileReader();
         reader.onload = function (e) {
-
-            downscaleImage(e.target.result, 50,null,null,function (url) {
-                callback(url);
-            });
-
+            fileReadCompleted(e.target.result);
         }
         reader.readAsDataURL(file);
 
-
-    }
-
-    function downscaleImage(dataUrl, newWidth, imageType, imageArguments,completed) {
-
-        var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
-
-        // Provide default values
-        imageType = imageType || "image/jpeg";
-        imageArguments = imageArguments || 0.7;
-
-        // Create a temporary image so that we can compute the height of the downscaled image.
-        image = new Image();
-        image.src = dataUrl;
-        image.onload = function () {
-            oldWidth = image.width;
-            oldHeight = image.height;
-            imageLoadCompleted();
-        };
-
-        var imageLoadCompleted = function (params) {
+        var fileReadCompleted = function (dataUrl) {
+            image = new Image();
+            image.src = dataUrl;
+            image.onload = function () {
+                oldWidth = image.width;
+                oldHeight = image.height;
+                imageLoadCompleted();
+            };
+        }
+        var imageLoadCompleted = function() {
             newHeight = Math.floor(oldHeight / oldWidth * newWidth)
 
-            // Create a temporary canvas to draw the downscaled image on.
             canvas = document.createElement("canvas");
             canvas.width = newWidth;
             canvas.height = newHeight;
 
-            // Draw the downscaled image on the canvas and return the new data URL.
             ctx = canvas.getContext("2d");
             ctx.drawImage(image, 0, 0, newWidth, newHeight);
             newDataUrl = canvas.toDataURL(imageType, imageArguments);
-            completed(newDataUrl);
+            callback(newDataUrl);
         }
 
+
     }
+
+     
 
 </script>
 
