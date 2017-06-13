@@ -64,24 +64,26 @@ class IndexControl extends CertControl
         $time = $para['img-time'];
         $albumId = $para['album_id'];
         $imageSource = $para['img-source'];
- 
-        $size=base64_to_file(UPLOAD.'a.jpg',$imageSource);
+        $imageName = $para['img-name'];
+        $imageType = $para['img-type'];
+        $imageSize = $para['img-size'];
+       
+        $res=base64_to_file($imageName,$imageSource);
         
-        // $res = \upload_file($imgFile);
-        // if ($res['ok']) {
-        //     $img['name'] = $imgFile['name'];
-        //     $img['type'] = $imgFile['type'];
-        //     $img['size'] = $imgFile['size'];
-        //     $img['path'] = $res['result'];
-        //     $img['user_id'] = session_get('user_id');
-        //     $img['album_id'] = $albumId;
-        //     $img['create_time'] = $time;
-        //     $img['description'] = $description;
-        //     $res = \app\model\ImageModel::instance()->insertObj($img);
-        //     $this->redirect('index', 'index', ['album_id' => $albumId]);
-        // } else {
-        //     throw new Exception($res['error'], 1);
-        // }
+        if ($res['ok']) {
+            $img['name'] = $imageName;
+            $img['type'] = $imageType;
+            $img['size'] = $res['size'];
+            $img['path'] = $res['result'];
+            $img['user_id'] = session_get('user_id');
+            $img['album_id'] = $albumId;
+            $img['create_time'] = $time;
+            $img['description'] = $description;
+            $res = \app\model\ImageModel::instance()->insertObj($img);
+            $this->redirect('index', 'index', ['album_id' => $albumId]);
+        } else {
+            throw new Exception($res['error'], 1);
+        }
     }
 
     public function getImagesByPage($pageNum, $pageSize = 6, $where = null)

@@ -13,6 +13,9 @@
                                     <div class="tpl-form-file-img">
                                         <img id="img-preview" name="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
                                         <input id="img-source" name="img-source" type="text" style="display:none">
+                                        <input id="img-type" name="img-type" type="hidden">
+                                        <input id="img-name" name="img-name" type="hidden">
+                                        <input id="img-size" name="img-size" type="hidden">
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-sm">
                                             <i class="am-icon-cloud-upload"></i> Add Photo</button>
@@ -70,60 +73,20 @@
         var file = target.files[0];
         var data = new Date(file.lastModifiedDate);
         var lastModifiedDate = data.toLocaleDateString();
-        var name = file.name;
-        var size = file.size;
-        var type = file.type;
 
-        //if (size > 1000 * 1000) {
-        clipImage(file, function (url) {
+        document.getElementById('img-type').value = file.type;
+        document.getElementById('img-name').value = file.name;
+        document.getElementById('img-size').value = file.size;
+
+        fileUtil.clipImage(file, function (url) {
             document.getElementById('img-preview').src = url;
             document.getElementById('img-source').value = url;
 
         });
-      
+
         document.getElementById('img-time').value = lastModifiedDate;
-        document.getElementById('img-description').value = name + ',' + size + ',' + type;
+        //document.getElementById('img-description').value = name + ',' + size + ',' + type;
     }
-
-    function clipImage(file, callback) {
-        var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
-        var maxWidth = 800;
-        var maxHeight = 800;
-        var newWidth=100;
-        var imageType = imageType || "image/jpeg";
-        var imageArguments = imageArguments || 1.0;
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            fileReadCompleted(e.target.result);
-        }
-        reader.readAsDataURL(file);
-
-        var fileReadCompleted = function (dataUrl) {
-            image = new Image();
-            image.src = dataUrl;
-            image.onload = function () {
-                oldWidth = image.width;
-                oldHeight = image.height;
-                imageLoadCompleted();
-            };
-        }
-        var imageLoadCompleted = function() {
-            newHeight = Math.floor(oldHeight / oldWidth * newWidth)
-
-            canvas = document.createElement("canvas");
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-
-            ctx = canvas.getContext("2d");
-            ctx.drawImage(image, 0, 0, newWidth, newHeight);
-            newDataUrl = canvas.toDataURL(imageType, imageArguments);
-            callback(newDataUrl);
-        }
-
-
-    }
-
-     
 
 </script>
 

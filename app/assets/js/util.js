@@ -181,7 +181,7 @@ var strUtil = {
             return false;
         }
         return true;
-    } 
+    }
 };
 
 
@@ -231,9 +231,54 @@ var urlUtil = {
 }
 
 
-var formUtil={
-    checkEmail:function (input) {
-        
+var formUtil = {
+    checkEmail: function (input) {
+
+    }
+
+}
+
+
+var fileUtil = {
+    clipImage: function (file, callback) {
+        var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+        var maxWidth = 800;
+        var maxHeight = 800;
+        var imageType = file.type// like "image/jpeg";
+        var imageArguments = imageArguments || 1.0;
+        var reader = new FileReader();
+        reader.onload = (e) => fileReadCompleted(e.target.result);
+
+        reader.readAsDataURL(file);
+
+        var fileReadCompleted = function (dataUrl) {
+            image = new Image();
+            image.src = dataUrl;
+            image.onload = function () {
+                oldWidth = image.width;
+                oldHeight = image.height;
+                imageLoadCompleted();
+            };
+        }
+        var imageLoadCompleted = function () {
+            if (oldWidth > oldHeight) {
+                newWidth = oldWidth > maxWidth ? maxWidth : oldWidth;
+                newHeight = Math.floor(oldHeight / oldWidth * newWidth);
+            } else {
+                newHeight = oldHeight > maxHeight ? maxHeight : oldHeight;
+                newWidth = Math.floor(oldWidth / oldHeight * newHeight);
+            }
+
+            canvas = document.createElement("canvas");
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0, newWidth, newHeight);
+            newDataUrl = canvas.toDataURL(imageType, imageArguments);
+            callback(newDataUrl);
+        }
+
     }
 
 }
