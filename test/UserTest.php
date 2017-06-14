@@ -1,42 +1,32 @@
 <?php
 
+
+
+define('SILVER', realpath(__DIR__) . '/');
 require '..\vendor\autoload.php';
+require '..\core\Function.php';
+require '..\core\Silver.php';
+require '..\core\Model.php';
+
+spl_autoload_register('core\Silver::load');
+
+//require '..\index.php';
 use PHPUnit\Framework\TestCase;
 
 
 class UserTest extends TestCase
 {
-    // public function testExpectFooActualFoo()
-    // {
-    //     $this->expectOutputString('foo');
-    //     print 'foo';
-    // }
-
-    // public function testExpectBarActualBaz()
-    // {
-    //     $this->expectOutputString('bar');
-    //     print 'baz';
-    // }
-
-    public function testPushAndPop()
+    public function testExpectFooActualFoo()
     {
-        $stack = [];
-        $this->assertEquals(0, count($stack));
-
-        array_push($stack, 'foo');
-        $this->assertEquals('foo', $stack[count($stack)-1]);
-        $this->assertEquals(1, count($stack));
-
-        $this->assertEquals('foo', array_pop($stack));
-        $this->assertEquals(0, count($stack));
+        //$this->expectOutputString('foo');
+      // $albums= \app\model\AlbumModel::instance()->getAlbumsByUserId(1);
+    
+        //p($albums);
+       
+        $albums= \app\model\AlbumModel::instance()->getAlbumsByUserId(1);
     }
 
-    // public function testNewArrayIsEmpty()  
-    // {  
-    //     // 创建数组fixture。  
-    //     $fixture = array();  
    
-    //     // 断言数组fixture的尺寸是0。  
-    //     $this->assertEquals(0, sizeof($fixture));  
-    // }  
+
+    
 }
