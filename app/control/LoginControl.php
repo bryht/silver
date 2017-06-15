@@ -39,8 +39,38 @@ class LoginControl extends \core\Control
 
     public function getPasswordBack($value = '')
     {
-       $mail=$value['mail'];
-       
+        $mailTo = $value['mail'];
+        $mail = new \PHPMailer\PHPMailer\PHPMailer;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ),
+        );
+        $mail->isSMTP(); // Set mailer to use SMTP
+        $mail->Host = 'smtp-mail.outlook.com'; // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->Username = 'service_bryht@outlook.com'; // SMTP username
+        $mail->Password = 'Bb123456'; // SMTP password
+        $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted STARTTLS
+        $mail->Port = 587; // TCP port to connect to
+
+        $mail->setFrom('service_bryht@outlook.com', 'Silver');
+        $mail->addAddress($mailTo, 'User'); // Add a recipient
+
+        $mail->isHTML(true); // Set email format to HTML
+
+        $mail->Subject = 'Passsword Change';
+        $mail->Body = 'This is your new password <b>in bold!</b>';
+
+        if (!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message has been sent';
+        }
+
     }
 
     public function login($para)

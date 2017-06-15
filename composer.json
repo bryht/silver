@@ -10,7 +10,8 @@
         "catfan/medoo":"*",
         "twig/twig":"1.*",
         "doctrine/cache":"*",
-        "monolog/monolog":"*"
+        "monolog/monolog":"*",
+        "phpmailer/phpmailer": "6.0.0rc5"
     },
     "repositories": {
         "packagist": {
