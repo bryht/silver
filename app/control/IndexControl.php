@@ -20,11 +20,11 @@ class IndexControl extends CertControl
                 }
             }
 
-            $albumUsers=\app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
+            $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
         }
 
         $this->assign('album', $album);
-        $this->assign('albumUsers',$albumUsers);
+        $this->assign('albumUsers', $albumUsers);
         $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
         $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
         $this->display('index.html');
@@ -67,9 +67,9 @@ class IndexControl extends CertControl
         $imageName = $para['img-name'];
         $imageType = $para['img-type'];
         $imageSize = $para['img-size'];
-       
-        $res=base64_to_file($imageName,$imageSource);
-        
+
+        $res = base64_to_file($imageName, $imageSource);
+
         if ($res['ok']) {
             $img['name'] = $imageName;
             $img['type'] = $imageType;
@@ -168,6 +168,18 @@ class IndexControl extends CertControl
         }
         $this->result($res->rowCount() > 0, $firstAlbumId, '删除失败！');
 
+    }
+
+    public function albumShare($value = '')
+    {
+        $this->display('album-share.html');
+    }
+
+    public function albumShareUpdate($value = '')
+    {
+        $email=$value['user-email'];
+        
+        goback(-2);
     }
 
     public function userEdit($para)

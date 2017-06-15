@@ -1,0 +1,35 @@
+{% extends "layout-main.html" %} {% block content %}
+
+<div class="tpl-content-wrapper">
+    <div class="tpl-portlet-components">
+        <div class="tpl-block">
+            <div class="am-g">
+                <div class="tpl-form-body tpl-form-line">
+                    <form action="/index/albumShareUpdate" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                        
+                        <div class="am-form-group">
+                            <label for="user-email" class="am-u-sm-3 am-form-label">Share to user email</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="user-email" name="user-email" class="tpl-form-input" placeholder="please input the user email"
+                                  />
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success"></input>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}

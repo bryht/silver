@@ -1996,6 +1996,11 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     float: left;
 }
 
+.album-users-share{
+    margin-left: 10px;
+}
+
+
 .album-users img{
     width:30px;
     height:30px; 
