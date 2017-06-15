@@ -7,11 +7,11 @@ namespace app\model;
  */
 class UserModel extends \core\Model
 {
-    public function checkUser($name, $password)
+    public function checkUser($mail, $password)
     {
         $res = $this->select('user',
             ['id', 'name', 'mail', 'password', 'auth'],
-            ['name' => $name, 'password' => $password]);
+            ['mail' => $mail, 'password' => $password]);
         if (count($res) > 0) {
             return $res[0];
         } else {

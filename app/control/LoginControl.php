@@ -32,13 +32,24 @@ class LoginControl extends \core\Control
         }
     }
 
+    public function forgetPassword($value = '')
+    {
+        $this->display('user-forget-password.html');
+    }
+
+    public function getPasswordBack($value = '')
+    {
+       $mail=$value['mail'];
+       
+    }
+
     public function login($para)
     {
         if (empty($para)) {
             $this->display('login.html');
         } else {
 
-            $res = UserModel::instance()->checkUser($para['name'], $para['password']);
+            $res = UserModel::instance()->checkUser($para['email'], $para['password']);
             if ($res != false) {
                 session_set('user_id', $res['id']);
                 session_set('user_name', $res['name']);
