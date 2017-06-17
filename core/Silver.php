@@ -28,6 +28,7 @@ class Silver
 
     public static function load($class)
     {
+        $class=str_replace('\\','/',$class);
         if (isset($classMap[$class])) {
             return true;
         } else {
