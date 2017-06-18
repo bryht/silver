@@ -15,7 +15,7 @@ define('APICOMMAND', '\app\api\\');
 define('CONTROLCOMMAND', '\app\control\\');
 define('VIEWCOMMAND', '\app\view\\');
 
-define('DEBUG', false);
+define('DEBUG', true);
 
 require CORE . 'Function.php';
 require CORE . 'Silver.php';
@@ -29,9 +29,9 @@ if (DEBUG) {
     $whoops->register();
 
 } else {
-    //error_reporting(0);
-    //set_error_handler('errorHandler');
-    //register_shutdown_function('fatalErrorHandler');
+    error_reporting(0);
+    set_error_handler('errorHandler');
+    register_shutdown_function('fatalErrorHandler');
 }
 
 core\Silver::run();
