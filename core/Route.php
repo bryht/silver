@@ -13,10 +13,10 @@ class Route
         $request_uri = $_SERVER['PATH_INFO'];
         $patharr = explode('/', $request_uri);
         if (count($patharr) > 2 && $patharr[1] == 'api') {
-            $this->control = APICOMMAND.$patharr[2] . 'Api';// \app\api\indexApi
+            $this->control = APICOMMAND.ucwords($patharr[2]) . 'Api';// \app\api\indexApi
             $this->action = $patharr[3];
         } else if (count($patharr) > 1) {
-            $this->control = CONTROLCOMMAND.$patharr[1] . 'Control';//\app\control\indexControl
+            $this->control = CONTROLCOMMAND.ucwords($patharr[1]) . 'Control';//\app\control\indexControl
             $this->action = $patharr[2];
         } else {
             $conf = Conf::get_init_index();
