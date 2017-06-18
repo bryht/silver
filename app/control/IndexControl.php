@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Control;
+namespace app\control;
 
 class IndexControl extends CertControl
 {
