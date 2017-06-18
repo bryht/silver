@@ -15,7 +15,7 @@ define('APICOMMAND', '\app\api\\');
 define('CONTROLCOMMAND', '\app\control\\');
 define('VIEWCOMMAND', '\app\view\\');
 
-define('DEBUG', true);
+define('DEBUG', false);
 
 require CORE . 'Function.php';
 require CORE . 'Silver.php';
@@ -30,8 +30,8 @@ if (DEBUG) {
 
 } else {
     //error_reporting(0);
-    set_error_handler('errorHandler');
-    register_shutdown_function('fatalErrorHandler');
+    //set_error_handler('errorHandler');
+    //register_shutdown_function('fatalErrorHandler');
 }
 
 core\Silver::run();
