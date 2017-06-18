@@ -106,7 +106,9 @@ class IndexControl extends CertControl
     public function getImageUrlById($para)
     {
         $res = \app\model\ImageModel::instance()->getById($para['id']);
-        $filePath = SILVER . $res['path'];
+        $path=str_replace('\\','/',$res['path']);
+        $path=substr($path,1);
+        $filePath = SILVER . $path;
         $imageForm = getimagesize($filePath)['mime'];
         $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));
         header('content-type:' . $imageForm);
