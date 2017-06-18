@@ -94,7 +94,11 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    return UPLOAD . $type . '/' . $pathDate . '/';
+    $pathUrl= UPLOADURL . $type . '\\' . $pathDate . '\\';
+    $pathDir=UPLOAD . $type . '/' . $pathDate . '/';
+    $path['url']=$pathUrl;
+    $path['dir']=$pathDir;
+    return  $path;
 }
 
 function upload_file($file)
@@ -103,11 +107,11 @@ function upload_file($file)
         $temp_name = $file['tmp_name'];
         $file_name = $file['name'];
         $path = get_upload_path('img');
-        if (is_dir(SILVER . $path) == false) {
-            mkdir(SILVER . $path, 0777, \TRUE);
+        if (is_dir($path['dir']) == false) {
+            mkdir($path['dir'], 0777, \TRUE);
         }
-        move_uploaded_file($temp_name, SILVER . $path . $file_name);
-        return array('ok' => true, 'result' => $path . $file_name);
+        move_uploaded_file($temp_name, $path['dir'] . $file_name);
+        return array('ok' => true, 'result' => $path['url'] . $file_name);
     } else {
         return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
     }
@@ -116,13 +120,13 @@ function upload_file($file)
 function base64_to_file($file_name, $base64Url)
 {
     $path = get_upload_path('img');
-    if (is_dir(SILVER . $path) == false) {
-        mkdir(SILVER . $path, 0777, \TRUE);
+    if (is_dir($path['dir']) == false) {
+        mkdir($path['dir'], 0777, \TRUE);
     }
     $fileInfo = explode(',', $base64Url);
-    $size = file_put_contents(SILVER . $path . $file_name, base64_decode($fileInfo[1]));
+    $size = file_put_contents($path['dir'] . $file_name, base64_decode($fileInfo[1]));
     if ($size > 0) {
-        return array('ok' => true, 'result' => $path . $file_name,'size'=>$size);
+        return array('ok' => true, 'result' => $path['url'] . $file_name,'size'=>$size);
     } else {
         return array('ok' => false, 'error' => 'upload file fail!<br/>');
     }

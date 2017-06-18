@@ -14,6 +14,7 @@ define('VENDOR', SILVER.'vendor/');
 define('APICOMMAND', '\app\api\\');
 define('CONTROLCOMMAND', '\app\control\\');
 define('VIEWCOMMAND', '\app\view\\');
+define('UPLOADURL', '\upload\\');
 
 define('DEBUG', true);
 
