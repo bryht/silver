@@ -25,6 +25,7 @@ class IndexControl extends CertControl
         $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
 
         $this->assign('album', $album);
+        $this->assign('albumControl', $album['create_userid']==session_get('user_id'));
         $this->assign('albumUsers', $albumUsers);
         $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
         $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
@@ -85,10 +86,10 @@ class IndexControl extends CertControl
         $res = \app\model\ImageModel::instance()->getImagesByPage($pageNum, $pageSize, $where);
         $images = array();
         foreach ($res as $key => $value) {
-            $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
-            $images[$key] = $value;
+            $res[$key]['url'] = '/index/getImageUrlById?id=' . $value['id'];
+            $res[$key]['control']=($value['user_id']==session_get('user_id'));
         }
-        return $images;
+        return $res;
     }
 
     public function getPageNav($pageNum, $pageSize = 6, $where = null)

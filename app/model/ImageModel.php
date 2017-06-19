@@ -29,15 +29,9 @@ class ImageModel extends \core\Model
         $leftJoin = ['[>]user' => ['user_id', 'id']];
         $res = \app\model\ImageModel::instance()->select($this->table,
             ['[>]user' => ['user_id' => 'id']],
-            ['image.id', 'image.name', 'image.create_time', 'user.avatar', 'user.name(username)'], 
+            ['image.id', 'image.name','image.user_id','image.create_time', 'user.avatar', 'user.name(username)'], 
             $condiation);
-
-        $images = array();
-        foreach ($res as $key => $value) {
-            $value['url'] = '/index/getImageUrlById?id=' . $value['id'];
-            $images[$key] = $value;
-        }
-        return $images;
+        return $res;
 
     }
 

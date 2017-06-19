@@ -4,13 +4,13 @@ namespace app\control;
 
 class AlbumControl extends CertControl
 {
-       public function getAlbum()
+    public function getAlbum()
     {
         $userId = session_get('user_id');
         $res = \app\model\AlbumModel::instance()->getAlbumsByUserId($userId);
         $this->result(count($res) > 0, $res, $res);
     }
-    
+
     public function albumAdd($para)
     {
         $this->display('album-add.html');

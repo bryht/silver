@@ -9,26 +9,30 @@
                     <div class="am-btn-group am-btn-group-xs">
                         <a id="add-image" type="button" class="am-btn am-btn-default am-round am-btn-success">
                             <span class="am-icon-plus"></span> New Photo</a>
+                        {% if  albumControl == true %}
                         <a id="eidt-album" type="button" class="am-btn am-btn-default am-round am-btn-warning">
                             <span class="am-icon-edit"></span> Edit Album</a>
                         <a id="delete-album" type="button" class="am-btn am-btn-default am-round am-btn-danger">
                             <span class="am-icon-recycle"></span> Delete Album</a>
+                         {% endif %}
                         <a id="show-album" type="button" class="am-btn am-btn-default am-round am-btn-secondary">
 
                             <span class="am-icon-tv"></span> Show Album</a>
 
                         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;float:left;" width=298 height=52
                             src="{{album.music_link}}"></iframe>
-
-                        <a id="edit-musiclink" class="am-btn am-round am-btn-warning">
-                            <span class="am-icon-edit"></span> Edit Music</a> {% for user in albumUsers%}
-
+                        {% if  albumControl == true %}
+                        <a id="edit-musiclink" class="am-btn am-btn-default am-round am-btn-warning">
+                            <span class="am-icon-edit"></span> Edit Music</a>  
+                         <a id="share-album" class="am-btn am-btn-default am-round am-btn-success album-users-share">
+                            <span class="am-icon-share"></span> Share Album</a>
+                        {% endif %}
+                        {% for user in albumUsers%}
                         <div class="album-users">
                             <img src="{{user.avatar}}"> {{user.name}}
                         </div>
                         {% endfor %}
-                        <a id="share-album" class="am-btn am-round am-btn-success album-users-share">
-                            <span class="am-icon-share"></span> Share Album</a>
+                       
                     </div>
 
                 </div>
@@ -60,7 +64,9 @@
                                                  <img src="{{image.avatar}}" alt="">{{image.username}}
                                          </span>
                                         </div>
+                                        {% if  image.control == true %}
                                         <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
