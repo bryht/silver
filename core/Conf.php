@@ -21,7 +21,7 @@ class Conf
     public static function get_init_index()
     {
         return  array(
-            'control' => 'Index',
+            'control' => 'index',
             'action'=>'index');
     }
 

@@ -13,7 +13,7 @@ class Control
 
     public function display_normal($file)
     {
-        $file = SILVER . VIEW . $file;
+        $file = VIEW . $file;
         extract($this->assign);
         if (is_file($file)) {
             include $file;
@@ -25,7 +25,7 @@ class Control
     {
         $loader = new \Twig_Loader_Filesystem(VIEW);
         $twig = new \Twig_Environment($loader, array(
-            'cache' => SILVER . '/cache/twig/',
+            'cache' => CACHE . 'twig/',
             'debug' => DEBUG)
         );
         echo $twig->render($file, $this->assign);

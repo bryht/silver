@@ -7,7 +7,7 @@ spl_autoload_register('load');
 function load($class)
 {
     if (is_file(ROOTPATH . $class . '.php')) {
-        //p('LOAD:'.SILVER . $class . '.php');
+        
         include ROOTPATH . $class . '.php';
     }
 }

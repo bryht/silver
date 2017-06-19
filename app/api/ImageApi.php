@@ -25,7 +25,8 @@ class ImageApi extends CertApi
     public function getImageUrlById($para)
     {
         $res = \app\model\ImageModel::instance()->getById($para['id']);
-        $filePath = SILVER . $res['path'];
+        $path = str_replace('\\', '/', $res['path']);
+        $filePath = SILVER_BASE . $path;
         $imageForm = getimagesize($filePath)['mime'];
         $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));
         header('content-type:' . $imageForm);

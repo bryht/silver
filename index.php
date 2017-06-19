@@ -1,5 +1,6 @@
 <?php
 
+define('SILVER_BASE', realpath(__DIR__));
 define('SILVER', realpath(__DIR__) . '/');
 define('APP', SILVER.'app/');
 define('API', APP . 'api/');
@@ -11,10 +12,10 @@ define('CORE', SILVER.'core/');
 define('UPLOAD',SILVER.'upload/');
 define('VENDOR', SILVER.'vendor/');
 
-define('APICOMMAND', '\app\api\\');
-define('CONTROLCOMMAND', '\app\control\\');
-define('VIEWCOMMAND', '\app\view\\');
-define('UPLOADURL', '\upload\\');
+define('API_RELATIVE', '\app\api\\');
+define('CONTROL_RELATIVE', '\app\control\\');
+define('VIEW_RELATIVE', '\app\view\\');
+define('UPLOAD_RELATIVE', '\upload\\');
 
 define('DEBUG', true);
 

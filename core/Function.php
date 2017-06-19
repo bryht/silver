@@ -11,6 +11,18 @@ function p($var)
     }
 }
 
+function pShow($value = '', $type = 'obj')
+{
+    switch ($type) {
+        case 'string':
+            throw new \Exception($value);
+            break;
+        case 'obj':
+            throw new \Exception(json_encode($value));
+            break;
+    }
+}
+
 function guid($trim = true)
 {
     // Windows
@@ -94,11 +106,11 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    $pathUrl= UPLOADURL . $type . '\\' . $pathDate . '\\';
-    $pathDir=UPLOAD . $type . '/' . $pathDate . '/';
-    $path['url']=$pathUrl;
-    $path['dir']=$pathDir;
-    return  $path;
+    $pathUrl = UPLOADURL . $type . '\\' . $pathDate . '\\';
+    $pathDir = UPLOAD . $type . '/' . $pathDate . '/';
+    $path['url'] = $pathUrl;
+    $path['dir'] = $pathDir;
+    return $path;
 }
 
 function upload_file($file)
@@ -126,7 +138,7 @@ function base64_to_file($file_name, $base64Url)
     $fileInfo = explode(',', $base64Url);
     $size = file_put_contents($path['dir'] . $file_name, base64_decode($fileInfo[1]));
     if ($size > 0) {
-        return array('ok' => true, 'result' => $path['url'] . $file_name,'size'=>$size);
+        return array('ok' => true, 'result' => $path['url'] . $file_name, 'size' => $size);
     } else {
         return array('ok' => false, 'error' => 'upload file fail!<br/>');
     }

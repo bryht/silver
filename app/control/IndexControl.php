@@ -9,19 +9,20 @@ class IndexControl extends CertControl
         if (isset($para['page']) == false) {
             $para['page'] = 0;
         }
-        $where = ['album_id' => 0];
-        if (isset($para['album_id'])) {
-            //TODO judge the user have the right to access the album
-            $where = ['album_id' => $para['album_id']];
-            $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
-            if ($album) {
-                if (strpos($album['music_link'], 'music.163.com') == 0) {
-                    $album['music_link'] = '';
-                }
-            }
-
-            $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
+        if (isset($para['album_id']) == false) {
+            $para['album_id'] = 0;
         }
+
+        //TODO judge the user have the right to access the album
+        $where = ['album_id' => $para['album_id']];
+        $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
+        if ($album) {
+            if (strpos($album['music_link'], 'music.163.com') == 0) {
+                $album['music_link'] = '';
+            }
+        }
+
+        $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
 
         $this->assign('album', $album);
         $this->assign('albumUsers', $albumUsers);
@@ -106,9 +107,8 @@ class IndexControl extends CertControl
     public function getImageUrlById($para)
     {
         $res = \app\model\ImageModel::instance()->getById($para['id']);
-        $path=str_replace('\\','/',$res['path']);
-        $path=substr($path,1);
-        $filePath = SILVER . $path;
+        $path = str_replace('\\', '/', $res['path']);
+        $filePath = SILVER_BASE . $path;
         $imageForm = getimagesize($filePath)['mime'];
         $imageSource = fread(fopen($filePath, 'rb'), filesize($filePath));
         header('content-type:' . $imageForm);
@@ -179,8 +179,8 @@ class IndexControl extends CertControl
 
     public function albumShareUpdate($value = '')
     {
-        $email=$value['user-email'];
-        
+        $email = $value['user-email'];
+
         goback(-2);
     }
 

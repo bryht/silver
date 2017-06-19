@@ -34,7 +34,6 @@ class Silver
             return true;
         } else {
             if (is_file(SILVER . $class . '.php')) {
-                //p('LOAD:'.SILVER . $class . '.php');
                 include SILVER . $class . '.php';
                 self::$classMap[$class] = $class;
             } else {
