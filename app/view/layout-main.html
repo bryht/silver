@@ -53,7 +53,7 @@
                           </span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li><a href="/index/userEdit"><span class="am-icon-cog"></span> Setting</a></li>
+                        <li><a href="/user/userEdit"><span class="am-icon-cog"></span> Setting</a></li>
                         <li><a href="/login/logout"><span class="am-icon-power-off"></span> Logout</a></li>
                     </ul>
                 </li>
@@ -65,7 +65,7 @@
         <div class="tpl-left-nav tpl-left-nav-hover">
             <div class="tpl-left-nav-title">
 
-                <a type="button" href="/index/albumAdd" class="tpl-add-btn"><span class="am-icon-plus">  New Album</span></a>
+                <a type="button" href="/album/albumAdd" class="tpl-add-btn"><span class="am-icon-plus">  New Album</span></a>
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
@@ -106,7 +106,7 @@
             
             var subMenu = $('#sub-menu-main');
              var album_id = urlUtil.getQueryValue('album_id');
-            $.getJSON('/index/getAlbum', function (data) {
+            $.getJSON('/album/getAlbum', function (data) {
                 if (data.ok) {
                     var result = data.result;
                     var album = "<ul class='tpl-left-nav-sub-menu' style='display:block'><li>";

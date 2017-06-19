@@ -106,7 +106,7 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    $pathUrl = UPLOADURL . $type . '\\' . $pathDate . '\\';
+    $pathUrl = UPLOAD_RELATIVE . $type . '\\' . $pathDate . '\\';
     $pathDir = UPLOAD . $type . '/' . $pathDate . '/';
     $path['url'] = $pathUrl;
     $path['dir'] = $pathDir;

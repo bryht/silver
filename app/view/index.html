@@ -105,10 +105,10 @@
         var album_id = urlUtil.getQueryValue('album_id');
 
         $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
-        $('#eidt-album')[0].setAttribute('href', '/index/albumEdit?album_id=' + album_id);
+        $('#eidt-album')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
         $('#delete-album').click(function () { deleteAlbum(album_id) });
-        $('#edit-musiclink')[0].setAttribute('href', '/index/albumEdit?album_id=' + album_id);
-        $('#share-album')[0].setAttribute('href', '/index/albumShare?album_id=' + album_id);
+        $('#edit-musiclink')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
+        $('#share-album')[0].setAttribute('href', '/album/albumShare?album_id=' + album_id);
 
     })(document);
 
@@ -130,7 +130,7 @@
     function deleteAlbum(id) {
         var ok = confirm("确认删除？");
         if (ok) {
-            $.get('/index/albumDelete?album_id=' + id, function (res) {
+            $.get('/album/albumDelete?album_id=' + id, function (res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
                     window.location = '/index/index?album_id=' + data.result;
