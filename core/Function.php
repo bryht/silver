@@ -174,6 +174,11 @@ function mailler($to, $subject, $content,$para=null)
     $mail->isHTML(true); // Set email format to HTML
 
     $mail->Subject = $subject;
+    if (isset($para)) {
+       foreach ($para as $key => $value) {
+           $content=str_replace('{'.$key.'}',$value,$content);
+       }
+    }
     $mail->Body = $content;
     
     if (!$mail->send()) {
