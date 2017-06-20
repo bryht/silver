@@ -149,7 +149,7 @@ function goback($step = -1)
     echo "<script>history.go(" . $step . ");</script>";
 }
 
-function mailler($to, $subject, $content)
+function mailler($to, $subject, $content,$para=null)
 {
 
     $mail = new \PHPMailer\PHPMailer\PHPMailer;
@@ -175,7 +175,7 @@ function mailler($to, $subject, $content)
 
     $mail->Subject = $subject;
     $mail->Body = $content;
-
+    
     if (!$mail->send()) {
         return $mail->ErrorInfo;
     } else {

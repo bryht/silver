@@ -75,13 +75,18 @@ class AlbumControl extends CertControl
 
     public function albumShareUpdate($value = '')
     {
-        $email = $value['user-email'];
-        $res = mailler($email, 'One share an album to you', '1111');
-        if ($res != true) {
-            echo $res;
-        } else {
-            goback(-2);
-        }
+        //$email = $value['user-email'];
+        $name = session_get('user_name');
+        $templateName = VIEW.'album-share-email.html';
+        $templateContent =file_get_contents($templateName);
+        $content="".$templateContent."";//"<h1>{$name}</h1>";
+        echo $content;
+        // $res = mailler($email, $name . ' share an album to you', $contents);
+        // if ($res != true) {
+        //     echo $res;
+        // } else {
+        //     goback(-2);
+        // }
     }
 
 }
