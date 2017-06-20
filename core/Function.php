@@ -148,3 +148,37 @@ function goback($step = -1)
 {
     echo "<script>history.go(" . $step . ");</script>";
 }
+
+function mailler($to, $subject, $content)
+{
+
+    $mail = new \PHPMailer\PHPMailer\PHPMailer;
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ),
+    );
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = core\Conf::get_mail()['host'];
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+    $mail->Username = core\Conf::get_mail()['mail']; // SMTP username
+    $mail->Password = core\Conf::get_mail()['password']; // SMTP password
+    $mail->SMTPSecure = core\Conf::get_mail()['smtpsecure']; // Enable TLS encryption, `ssl` also accepted STARTTLS
+    $mail->Port = core\Conf::get_mail()['port']; // TCP port to connect to
+
+    $mail->setFrom(core\Conf::get_mail()['mail'], 'Silver');
+    $mail->addAddress($to, 'User'); // Add a recipient
+
+    $mail->isHTML(true); // Set email format to HTML
+
+    $mail->Subject = $subject;
+    $mail->Body = $content;
+
+    if (!$mail->send()) {
+        return $mail->ErrorInfo;
+    } else {
+        return true;
+    }
+}
