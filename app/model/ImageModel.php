@@ -14,6 +14,11 @@ class ImageModel extends \core\Model
         $res = $this->select('image', ['album_id' => $albumId]);
         return $res;
     }
+    public function getThreeImagesByAlbumId($albumId)
+    {
+        $res = $this->select('image', ['path'], ['LIMIT' => 3], ['album_id' => $albumId]);
+        return $res;
+    }
 
     public function getImagesByPage($pageNum = 0, $pageSize = 6, $where = null, $order = ['id' => 'DESC'])
     {
@@ -29,7 +34,7 @@ class ImageModel extends \core\Model
         $leftJoin = ['[>]user' => ['user_id', 'id']];
         $res = \app\model\ImageModel::instance()->select($this->table,
             ['[>]user' => ['user_id' => 'id']],
-            ['image.id', 'image.name','image.user_id','image.create_time', 'user.avatar', 'user.name(username)'], 
+            ['image.id', 'image.name', 'image.user_id', 'image.create_time', 'user.avatar', 'user.name(username)'],
             $condiation);
         return $res;
 
