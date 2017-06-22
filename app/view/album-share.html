@@ -6,12 +6,11 @@
             <div class="am-g">
                 <div class="tpl-form-body tpl-form-line">
                     <form action="/album/albumShareUpdate" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
-                        
+
                         <div class="am-form-group">
                             <label for="user-email" class="am-u-sm-3 am-form-label">Share to user email</label>
                             <div class="am-u-sm-9">
-                                <input type="text" id="user-email" name="user-email" class="tpl-form-input" placeholder="please input the user email"
-                                  />
+                                <input type="text" id="user-email" name="user-email" class="tpl-form-input" placeholder="please input the user email" />
                             </div>
                         </div>
                         <div class="am-form-group">
@@ -19,6 +18,7 @@
                                 <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success"></input>
                             </div>
                         </div>
+                        <input type="hidden" id="album-id" name="album-id" value="">
                     </form>
 
                 </div>
@@ -27,8 +27,13 @@
 
     </div>
 </div>
-
-<script type="text/javascript">
+{% endblock %}
+{% block javascript %}
+<script>
+    (function (doc) {
+        var album_id = urlUtil.getQueryValue('album_id');
+        doc.getElementById('album-id').value = album_id;
+    })(document);
 
 </script>
 

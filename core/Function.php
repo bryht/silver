@@ -32,7 +32,6 @@ function guid($trim = true)
         } else {
             return com_create_guid();
         }
-
     }
 
     // OSX/Linux
@@ -149,7 +148,7 @@ function goback($step = -1)
     echo "<script>history.go(" . $step . ");</script>";
 }
 
-function mailler($to, $subject, $content,$para=null)
+function sendMaill($to, $subject, $content, $para = null, $images = null)
 {
 
     $mail = new \PHPMailer\PHPMailer\PHPMailer;
@@ -170,17 +169,24 @@ function mailler($to, $subject, $content,$para=null)
 
     $mail->setFrom(core\Conf::get_mail()['mail'], 'Silver');
     $mail->addAddress($to, 'User'); // Add a recipient
+    // $mail->addCC('cc@example.com');
+    // $mail->addBCC('bcc@example.com');
 
     $mail->isHTML(true); // Set email format to HTML
 
     $mail->Subject = $subject;
     if (isset($para)) {
-       foreach ($para as $key => $value) {
-           $content=str_replace('{'.$key.'}',$value,$content);
-       }
+        foreach ($para as $key => $value) {
+            $content = str_replace('{' . $key . '}', $value, $content);
+        }
+    }
+    if (isset($images)) {
+        foreach ($images as $key => $value) {
+            $mail->AddEmbeddedImage($value, $key);
+        }
     }
     $mail->Body = $content;
-    
+
     if (!$mail->send()) {
         return $mail->ErrorInfo;
     } else {

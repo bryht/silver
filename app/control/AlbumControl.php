@@ -76,11 +76,21 @@ class AlbumControl extends CertControl
     public function albumShareUpdate($value = '')
     {
         $email = $value['user-email'];
+        $album_id=$value['album-id'];
         $name = session_get('user_name');
+        $album=\app\model\AlbumModel::instance()->getById($album_id);
+        $images=\app\model\ImageModel::instance()->getThreeImagesByAlbumId($album_id);
+        //ablum-text image1 mail
+
         $templateName = VIEW . 'album-share-email.html';
         $content = file_get_contents($templateName);
-        $para = array('name' => $name);
-        $res = mailler($email, $name . ' share an album to you', $content, $para);
+        $para = array('name' => $name,
+        'album-text'=> $album['name'],
+        'image1'=>$images[0]['path'],
+        'image2'=>$images[1]['path'],
+        'image3'=>$images[2]['path'],
+        'mail'=>$email);
+        $res = sendMaill($email, $name . ' share an album to you', $content, $para);
         if ($res != true) {
             echo $res;
         } else {
