@@ -11,6 +11,76 @@ function p($var)
     }
 }
 
+function pShow($value = '', $type = 'obj')
+{
+    switch ($type) {
+        case 'string':
+            throw new \Exception($value);
+            break;
+        case 'obj':
+            throw new \Exception(json_encode($value));
+            break;
+    }
+}
+
+function guid($trim = true)
+{
+    // Windows
+    if (function_exists('com_create_guid') === true) {
+        if ($trim === true) {
+            return trim(com_create_guid(), '{}');
+        } else {
+            return com_create_guid();
+        }
+    }
+
+    // OSX/Linux
+    if (function_exists('openssl_random_pseudo_bytes') === true) {
+        $data = openssl_random_pseudo_bytes(16);
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
+
+    // Fallback (PHP 4.2+)
+    mt_srand((double) microtime() * 10000);
+    $charid = strtolower(md5(uniqid(rand(), true)));
+    $hyphen = chr(45); // "-"
+    $lbrace = $trim ? "" : chr(123); // "{"
+    $rbrace = $trim ? "" : chr(125); // "}"
+    $guidv4 = $lbrace .
+    substr($charid, 0, 8) . $hyphen .
+    substr($charid, 8, 4) . $hyphen .
+    substr($charid, 12, 4) . $hyphen .
+    substr($charid, 16, 4) . $hyphen .
+    substr($charid, 20, 12) .
+        $rbrace;
+    return $guidv4;
+}
+
+function errorHandler($errno, $errstr, $errfile, $errline)
+{
+    $arr = array(
+        '[' . date('Y-m-d H-i-s') . ']',
+        $errno,
+        '|',
+        $errstr,
+        $errfile,
+        'line:' . $errline,
+    );
+    //formate：  [time] [errorNum or errorType] | errstr errorfile lineNum
+    if (is_dir(LOG) == false) {
+        mkdir(LOG, 0777, \TRUE);
+    }
+    error_log(implode(' ', $arr) . "\r\n", 3, LOG . date('Y-m-d') . '.log', 'extra');
+}
+
+function fatalErrorHandler()
+{
+    $e = error_get_last();
+    errorHandler($e['type'], $e['message'], $e['file'], $e['line']);
+}
+
 function session_set($name, $value)
 {
     if (!session_id()) {
@@ -35,7 +105,11 @@ function get_upload_path($type)
 {
     $date = new \DateTime();
     $pathDate = $date->format('Y-m-d');
-    return UPLOAD. $type . '\\' . $pathDate . '\\';
+    $pathUrl = UPLOAD_RELATIVE . $type . '\\' . $pathDate . '\\';
+    $pathDir = UPLOAD . $type . '/' . $pathDate . '/';
+    $path['url'] = $pathUrl;
+    $path['dir'] = $pathDir;
+    return $path;
 }
 
 function upload_file($file)
@@ -44,12 +118,78 @@ function upload_file($file)
         $temp_name = $file['tmp_name'];
         $file_name = $file['name'];
         $path = get_upload_path('img');
-        if (is_dir($path) == false) {
-            mkdir($path, 0777, \TRUE);
+        if (is_dir($path['dir']) == false) {
+            mkdir($path['dir'], 0777, \TRUE);
         }
-        move_uploaded_file($temp_name, SILVER . $path . $file_name);
-        return array('ok' => true, 'result' => $path . $file_name);
+        move_uploaded_file($temp_name, $path['dir'] . $file_name);
+        return array('ok' => true, 'result' => $path['url'] . $file_name);
     } else {
-        return array('ok' => false, 'error' => '上传失败!<br/>' . $imgFile['error']);
+        return array('ok' => false, 'error' => 'upload file fail!<br/>' . $file['error']);
+    }
+}
+
+function base64_to_file($file_name, $base64Url)
+{
+    $path = get_upload_path('img');
+    if (is_dir($path['dir']) == false) {
+        mkdir($path['dir'], 0777, \TRUE);
+    }
+    $fileInfo = explode(',', $base64Url);
+    $size = file_put_contents($path['dir'] . $file_name, base64_decode($fileInfo[1]));
+    if ($size > 0) {
+        return array('ok' => true, 'result' => $path['url'] . $file_name, 'size' => $size);
+    } else {
+        return array('ok' => false, 'error' => 'upload file fail!<br/>');
+    }
+}
+
+function goback($step = -1)
+{
+    echo "<script>history.go(" . $step . ");</script>";
+}
+
+function sendMaill($to, $subject, $content, $para = null, $images = null)
+{
+
+    $mail = new \PHPMailer\PHPMailer\PHPMailer;
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true,
+        ),
+    );
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = core\Conf::get_mail()['host'];
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+    $mail->Username = core\Conf::get_mail()['mail']; // SMTP username
+    $mail->Password = core\Conf::get_mail()['password']; // SMTP password
+    $mail->SMTPSecure = core\Conf::get_mail()['smtpsecure']; // Enable TLS encryption, `ssl` also accepted STARTTLS
+    $mail->Port = core\Conf::get_mail()['port']; // TCP port to connect to
+
+    $mail->setFrom(core\Conf::get_mail()['mail'], 'Silver');
+    $mail->addAddress($to, 'User'); // Add a recipient
+    // $mail->addCC('cc@example.com');
+    // $mail->addBCC('bcc@example.com');
+
+    $mail->isHTML(true); // Set email format to HTML
+
+    $mail->Subject = $subject;
+    if (isset($para)) {
+        foreach ($para as $key => $value) {
+            $content = str_replace('{' . $key . '}', $value, $content);
+        }
+    }
+    if (isset($images)) {
+        foreach ($images as $key => $value) {
+            $mail->AddEmbeddedImage($value, $key);
+        }
+    }
+    $mail->Body = $content;
+
+    if (!$mail->send()) {
+        return $mail->ErrorInfo;
+    } else {
+        return true;
     }
 }

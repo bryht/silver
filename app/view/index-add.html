@@ -6,35 +6,38 @@
             <div class="am-g">
                 <div class="tpl-form-body tpl-form-line">
                     <form action="/index/upload" method="post" enctype="multipart/form-data" class="am-form tpl-form-line-form">
-                         <div class="am-form-group">
-                            <label for="user-weibo" class="am-u-sm-3 am-form-label">图片 <span class="tpl-form-line-small-title">Images</span></label>
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">Photo</label>
                             <div class="am-u-sm-9">
                                 <div class="am-form-group am-form-file">
                                     <div class="tpl-form-file-img">
-                                        <img id="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
+                                        <img id="img-preview" name="img-preview" src="/app/assets/img/image_1876px_1202980_easyicon.net.png" alt="">
+                                        <input id="img-source" name="img-source" type="text" style="display:none">
+                                        <input id="img-type" name="img-type" type="hidden">
+                                        <input id="img-name" name="img-name" type="hidden">
+                                        <input id="img-size" name="img-size" type="hidden">
                                     </div>
                                     <button type="button" class="am-btn am-btn-danger am-btn-sm">
-                                            <i class="am-icon-cloud-upload"></i> 添加图片</button>
-                                    <input id="img-file" name="img-file" type="file"  onchange="fileChanged(this)" multiple>
-                                 
+                                            <i class="am-icon-cloud-upload"></i> Add Photo</button>
+                                    <input id="img-file" name="img-file" type="file" onchange="fileChanged(this)" multiple>
+
                                 </div>
                             </div>
                         </div>
                         <div class="am-form-group">
-                            <label for="user-name" class="am-u-sm-3 am-form-label">描述 <span class="tpl-form-line-small-title">Description</span></label>
+                            <label for="user-name" class="am-u-sm-3 am-form-label">Description</label>
                             <div class="am-u-sm-9">
-                                <input id="img-description" name="img-description" type="text" class="tpl-form-input"  placeholder="请输入描述">
-                                <small>请填写描述文字10-20字左右。</small>
+                                <input id="img-description" name="img-description" type="text" class="tpl-form-input" placeholder="Please input the description">
                             </div>
                         </div>
                         <div class="am-form-group">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">发布时间 <span class="tpl-form-line-small-title">Time</span></label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">Publish Time</label>
                             <div class="am-u-sm-9">
-                                <input type="text" id="img-time" name="img-time" class="am-form-field tpl-form-no-bg" placeholder="发布时间" data-am-datepicker="" readonly/>
-                                <small>发布时间为必填</small>
+                                <input type="text" id="img-time" name="img-time" class="am-form-field tpl-form-no-bg" placeholder="Please input the photo time"
+                                    data-am-datepicker="" readonly/>
                             </div>
                         </div>
-                       
+                        <input id="album_id" name="album_id" type="text" style="display:none">
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3">
                                 <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success"></input>
@@ -49,24 +52,43 @@
     </div>
 </div>
 
+
+{% endblock %}{% block javascript %}
+
 <script type="text/javascript">
-   
-   function fileChanged(target) {
+    (function () {
+        if (location.pathname.indexOf('edit') > 0) {
 
-       var file=target.files[0];
-       var data=new Date(file.lastModifiedDate);
-       var lastModifiedDate=data.toLocaleDateString();
-       var name=file.name;
-       var size=file.size;
-       var type=file.type;
-       var url =  window.URL.createObjectURL(file);
+            document.getElementById('img-preview').setAttribute('src', '/index/getImageUrlById?id={{image.id}}');
+            document.getElementById('img-description').value = '{{image.name}}';
+            document.getElementById('img-time').value = '{{image.name}}';
 
-       document.getElementById('img-preview').src=url;
-       document.getElementById('img-time').value=lastModifiedDate;
-       document.getElementById('img-description').value=name+','+size+','+type;
-   }
+        }
+        document.getElementById('album_id').value = urlUtil.getQueryValue('album_id');
+    })();
 
+
+    function fileChanged(target) {
+
+        var file = target.files[0];
+        var data = new Date(file.lastModifiedDate);
+        var lastModifiedDate = data.toLocaleDateString();
+
+        document.getElementById('img-type').value = file.type;
+        document.getElementById('img-name').value = file.name;
+        document.getElementById('img-size').value = file.size;
+
+        fileUtil.clipImage(file, function (url) {
+            document.getElementById('img-preview').src = url;
+            document.getElementById('img-source').value = url;
+
+        });
+
+        document.getElementById('img-time').value = lastModifiedDate;
+        //document.getElementById('img-description').value = name + ',' + size + ',' + type;
+    }
 
 </script>
+
 
 {% endblock %}
