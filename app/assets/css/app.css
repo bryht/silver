@@ -492,12 +492,20 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     height: 50px;
     padding: 25px 15px 10px;
     color: #5C9ACF;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 600;
 }
 
+.tpl-add-btn{
+    line-height: 40px;
+    font-size: 10px;
+    float: right;
+}
+
+
 .tpl-left-nav-list {
     width: 235px;
+    margin-top:15px;
 }
 
 .tpl-left-nav-item {}
@@ -1507,6 +1515,8 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     position: relative;
     display: block;
     width: 100%;
+    max-width: 100%;
+    height: 150px;
 }
 
 .tpl-table-images-content-i-time {
@@ -1519,7 +1529,6 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-table-images-content-i-shadow {
-    background: url(../img/lbbg.png) bottom repeat-x;
     position: absolute;
     left: 0;
     right: 0;
@@ -1528,17 +1537,13 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 }
 
 .tpl-table-images-content-i-info {
-    position: absolute;
-    left: 10px;
-    right: 0;
-    bottom: 10px;
-    z-index: 2;
+   text-align: left;
 }
 
 .tpl-table-images-content-i-info span.ico {
     line-height: 40px;
     display: inline-block;
-    color: #fff;
+    color: #000;
     font-size: 14px;
 }
 
@@ -1551,7 +1556,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .tpl-table-images-content-i img {
     display: block;
-    width: 100%;
+    max-width: 100%;
+    max-height: 190px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tpl-table-images-content-block {
@@ -1598,6 +1606,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 .tpl-edit-content-btn {
     margin-top: 10px;
     width: 100%;
+}
+
+.tpl-edit-content-btn a{
+    font-size: 10px;
 }
 
 .tpl-edit-content-btn button {
@@ -1727,9 +1739,6 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     text-align: right;
 }
 
-.tpl-form-line-form .am-form-group {
-    /*padding: 20px 0;*/
-}
 
 .tpl-form-line-form .am-form-label .tpl-form-line-small-title {
     color: #999;
@@ -1915,11 +1924,31 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .myapp-login .am-form-group {
     margin-bottom: 0;
+    text-align: center;
 }
+
+.login-am-center .am-form .am-form-group-register input{
+    border-radius: 6px 6px 6px 6px;
+    margin-top: 10px;
+}
+
+.login-am-center .am-form .am-form-group-register label{
+    color: #ff0000;
+    width:100%;
+    text-align: center;
+}
+
+
 
 .login-am-center {
     margin: 0 auto;
     float: none;
+}
+
+.login-am-center .am-form .am-form-group a{
+    color: lightyellow;
+    font-size: 10px;
+    text-align: center;
 }
 
 .login-am-center .am-form input {
@@ -1933,6 +1962,10 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
 
 .login-am-center .am-form .am-form-group:first-child input {
     border-radius: 6px 6px 0px 0px;
+}
+
+.am-btn-toolbar .am-btn-group .am-btn-default{
+    margin-left: 10px;
 }
 
 .login-am-center .am-btn-default {
@@ -1958,6 +1991,24 @@ ul.tpl-dropdown-content li>a.tpl-dropdown-content-message:last-child {
     margin-top: 20px;
     margin-bottom: 40px;
 }
+
+.album-users{
+    float: left;
+}
+
+.album-users-share{
+    margin-left: 10px;
+}
+
+
+.album-users img{
+    width:30px;
+    height:30px; 
+    margin-left:10px;
+    margin-top:-5px;
+    border-radius:15px;
+}
+
 
 @media screen and (max-width: 1000px) {
     .tpl-left-nav-hover {

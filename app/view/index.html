@@ -1,19 +1,42 @@
 {% extends "layout-main.html" %} {% block content %}
-
-
 <div class="tpl-content-wrapper">
-
 
     <div class="tpl-portlet-components">
         <div class="tpl-block">
             <div class="am-g">
-                <div class="am-u-sm-12 am-u-md-6">
-                    <div class="am-btn-toolbar">
-                        <div class="am-btn-group am-btn-group-xs">
-                            <a type="button" class="am-btn am-btn-default am-btn-success" href="/index/add"><span class="am-icon-plus"></span> 新增</a>
+
+                <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                        <a id="add-image" type="button" class="am-btn am-btn-default am-round am-btn-success">
+                            <span class="am-icon-plus"></span> New Photo</a>
+                        {% if  albumControl == true %}
+                        <a id="eidt-album" type="button" class="am-btn am-btn-default am-round am-btn-warning">
+                            <span class="am-icon-edit"></span> Edit Album</a>
+                        <a id="delete-album" type="button" class="am-btn am-btn-default am-round am-btn-danger">
+                            <span class="am-icon-recycle"></span> Delete Album</a>
+                         {% endif %}
+                        <a id="show-album" type="button" class="am-btn am-btn-default am-round am-btn-secondary">
+
+                            <span class="am-icon-tv"></span> Show Album</a>
+
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;float:left;" width=298 height=52
+                            src="{{album.music_link}}"></iframe>
+                        {% if  albumControl == true %}
+                        <a id="edit-musiclink" class="am-btn am-btn-default am-round am-btn-warning">
+                            <span class="am-icon-edit"></span> Edit Music</a>  
+                         <a id="share-album" class="am-btn am-btn-default am-round am-btn-success album-users-share">
+                            <span class="am-icon-share"></span> Share Album</a>
+                        {% endif %}
+                        {% for user in albumUsers%}
+                        <div class="album-users">
+                            <img src="{{user.avatar}}"> {{user.name}}
                         </div>
+                        {% endfor %}
+                       
                     </div>
+
                 </div>
+
 
             </div>
             <div class="am-g">
@@ -21,15 +44,10 @@
                     {% for image in images%}
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
                         <div class="tpl-table-images-content">
-                            <div class="tpl-table-images-content-i-time">发布时间：2016-09-12</div>
+                            <div class="tpl-table-images-content-i-time">Create Time：{{image.create_time}}</div>
 
                             <a href="javascript:;" class="tpl-table-images-content-i">
-                                <div class="tpl-table-images-content-i-info">
-                                    <span class="ico">
-                                    <img src="/app/assets/img/user01.png" alt="">发布者
-                                 </span>
 
-                                </div>
                                 <span class="tpl-table-images-content-i-shadow"></span>
                                 <img src="{{image.url}}" alt="">
                             </a>
@@ -39,8 +57,16 @@
                                 </div>
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs tpl-edit-content-btn">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> 编辑</button>
-                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
+                                        <!--<a href="/index/edit?id={{image.id}}" type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-edit"></span> Edit</a>-->
+
+                                        <div class="tpl-table-images-content-i-info">
+                                            <span class="ico">
+                                                 <img src="{{image.avatar}}" alt="">{{image.username}}
+                                         </span>
+                                        </div>
+                                        {% if  image.control == true %}
+                                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -53,13 +79,11 @@
 
                             <div class="am-fr">
                                 <ul class="am-pagination tpl-pagination">
-                                    <li class="am-disabled"><a href="#">«</a></li>
-                                    <li class="am-active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">»</a></li>
+                                    {% for page in pageNav%}
+                                    <li class=" {% if page.pageActive%}am-active {% endif %}">
+                                        <a class="page-nav-link" pageIndex="{{page.pageIndex}}">{{page.num}}</a>
+                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -73,7 +97,56 @@
     </div>
 
 </div>
+{% endblock %} {% block javascript %}
+<script>
+    (function (document) {
+        var links = document.getElementsByClassName('page-nav-link');
+        for (var index = 0; index < links.length; index++) {
+            var element = links[index];
+            var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
+            element.setAttribute('href', url);
+        }
 
 
+        var album_id = urlUtil.getQueryValue('album_id');
 
+        $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
+        $('#eidt-album')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
+        $('#delete-album').click(function () { deleteAlbum(album_id) });
+        $('#edit-musiclink')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
+        $('#share-album')[0].setAttribute('href', '/album/albumShare?album_id=' + album_id);
+
+    })(document);
+
+    function deleteImage(id) {
+        var ok = confirm("确认删除？");
+        if (ok) {
+            $.get('/index/delete?id=' + id, function (res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    window.location = window.location;
+                } else {
+                    alert(data.result);
+                }
+
+            });
+        }
+    }
+
+    function deleteAlbum(id) {
+        var ok = confirm("确认删除？");
+        if (ok) {
+            $.get('/album/albumDelete?album_id=' + id, function (res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    window.location = '/index/index?album_id=' + data.result;
+                } else {
+                    alert(data.result);
+                }
+
+            });
+        }
+    }
+
+</script>
 {% endblock %}

@@ -3,28 +3,41 @@ namespace app\model;
 
 class ImageModel extends \core\Model
 {
-    public function addImage($image){
-        $res=$this->insert('images',$image);
+    public function addImage($image)
+    {
+        $res = $this->insert('image', $image);
         return $res;
     }
 
-    public function getImages(){
-        $res=$this->select('images',['id','name','description']);
+    public function getImagesByAlbumId($albumId)
+    {
+        $res = $this->select('image', ['album_id' => $albumId]);
+        return $res;
+    }
+    public function getThreeImagesByAlbumId($albumId)
+    {
+        $res = $this->select('image', ['path'], ['LIMIT' => 3], ['album_id' => $albumId]);
         return $res;
     }
 
-    public function getImageById($id){
-        
-        $res=$this->select('images','*',['id'=>$id]);
-        if (count($res)==1) {
-            return $res[0];
-        }else{
-            throw new Exception("Error:".$res, 1);
+    public function getImagesByPage($pageNum = 0, $pageSize = 6, $where = null, $order = ['id' => 'DESC'])
+    {
+        $condiation = [
+            'ORDER' => $order,
+            'LIMIT' => [$pageNum * $pageSize, $pageSize],
+        ];
+        if (isset($where)) {
+            foreach ($where as $key => $value) {
+                $condiation[$key] = $value;
+            }
         }
+        $leftJoin = ['[>]user' => ['user_id', 'id']];
+        $res = \app\model\ImageModel::instance()->select($this->table,
+            ['[>]user' => ['user_id' => 'id']],
+            ['image.id', 'image.name', 'image.user_id', 'image.create_time', 'user.avatar', 'user.name(username)'],
+            $condiation);
+        return $res;
 
     }
 
-    public function getImagesPage($pageIndex,$pageSize){
-
-    }
 }

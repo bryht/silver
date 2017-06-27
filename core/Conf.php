@@ -1,6 +1,5 @@
 <?php
 
-
 namespace core;
 
 class Conf
@@ -20,10 +19,21 @@ class Conf
 
     public static function get_init_index()
     {
-        return  array(
+        return array(
             'control' => 'index',
-            'action'=>'index');
+            'action' => 'index');
     }
 
+    public static function get_mail()
+    {
+        return array(
+            'host' => 'smtp-mail.outlook.com', // Specify main and backup SMTP servers
+            'mail' => 'service_bryht@outlook.com', // SMTP username
+            'password' => 'Bb123456', // SMTP password
+            'smtpsecure' => 'tls', // Enable TLS encryption, `ssl` also accepted STARTTLS
+            'port' => '587', // TCP port to connect to
+        );
+
+    }
 
 }

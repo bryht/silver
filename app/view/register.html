@@ -1,0 +1,67 @@
+{% extends "layout-login.html" %} {% block content %}
+
+<div class="am-g myapp-login">
+    <div class="myapp-login-logo-block  tpl-login-max">
+        <div class="myapp-login-logo-text">
+            <div class="myapp-login-logo-text">
+                Register
+            </div>
+        </div>
+
+        <div class="login-font">
+            <span> </span>
+        </div>
+        <div class="am-u-sm-10 login-am-center">
+            <form id="register-form" class="am-form" onsubmit="return onCheck()"  action="/login/register" method="post">
+                <fieldset>
+                    <div class="am-form-group-register">
+                        <input type="email" name="mail" class="" placeholder="Please input your email address" required>
+                    </div>
+                    <div class="am-form-group-register">
+                        <input type="text" name="name" class="" placeholder="Please input your user name" required>
+                    </div>
+                    <div class="am-form-group-register">
+                        <input id="password1" type="password" name="password" class="" placeholder="Please input your password" required>
+                    </div>
+                    <div class="am-form-group-register">
+                        <input id="password2" type="password" class="" placeholder="Please input your password again" required>
+                    </div>
+
+                    <p><button id="form-submit-btn" type="submit" class="am-btn am-btn-default">Register</button></p>
+                    <div class="am-form-group-register">
+                        <label>{{message}}</label>
+                    </div>
+                    <div class="am-form-group">
+                        <a href="/login/login">I already have an account</a>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} {% block javascript %}
+<script>
+    var message = '{{message}}';
+    if (message == 'Register success!') {
+        setTimeout(function () {
+            location.href = '/login/login';
+        }, 1000);
+    }
+
+    function onCheck() {
+        var val1=$('#password1').val();
+        var val2=$('#password2').val();
+        if (val1==val2) {
+            return true;
+        }else{
+            alert('password should be same!');
+            return false;
+        }
+    }
+
+</script>
+
+{% endblock %}
