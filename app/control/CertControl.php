@@ -11,10 +11,11 @@ class CertControl extends \core\Control
         }
         
         $authIds=session_get('user_auth');
-        $auth=\app\model\MenuModel::instance()->getMenusByIds($authIds);
+        $menu=\app\model\MenuModel::instance()->getTreeMenusByAuthIds($authIds);
         $user=\app\model\UserModel::instance()->getById(session_get('user_id'));
+
+        $this->assign('menu',$menu);
         $this->assign('user',$user);
-        $this->assign('user_auth',$auth);
         
     }
 

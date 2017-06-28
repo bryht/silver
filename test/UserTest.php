@@ -11,8 +11,8 @@ class UserTest extends TestCase
         // $albums= \app\model\AlbumModel::instance()->getAlbumsByUserId(1);
         // print_r($albums);
 
-        $threePictures=\app\model\ImageModel::instance()->getThreeImagesByAlbumId(28);
-        print_r($threePictures);
+       $menu=\app\model\MenuModel::instance()->getTreeMenusByAuthIds('1,2,3');
+        print_r($menu);
     }
     
 }

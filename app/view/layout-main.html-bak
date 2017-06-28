@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>KindsPlay</title>
+    <meta name="description" content="KindsPlay">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/app/assets/img/moon_32px_1206584_easyicon.net.png">
+    <link rel="apple-touch-icon-precomposed" href="/app/assets/img/moon_72px_1206584_easyicon.net.png">
+    <meta name="apple-mobile-web-app-title" content="KindsPlay" />
+    <link rel="stylesheet" href="/app/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="/app/assets/css/admin.css">
+    <link rel="stylesheet" href="/app/assets/css/app.css">
+</head>
+
+<body data-type="index ">
+
+
+    <header class="am-topbar am-topbar-inverse admin-header ">
+        <div class="am-topbar-brand ">
+            <a class="tpl-logo">
+                <span>
+                    <img src="/app/assets/img/moon_72px_1206584_easyicon.net.png">
+                </span>
+                <span>
+                     Kinds Play
+                </span>
+            </a>
+
+        </div>
+        <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right ">
+
+        </div>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only
+        " data-am-collapse="{target: '#topbar-collapse'} "><span class="am-sr-only ">Nav Change</span> <span class="am-icon-bars "></span></button>
+
+        <div class="am-collapse am-topbar-collapse " id="topbar-collapse ">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list ">
+
+                <li class="am-dropdown " data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link " href="javascript:; ">
+                        <span class="tpl-header-list-user-nick ">{{user.name}}</span>
+                        <span class="tpl-header-list-user-ico ">
+                             <img src="{{user.avatar}}">
+                          </span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="/user/userEdit"><span class="am-icon-cog"></span> Setting</a></li>
+                        <li><a href="/login/logout"><span class="am-icon-power-off"></span> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="tpl-page-container tpl-page-header-fixed">
+
+        <div class="tpl-left-nav tpl-left-nav-hover">
+            <div class="tpl-left-nav-title">
+
+                <a type="button" href="/album/albumAdd" class="tpl-add-btn"><span class="am-icon-plus">  New Album</span></a>
+            </div>
+            <div class="tpl-left-nav-list">
+                <ul class="tpl-left-nav-menu">
+                    {% for item in user_auth %}
+                    <li class="tpl-left-nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="am-icon-home"></i>
+                            <span>{{item.text}}</span>
+                            <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
+                        </a>
+                        <div id='sub-menu-{{item.flag}}'>
+                            <!--<ul class="tpl-left-nav-sub-menu" style="display:block">
+                            <li>
+                                <a href="table-font-list.html" class="active">
+                                    <i class="am-icon-angle-right"></i>
+                                    <span>文字表格</span>
+                                </a>
+                            </li>
+                            </ul>-->
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <content>
+            {% block content %} {% endblock %}
+        </content>
+    </div>
+
+    <script src="/app/assets/js/jquery.min.js "></script>
+    <script src="/app/assets/js/amazeui.min.js "></script>
+    <script src="/app/assets/js/iscroll.js "></script>
+    <script src="/app/assets/js/util.js"></script>
+    <script src="/app/assets/js/app.js "></script>
+    <script>
+        (function (document) {
+            
+            var subMenu = $('#sub-menu-main');
+             var album_id = urlUtil.getQueryValue('album_id');
+            $.getJSON('/album/getAlbum', function (data) {
+                if (data.ok) {
+                    var result = data.result;
+                    var album = "<ul class='tpl-left-nav-sub-menu' style='display:block'><li>";
+                    for (var index = 0; index < result.length; index++) {
+                        var element = result[index];
+                        var flag = parseInt(album_id) == parseInt(element.id) ? 'active' : '';
+                        album += [
+                            "<a href='/index/index?album_id=" + element.id + "' class='" + flag + "'>",
+                            "<i class='am-icon-angle-right'></i>",
+                            "<span>" + element.name + "</span>",
+                            "</a>"
+                        ].join('');
+                    }
+                    album += "</li></ul>";
+                    subMenu.html(album);
+                }
+            })
+        })(document);
+    </script>
+    {% block javascript %} {% endblock %}
+</body>
+
+</html>
