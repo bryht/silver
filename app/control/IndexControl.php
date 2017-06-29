@@ -29,7 +29,7 @@ class IndexControl extends CertControl
         $this->assign('albumUsers', $albumUsers);
         $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
         $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
-        $this->display('index.html');
+        $this->display('index-index.html');
     }
 
     public function add()

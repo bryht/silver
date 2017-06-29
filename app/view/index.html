@@ -1,4 +1,4 @@
-{% extends "layout-main.html" %} {% block content %}
+{% extends "common/layout-main.html" %} {% block content %}
 <div class="tpl-content-wrapper">
 
     <div class="tpl-portlet-components">
@@ -9,30 +9,27 @@
                     <div class="am-btn-group am-btn-group-xs">
                         <a id="add-image" type="button" class="am-btn am-btn-default am-round am-btn-success">
                             <span class="am-icon-plus"></span> New Photo</a>
-                        {% if  albumControl == true %}
+                        {% if albumControl == true %}
                         <a id="eidt-album" type="button" class="am-btn am-btn-default am-round am-btn-warning">
                             <span class="am-icon-edit"></span> Edit Album</a>
                         <a id="delete-album" type="button" class="am-btn am-btn-default am-round am-btn-danger">
                             <span class="am-icon-recycle"></span> Delete Album</a>
-                         {% endif %}
+                        {% endif %}
                         <a id="show-album" type="button" class="am-btn am-btn-default am-round am-btn-secondary">
 
                             <span class="am-icon-tv"></span> Show Album</a>
 
-                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;float:left;" width=298 height=52
-                            src="{{album.music_link}}"></iframe>
-                        {% if  albumControl == true %}
+                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" style="margin-top:-12px;float:left;" width=298 height=52 src="{{album.music_link}}"></iframe> {% if albumControl == true %}
                         <a id="edit-musiclink" class="am-btn am-btn-default am-round am-btn-warning">
-                            <span class="am-icon-edit"></span> Edit Music</a>  
-                         <a id="share-album" class="am-btn am-btn-default am-round am-btn-success album-users-share">
+                            <span class="am-icon-edit"></span> Edit Music</a>
+                        <a id="share-album" class="am-btn am-btn-default am-round am-btn-success album-users-share">
                             <span class="am-icon-share"></span> Share Album</a>
-                        {% endif %}
-                        {% for user in albumUsers%}
+                        {% endif %} {% for user in albumUsers%}
                         <div class="album-users">
                             <img src="{{user.avatar}}"> {{user.name}}
                         </div>
                         {% endfor %}
-                       
+
                     </div>
 
                 </div>
@@ -64,9 +61,8 @@
                                                  <img src="{{image.avatar}}" alt="">{{image.username}}
                                          </span>
                                         </div>
-                                        {% if  image.control == true %}
-                                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a>
-                                        {% endif %}
+                                        {% if image.control == true %}
+                                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a> {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +95,7 @@
 </div>
 {% endblock %} {% block javascript %}
 <script>
-    (function (document) {
+    (function(document) {
         var links = document.getElementsByClassName('page-nav-link');
         for (var index = 0; index < links.length; index++) {
             var element = links[index];
@@ -112,7 +108,9 @@
 
         $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
         $('#eidt-album')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
-        $('#delete-album').click(function () { deleteAlbum(album_id) });
+        $('#delete-album').click(function() {
+            deleteAlbum(album_id)
+        });
         $('#edit-musiclink')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
         $('#share-album')[0].setAttribute('href', '/album/albumShare?album_id=' + album_id);
 
@@ -121,7 +119,7 @@
     function deleteImage(id) {
         var ok = confirm("确认删除？");
         if (ok) {
-            $.get('/index/delete?id=' + id, function (res) {
+            $.get('/index/delete?id=' + id, function(res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
                     window.location = window.location;
@@ -136,7 +134,7 @@
     function deleteAlbum(id) {
         var ok = confirm("确认删除？");
         if (ok) {
-            $.get('/album/albumDelete?album_id=' + id, function (res) {
+            $.get('/album/albumDelete?album_id=' + id, function(res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
                     window.location = '/index/index?album_id=' + data.result;
@@ -147,6 +145,5 @@
             });
         }
     }
-
 </script>
 {% endblock %}

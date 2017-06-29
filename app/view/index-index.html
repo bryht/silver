@@ -1,0 +1,117 @@
+{% extends "common/layout-main.html" %} {% block content %}
+
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Album Name</h3>
+
+            <div class="box-tools">
+                <div class="btn-group" role="group">
+                    <button id="add-image" type="button" class="btn btn-success"><i class="fa fa-plus"></i>New Photo</button>
+                    <button id="eidt-album" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit Album</button>
+                    <button id="delete-album" type="button" class="btn btn-danger"><i class="fa fa-recycle"></i>Delete Album</button>
+                    <button id="show-album" type="button" class="btn btn-info"><i class="fa fa-tv"></i>Show Album</button>
+                    <button id="share-album" type="button" class="btn btn-info"><i class="fa fa-share"></i>Share Album</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for image in images%}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="{{image.url}}" style="height: 200px;max-width: 100%; display: block;">
+                    <div class="caption">
+                        <img src="{{image.avatar}}" class="img-circle" style="width:30px;height:30px;" alt="">
+                        <p>{{image.username}}</p>
+                        <p>Create Time：{{image.create_time}}{{image.description}}</p>
+                        {% if image.control == true %}
+                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a> {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+
+                {% for page in pageNav%}
+                <li class=" {% if page.pageActive%}active {% endif %}">
+                    <a class="page-nav-link" pageIndex="{{page.pageIndex}}">{{page.num}}</a>
+                </li>
+
+                {% endfor %}
+                <!--<li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>-->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+{% endblock %} {% block javascript %}
+<script>
+    (function(document) {
+        var links = document.getElementsByClassName('page-nav-link');
+        for (var index = 0; index < links.length; index++) {
+            var element = links[index];
+            var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
+            element.setAttribute('href', url);
+        }
+
+
+        var album_id = urlUtil.getQueryValue('album_id');
+
+        $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
+        $('#eidt-album')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
+        $('#delete-album').click(function() {
+            deleteAlbum(album_id)
+        });
+        //$('#edit-musiclink')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
+        $('#share-album')[0].setAttribute('href', '/album/albumShare?album_id=' + album_id);
+
+    })(document);
+
+    function deleteImage(id) {
+        var ok = confirm("confirm to delete?");
+        if (ok) {
+            $.get('/index/delete?id=' + id, function(res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    window.location = window.location;
+                } else {
+                    alert(data.result);
+                }
+
+            });
+        }
+    }
+
+    function deleteAlbum(id) {
+        var ok = confirm("confirm to delete?");
+        if (ok) {
+            $.get('/album/albumDelete?album_id=' + id, function(res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    window.location = '/index/index?album_id=' + data.result;
+                } else {
+                    alert(data.result);
+                }
+
+            });
+        }
+    }
+</script>
+{% endblock %}

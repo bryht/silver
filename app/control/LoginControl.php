@@ -15,26 +15,28 @@ class LoginControl extends \core\Control
     {
         if (empty($para)) {
             $this->assign('message', '');
-            $this->display('register.html');
+            $this->display('login-register.html');
         } else {
             $check = UserModel::instance()->checkRegister($para['name'], $para['mail']);
             if ($check == true) {
                 $this->assign('message', 'User or Mail alerady exist!');
-                $this->display('register.html');
+                $this->display('login-register.html');
                 return;
             }
 
             $res = UserModel::instance()->insertObj($para);
             if ($res > 0) {
-                $this->assign('message', 'Register success!');
-                $this->display('register.html');
+                $this->assign('title', 'Success!');
+                $this->assign('message', 'Register Success!');
+                $this->assign('redirect', '/login/login');
+                $this->display('common/message.html');
             }
         }
     }
 
     public function forgetPassword($value = '')
     {
-        $this->display('user-forget-password.html');
+        $this->display('login-forget-password.html');
     }
 
     public function getPasswordBack($value = '')
@@ -76,7 +78,8 @@ class LoginControl extends \core\Control
     public function login($para)
     {
         if (empty($para)) {
-            $this->display('login.html');
+            $this->assign('message', '');
+            $this->display('login-login.html');
         } else {
 
             $res = UserModel::instance()->checkUser($para['email'], $para['password']);
@@ -93,7 +96,9 @@ class LoginControl extends \core\Control
                 }
                 $this->redirect('index', 'index', ['album_id' => $albumId]); //default is main category
             } else {
-                $this->display('login.html');
+
+                $this->assign('message', 'Name or password error!');
+                $this->display('login-login.html');
             }
         }
     }

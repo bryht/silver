@@ -1,3 +1,13 @@
-.main-footer{
+.main-footer {
     padding: 5px;
+}
+
+.login-page,
+.register-page {
+    background: #334054;
+}
+
+.login-logo a,
+.register-logo a {
+    color: #fff;
 }

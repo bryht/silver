@@ -1,0 +1,51 @@
+{% extends "common/layout-login.html" %} {% block content %}
+
+<div class="register-box-body">
+    <p class="login-box-msg">Register a new membership</p>
+
+    <form onsubmit="return onCheck()" action="/login/register" method="post">
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" name="name" placeholder="Full name" required>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="email" class="form-control" name="mail" placeholder="Email" required>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input id="password1" type="password" class="form-control" name="password" placeholder="Password" required>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input id="password2" type="password" class="form-control" placeholder="Retype password" required>
+            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                <p id="message" class="bg-danger">{{message}}</p>
+            </div>
+            <!-- /.col -->
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    </form>
+
+    <a href="/login/login" class="text-center">I already have a membership</a>
+</div>
+{% endblock %} {% block javascript %}
+<script>
+    function onCheck() {
+        var val1 = $('#password1').val();
+        var val2 = $('#password2').val();
+        if (val1 == val2) {
+            $('#message').html('');
+            return true;
+        } else {
+            $('#message').html('password should be same!');
+            return false;
+        }
+    }
+</script>
+{% endblock %}
