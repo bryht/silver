@@ -9,26 +9,37 @@ class IndexControl extends CertControl
         if (isset($para['page']) == false) {
             $para['page'] = 0;
         }
-        if (isset($para['album_id']) == false) {
-            $para['album_id'] = 0;
-        }
 
-        //TODO judge the user have the right to access the album
-        $where = ['album_id' => $para['album_id']];
-        $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
-        if ($album) {
-            if (strpos($album['music_link'], 'music.163.com') == 0) {
-                $album['music_link'] = '';
+        $userId = session_get('user_id');
+        $albums = \app\model\AlbumModel::instance()->getAlbumsByUserId($userId);
+        $haveAlbumAuth = false;
+       
+        for ($i = 0; $i < count($albums); $i++) {
+            if (isset($para['album_id']) == false) {
+               $para['album_id']=$albums[$i]['id'];
+            }
+            if ($albums[$i]['id'] == $para['album_id']) {
+                $albums[$i]['active'] = true;
+                $haveAlbumAuth = true;
             }
         }
+        
+        if ($haveAlbumAuth == false) {
+            $this->assign('message', 'have not auth to access this album');
+            $this->display('common/message.html');
+            exit();
+        }
 
+        $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
         $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
 
         $this->assign('album', $album);
-        $this->assign('albumControl', $album['create_userid']==session_get('user_id'));
+        $this->assign('albums', $albums);
+        $this->assign('albumControl', $album['create_userid'] == $userId);
         $this->assign('albumUsers', $albumUsers);
-        $this->assign('images', $this->getImagesByPage($para['page'], 6, $where));
-        $this->assign('pageNav', $this->getPageNav($para['page'], 6, $where));
+
+        $this->assign('images', $this->getImagesByPage($para['page'], 6, ['album_id' => $para['album_id']]));
+        $this->assign('pageNav', $this->getPageNav($para['page'], 6, ['album_id' => $para['album_id']]));
         $this->display('index-index.html');
     }
 
@@ -87,7 +98,7 @@ class IndexControl extends CertControl
         $images = array();
         foreach ($res as $key => $value) {
             $res[$key]['url'] = '/index/getImageUrlById?id=' . $value['id'];
-            $res[$key]['control']=($value['user_id']==session_get('user_id'));
+            $res[$key]['control'] = ($value['user_id'] == session_get('user_id'));
         }
         return $res;
     }
@@ -108,7 +119,5 @@ class IndexControl extends CertControl
         header('content-type:' . $imageForm);
         echo $imageSource;
     }
-
- 
 
 }

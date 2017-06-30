@@ -94,7 +94,7 @@ class LoginControl extends \core\Control
                 } else {
                     $albumId = -1;
                 }
-                $this->redirect('index', 'index', ['album_id' => $albumId]); //default is main category
+                $this->redirect('index', 'index'); //default is main category
             } else {
 
                 $this->assign('message', 'Name or password error!');

@@ -110,7 +110,7 @@
                         {% if item.hasChildren %}
                         <ul class="treeview-menu">
                             {% for child in item.children %}
-                            <li>
+                            <li class="active">
                                 <a href="/{{child.control}}/{{child.action}}">
                                     <i class="fa fa-circle-o"></i>
                                     <span>{{child.text}}</span>
@@ -165,7 +165,12 @@
     <script>
         (function(document) {
 
-
+            var pageNavLinks = document.getElementsByClassName('page-nav-link');
+            for (var index = 0; index < pageNavLinks.length; index++) {
+                var element = pageNavLinks[index];
+                var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
+                element.setAttribute('href', url);
+            }
         })(document);
     </script>
     {% block javascript %} {% endblock %}

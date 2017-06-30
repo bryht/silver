@@ -97,7 +97,7 @@ class Model extends \Medoo\Medoo
         for ($i = 0; $i < $pageCount; $i++) {
             array_push($pageNav, ['num' => $i + 1,
                 'pageIndex' => $i,
-                'pageActive' => $pageNum == $i]);
+                'active' => $pageNum == $i]);
         }
         array_push($pageNav, ['num' => '»', 'pageIndex' => ($pageCount - 1)]);
         return $pageNav;

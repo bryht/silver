@@ -19,5 +19,10 @@ class CertControl extends \core\Control
         
     }
 
+    public function setMenuSelect($current)
+    {
+        
+    }
+
 
 }
