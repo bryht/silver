@@ -5,6 +5,10 @@ namespace app\control;
 class UserControl extends CertControl
 {
 
+    public function index(Type $var = null)
+    {
+        
+    }
 
     public function userEdit($para)
     {
@@ -37,5 +41,7 @@ class UserControl extends CertControl
             $this->redirect500(implode('|', $resUpdate->errorInfo()));
         }
     }
+
+
 
 }

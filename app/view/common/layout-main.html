@@ -96,13 +96,10 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-
                     {% for item in menu %}
-
-                    <li class="treeview">
+                    <li class="treeview" parent={{item.parent_id}} path="/{{item.control}}/{{item.action}}">
                         <a href="/{{item.control}}/{{item.action}}">
                             <i class="fa fa-files-o"></i>
                             <span>{{item.text}}</span>
@@ -110,7 +107,7 @@
                         {% if item.hasChildren %}
                         <ul class="treeview-menu">
                             {% for child in item.children %}
-                            <li class="active">
+                            <li class="treeview" parent={{child.parent_id}} path="/{{child.control}}/{{child.action}}">
                                 <a href="/{{child.control}}/{{child.action}}">
                                     <i class="fa fa-circle-o"></i>
                                     <span>{{child.text}}</span>
@@ -164,12 +161,19 @@
     <script src="/app/assets/js/util.js"></script>
     <script>
         (function(document) {
+            var path = location.pathname;
+            var menuLinks = document.getElementsByClassName('treeview');
+            for (var index = 0; index < menuLinks.length; index++) {
+                if (menuLinks[index].getAttribute('path') == path) {
+                    menuLinks[index].setAttribute('class', 'treeview active');
+                    var parentId = menuLinks[index].getAttribute('parent');
+                    if (parentId != 0) {
+                        var parent = menuLinks[index].parentElement.parentElement;
+                        parent.setAttribute('class', 'treeview active');
 
-            var pageNavLinks = document.getElementsByClassName('page-nav-link');
-            for (var index = 0; index < pageNavLinks.length; index++) {
-                var element = pageNavLinks[index];
-                var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
-                element.setAttribute('href', url);
+                    }
+                }
+
             }
         })(document);
     </script>
