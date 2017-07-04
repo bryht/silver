@@ -3,19 +3,26 @@
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Album Name</h3>
+            <!--<h3 class="box-title">Album Name</h3>-->
 
-            <div class="box-tools">
-                <div class="btn-group" role="group">
-                    <button id="add-image" type="button" class="btn btn-success"><i class="fa fa-plus"></i>New Photo</button>
-                    <button id="eidt-album" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit Album</button>
-                    <button id="delete-album" type="button" class="btn btn-danger"><i class="fa fa-recycle"></i>Delete Album</button>
-                    <button id="show-album" type="button" class="btn btn-info"><i class="fa fa-tv"></i>Show Album</button>
-                    <button id="share-album" type="button" class="btn btn-info"><i class="fa fa-share"></i>Share Album</button>
-                </div>
-            </div>
+            <ul class="nav nav-tabs">
+                {% for album in albums%}
+                <li role="presentation" class="{% if album.active%} active {% endif %}"><a class="album-nav-link" href="/index/index?album_id={{album.id}}">{{album.name}}</a></li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <div class="btn-group" role="group">
+            <button id="add-image" type="button" class="btn btn-success"><i class="fa fa-plus"></i>New Photo</button>
+            <button id="eidt-album" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit Album</button>
+            <button id="delete-album" type="button" class="btn btn-danger"><i class="fa fa-recycle"></i>Delete Album</button>
+            <button id="show-album" type="button" class="btn btn-info"><i class="fa fa-tv"></i>Show Album</button>
+            <button id="share-album" type="button" class="btn btn-info"><i class="fa fa-share"></i>Share Album</button>
         </div>
         <div class="row">
+
+
+
             {% for image in images%}
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
@@ -36,26 +43,11 @@
             <ul class="pagination">
 
                 {% for page in pageNav%}
-                <li class=" {% if page.pageActive%}active {% endif %}">
+                <li class="{% if page.active%} active {% endif %}">
                     <a class="page-nav-link" pageIndex="{{page.pageIndex}}">{{page.num}}</a>
                 </li>
-
                 {% endfor %}
-                <!--<li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>-->
+
             </ul>
         </nav>
     </div>
@@ -64,13 +56,12 @@
 {% endblock %} {% block javascript %}
 <script>
     (function(document) {
-        var links = document.getElementsByClassName('page-nav-link');
-        for (var index = 0; index < links.length; index++) {
-            var element = links[index];
+        var pageNavLinks = document.getElementsByClassName('page-nav-link');
+        for (var index = 0; index < pageNavLinks.length; index++) {
+            var element = pageNavLinks[index];
             var url = urlUtil.setQueryValue('page', element.getAttribute('pageIndex'));
             element.setAttribute('href', url);
         }
-
 
         var album_id = urlUtil.getQueryValue('album_id');
 

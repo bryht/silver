@@ -19,5 +19,4 @@ class CertControl extends \core\Control
         
     }
 
-
 }

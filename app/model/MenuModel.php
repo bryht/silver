@@ -28,9 +28,12 @@ class MenuModel extends \core\Model
         }
 
         $menusAuthIds = explode(',', $ids);
+     
         $menusByAuth = array_uintersect(self::$_menus, $menusAuthIds, 'self::compareId');
+
         $menusTree = array();
         $this->setTreeMenu(0, $menusTree, $menusByAuth);
+         
         return $menusTree['children'];
     }
 
@@ -38,7 +41,7 @@ class MenuModel extends \core\Model
     private function setTreeMenu($parentId, &$menuItem, $menusByAuth)
     {
         self::$_flagParentId = $parentId;
-
+       
         $menuItem['children'] = array_filter($menusByAuth, function ($item) {
             if ($item['parent_id'] == self::$_flagParentId) {
                 return true;
@@ -51,7 +54,7 @@ class MenuModel extends \core\Model
     }
 
     private static function compareId($v1, $v2)
-    {
+    {  
         if (is_array($v1)) {
             $v1 = $v1['id'];
         }

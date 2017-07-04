@@ -1,4 +1,4 @@
-{% extends "layout-login.html" %} {% block content %}
+{% extends "/common/layout-login.html" %} {% block content %}
 <!-- /.login-logo -->
 <div class="callout callout-success">
     <h4>{{title}}</h4>
@@ -14,6 +14,10 @@
         $('#second').html(index + 's');
     }, 1000)
     setTimeout(function() {
+        $url = '{{redirect}}'
+        if ($url == '') {
+            history.go(-1);
+        }
         location.href = '{{redirect}}';
     }, 3000);
 </script>
