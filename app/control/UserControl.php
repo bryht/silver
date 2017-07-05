@@ -5,9 +5,28 @@ namespace app\control;
 class UserControl extends CertControl
 {
 
-    public function index(Type $var = null)
+    public function index($para)
     {
-        
+        if (isset($para['page']) == false) {
+            $para['page'] = 0;
+        }
+        $this->assign('users', $this->getUsersByPage($para['page'], 10));
+        $this->assign('pageNav', $this->getPageNav($para['page'], 10));
+ 
+        $this->display('user-index.html');
+    }
+
+    public function getUsersByPage($pageNum, $pageSize = 6, $where = null)
+    {
+        $res = \app\model\UserModel::instance()->getItemsByPage($pageNum, $pageSize, $where);
+
+        return $res;
+    }
+
+    public function getPageNav($pageNum, $pageSize = 6, $where = null)
+    {
+        $pageNav = \app\model\UserModel::instance()->getNavByPage($pageNum, $pageSize, $where);
+        return $pageNav;
     }
 
     public function userEdit($para)
@@ -41,7 +60,5 @@ class UserControl extends CertControl
             $this->redirect500(implode('|', $resUpdate->errorInfo()));
         }
     }
-
-
 
 }
