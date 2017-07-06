@@ -23,7 +23,7 @@ class LoginControl extends \core\Control
                 $this->display('login-register.html');
                 return;
             }
-
+            $para['password']=md5($para['password']);
             $res = UserModel::instance()->insertObj($para);
             if ($res > 0) {
                 $this->assign('title', 'Success!');
@@ -82,7 +82,7 @@ class LoginControl extends \core\Control
             $this->display('login-login.html');
         } else {
 
-            $res = UserModel::instance()->checkUser($para['email'], $para['password']);
+            $res = UserModel::instance()->checkUser($para['email'], md5($para['password']));
             if ($res != false) {
                 session_set('user_id', $res['id']);
                 session_set('user_name', $res['name']);
