@@ -61,4 +61,16 @@ class UserControl extends CertControl
         }
     }
 
+    public function userDelete($para)
+    {
+        $id = $para['id'];
+        
+        $res = \app\model\UserModel::instance()->deleteById($id);
+        if ($res) {
+            $this->success($res);
+        } else {
+            $this->error('delete user failed!');
+        }
+    }
+
 }

@@ -22,47 +22,66 @@
                         <th style="width: 10px">Id</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Avatar</th>
-                        <th>Auth</th>
                         <th>CreateTime</th>
-                        <th style="width: 40px">Contorl</th>
+                        <th>LoginTime</th>
+                        <th>Contorl</th>
                     </tr>
                     {% for user in users%}
                     <tr>
                         <td>{{user.id}}</td>
-                        <td>{{user.name}}</td>
+                        <td><img class="image-circle" width="30px" src="{{user.avatar}}">{{user.name}}</td>
                         <td>{{user.mail}}</td>
-                        <td>{{user.avatar}}</td>
-                        <td>{{user.auth}}</td>
                         <td>{{user.create_time}}</td>
-                        <td>--------</td>
+                        <td>{{user.login_time}}</td>
+                        <td>
+                            <div class="btn-toolbar">
+                                <button type="button" title="set auth" data-id="{{user.id}}" data-toggle="modal" data-target="#model-user-auth"  class="btn btn-primary"><i class="fa fa-group"></i></button>
+                                <button type="button" title="edit" class="btn btn-info"><i class="fa fa-edit "></i></button>
+                                <button type="button" title="delete" class="btn btn-danger" data-id="{{user.id}}" data-name="{{user.name}}" data-avatar="{{user.avatar}}"
+                                    data-toggle="modal" data-target="#model-user-delete"><i class="fa fa-recycle"></i></button>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
 
                 </tbody>
             </table>
         </div>
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-whatever="@fat">
-             Launch demo modal
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <!-- model delete-->
+        <div class="modal fade" id="model-user-delete" role="dialog" aria-labelledby="labe">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        ...
+                        <h4 class="modal-title" id="labe">Sure to delete?</h4>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- model auth-->
+        <div class="modal fade" id="model-user-auth" role="dialog" aria-labelledby="labe">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="labe">Sure to delete?</h4>
+                    </div>
+                    <div class="modal-body">
+                        1111
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- /.box-body -->
         <div class="box-footer clearfix">
@@ -81,7 +100,7 @@
 
 {% endblock %} {% block javascript %}
 <script>
-    (function(document) {
+    (function (document) {
         var pageNavLinks = document.getElementsByClassName('page-nav-link');
         for (var index = 0; index < pageNavLinks.length; index++) {
             var element = pageNavLinks[index];
@@ -92,29 +111,40 @@
 
 
     })(document);
-    $('#exampleModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+    $('#model-user-auth').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget);
+        var id = target.data('id');
+        var name = target.data('name');
+        var avatar = target.data('avatar');
+        var modal = $(this);
 
-    function deleteImage(id) {
-        var ok = confirm("confirm to delete?");
-        if (ok) {
-            $.get('/user/delete?id=' + id, function(res) {
+
+
+    });
+
+
+    $('#model-user-delete').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget);
+        var id = target.data('id');
+        var name = target.data('name');
+        var avatar = target.data('avatar');
+        var modal = $(this);
+        modal.find('.modal-title').text('Sure to delete ' + name + ' ?')
+        modal.find('.btn-primary').unbind('click').click(() => {
+
+            $.get('/user/userDelete?id=' + id, function (res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
-                    window.location = window.location;
+                    location.reload();
                 } else {
                     alert(data.result);
                 }
-
             });
-        }
-    }
+
+        });
+
+
+    });
+
 </script>
 {% endblock %}
