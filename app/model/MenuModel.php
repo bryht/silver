@@ -49,6 +49,17 @@ class MenuModel extends \core\Model
         return $menus['children'];
     }
 
+
+    public function getTreeMenus(){
+        if (is_null(self::$_menus) || isset(self::$_menus)) {
+            self::$_menus = self::instance()->getAll();
+        }
+        $menus = array();
+        $this->setTreeMenu(0, $menus, self::$_menus);
+        return $menus['children'];
+
+    }
+
     protected static $_flagParentId = null;
     private function setTreeMenu($parentId, &$menusTree, $menusByAuth)
     {
