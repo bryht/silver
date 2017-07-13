@@ -15,11 +15,11 @@
             </div>
         </div>
         <!-- /.box-header -->
-        <div class="box-body">
-            <table class="table table-bordered">
+        <div class="box-body table-responsive">
+            <table class="table  table-bordered">
                 <tbody>
-                    <tr>
-                        <th style="width: 10px">Id</th>
+                    <tr style="background: #3c8dbc;color:white;">
+                        <th style="width: 10px"></th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>CreateTime</th>
@@ -28,8 +28,8 @@
                     </tr>
                     {% for user in users%}
                     <tr>
-                        <td>{{user.id}}</td>
-                        <td><img class="image-circle" width="30px" src="{{user.avatar}}">{{user.name}}</td>
+                        <td><img class="image-circle" width="30px" src="{{user.avatar}}"></td>
+                        <td>{{user.name}}</td>
                         <td>{{user.mail}}</td>
                         <td>{{user.create_time}}</td>
                         <td>{{user.login_time}}</td>
@@ -69,7 +69,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="labe">Sure to delete?</h4>
+                        <h4 class="modal-title" id="labe">Auth Setting</h4>
                     </div>
                     <div class="modal-body">
                         1111
