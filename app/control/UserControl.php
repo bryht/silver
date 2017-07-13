@@ -12,8 +12,34 @@ class UserControl extends CertControl
         }
         $this->assign('users', $this->getUsersByPage($para['page'], 10));
         $this->assign('pageNav', $this->getPageNav($para['page'], 10));
- 
+
         $this->display('user-index.html');
+    }
+
+    public function getAuth()
+    {
+        $userId = session_get('user_id');
+        $userAuth =explode(',',session_get('user_auth'));
+        $res = \app\model\MenuModel::instance()->getTreeMenus();
+        if ($res) {
+            foreach ($res as $key => $value) {
+                $this->setTreeMenu($res[$key], $userAuth);
+            }
+            $this->success($res);
+
+        } else {
+            $this->error($res->errorInfo());
+        }
+    }
+
+    private function setTreeMenu(&$menusTree, $userAuth)
+    {
+        $menusTree['state']['checked']=in_array((int)$menusTree['id'],$userAuth);
+        $menusTree['nodes']=$menusTree['children'];
+        $menusTree['nodeId']=(int)$menusTree['id'];
+        foreach ($menusTree['nodes'] as $key => $value) {
+             $this->setTreeMenu($menusTree['nodes'][$key], $userAuth);
+        }
     }
 
     public function getUsersByPage($pageNum, $pageSize = 6, $where = null)
@@ -64,7 +90,7 @@ class UserControl extends CertControl
     public function userDelete($para)
     {
         $id = $para['id'];
-        
+
         $res = \app\model\UserModel::instance()->deleteById($id);
         if ($res) {
             $this->success($res);

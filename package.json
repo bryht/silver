@@ -1,9 +1,0 @@
-{
-  "name": "silver",
-  "version": "1.0.0",
-  "description": "php framework",
-  "main": "index.js",
-  "repository": "https://github.com/bryht/Silver.git",
-  "author": "ming",
-  "license": "MIT"
-}
