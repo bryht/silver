@@ -1,5 +1,4 @@
 <?php
-
 namespace app\control;
 
 class UserControl extends CertControl
@@ -16,29 +15,44 @@ class UserControl extends CertControl
         $this->display('user-index.html');
     }
 
-    public function getAuth()
+    public function getAuth($para)
     {
-        $userId = session_get('user_id');
-        $userAuth =explode(',',session_get('user_auth'));
+        $userId = $para['id'];
+        $user=\app\model\UserModel::instance()->getById($userId);
+
+        $userAuth = explode(',', $user['auth']);
         $res = \app\model\MenuModel::instance()->getTreeMenus();
         if ($res) {
             foreach ($res as $key => $value) {
                 $this->setTreeMenu($res[$key], $userAuth);
             }
             $this->success($res);
-
-        } else {
+        }
+        else {
             $this->error($res->errorInfo());
         }
     }
 
+    public function saveAuth($para){
+        $userId=$para['id'];
+        $user['auth']=$para['auth'];
+        $res=\app\model\UserModel::instance()->updateObjById($user,$userId);
+        if($res){
+             $this->success($res);
+        }else{
+            $this->error($res->errorInfo());
+        }
+
+    }
+
     private function setTreeMenu(&$menusTree, $userAuth)
     {
-        $menusTree['state']['checked']=in_array((int)$menusTree['id'],$userAuth);
-        $menusTree['nodes']=$menusTree['children'];
-        $menusTree['nodeId']=(int)$menusTree['id'];
-        foreach ($menusTree['nodes'] as $key => $value) {
-             $this->setTreeMenu($menusTree['nodes'][$key], $userAuth);
+        $menusTree['state']['checked'] = in_array((int) $menusTree['id'], $userAuth);
+        if (count($menusTree['children']) > 0) {
+            $menusTree['nodes'] = $menusTree['children'];
+            foreach ($menusTree['nodes'] as $key => $value) {
+                $this->setTreeMenu($menusTree['nodes'][$key], $userAuth);
+            }
         }
     }
 
@@ -73,7 +87,8 @@ class UserControl extends CertControl
             $res = \upload_file($imgFile);
             if ($res['ok']) {
                 $user['avatar'] = $res['result'];
-            } else {
+            }
+            else {
                 $this->redirect500(implode('|', $res['error']));
             }
         }
@@ -82,7 +97,8 @@ class UserControl extends CertControl
         $resUpdate = \app\model\UserModel::instance()->updateObjById($user, $user['id']);
         if ($resUpdate) {
             goback(-2);
-        } else {
+        }
+        else {
             $this->redirect500(implode('|', $resUpdate->errorInfo()));
         }
     }
@@ -94,7 +110,8 @@ class UserControl extends CertControl
         $res = \app\model\UserModel::instance()->deleteById($id);
         if ($res) {
             $this->success($res);
-        } else {
+        }
+        else {
             $this->error('delete user failed!');
         }
     }

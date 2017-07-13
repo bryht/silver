@@ -38,7 +38,8 @@
                             <div class="btn-toolbar">
                                 <button type="button" title="set auth" data-id="{{user.id}}" data-toggle="modal" data-target="#model-user-auth" class="btn btn-primary"><i class="fa fa-group"></i></button>
                                 <button type="button" title="edit" class="btn btn-info"><i class="fa fa-edit "></i></button>
-                                <button type="button" title="delete" class="btn btn-danger" data-id="{{user.id}}" data-name="{{user.name}}" data-avatar="{{user.avatar}}" data-toggle="modal" data-target="#model-user-delete"><i class="fa fa-recycle"></i></button>
+                                <button type="button" title="delete" class="btn btn-danger" data-id="{{user.id}}" data-name="{{user.name}}" data-avatar="{{user.avatar}}"
+                                    data-toggle="modal" data-target="#model-user-delete"><i class="fa fa-recycle"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -102,7 +103,7 @@
 <link rel="stylesheet" href="/app/assets/bootstrap-treeview/src/css/bootstrap-treeview.css">
 <script src="/app/assets/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
 <script>
-    (function(document) {
+    (function (document) {
         var pageNavLinks = document.getElementsByClassName('page-nav-link');
         for (var index = 0; index < pageNavLinks.length; index++) {
             var element = pageNavLinks[index];
@@ -112,46 +113,19 @@
 
     })(document);
 
-    var tree = [{
-        text: "Parent 1",
-        state: {
-            checked: true
-        },
-        nodes: [{
-            text: "Child 1",
-            nodes: [{
-                text: "Grandchild 1"
-            }, {
-                text: "Grandchild 2"
-            }]
-        }, {
-            text: "Child 2"
-        }]
-    }, {
-        text: "Parent 1",
-        state: {
-            checked: true
-        },
-        nodes: []
-    }];
-
-    $('#model-user-auth').on('show.bs.modal', function(event) {
+    $('#model-user-auth').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget);
         var id = target.data('id');
         var name = target.data('name');
         var avatar = target.data('avatar');
         var modal = $(this);
 
-        $.get('/user/getAuth', function(res) {
+        $.get('/user/getAuth?id=' + id, function (res) {
 
             var data = JSON.parse(res);
-
             if (data.ok) {
-
-                var a = data.result;
-                debugger;
                 $('#auth-tree').treeview({
-                    data: tree,
+                    data: data.result,
                     showCheckbox: true
                 });
 
@@ -165,14 +139,26 @@
         modal.find('.btn-primary').unbind('click').click(() => {
 
             var checkedList = $('#auth-tree').treeview('getChecked');
-            debugger;
+            var authArray = new Array();
+            checkedList.forEach(function (element) {
+                authArray.push(element.id);
+            }, this);
+            var authString = authArray.join(',');
+            $.post('/user/saveAuth', { 'id': id, 'auth': authString }, function (res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+
+                } else {
+                    alert(data.result);
+                }
+            });
 
         });
 
     });
 
 
-    $('#model-user-delete').on('show.bs.modal', function(event) {
+    $('#model-user-delete').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget);
         var id = target.data('id');
         var name = target.data('name');
@@ -181,7 +167,7 @@
         modal.find('.modal-title').text('Sure to delete ' + name + ' ?')
         modal.find('.btn-primary').unbind('click').click(() => {
 
-            $.get('/user/userDelete?id=' + id, function(res) {
+            $.get('/user/userDelete?id=' + id, function (res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
                     location.reload();
@@ -194,5 +180,6 @@
 
 
     });
+
 </script>
 {% endblock %}
