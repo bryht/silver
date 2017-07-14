@@ -22,6 +22,7 @@ class UserControl extends CertControl
 
         $userAuth = explode(',', $user['auth']);
         $res = \app\model\MenuModel::instance()->getTreeMenus();
+        $res=array_values($res);
         if ($res) {
             foreach ($res as $key => $value) {
                 $this->setTreeMenu($res[$key], $userAuth);
@@ -48,7 +49,7 @@ class UserControl extends CertControl
     private function setTreeMenu(&$menusTree, $userAuth)
     {
         $menusTree['state']['checked'] = in_array((int) $menusTree['id'], $userAuth);
-        if (count($menusTree['children']) > 0) {
+        if ($menusTree['hasChildren']) {
             $menusTree['nodes'] = $menusTree['children'];
             foreach ($menusTree['nodes'] as $key => $value) {
                 $this->setTreeMenu($menusTree['nodes'][$key], $userAuth);

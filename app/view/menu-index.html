@@ -1,0 +1,75 @@
+{% extends "common/layout-main.html" %} {% block content %}
+
+
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Menus</h3>
+
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <div id="menu-tree"></div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %} {% block javascript %}
+<link rel="stylesheet" href="/app/assets/bootstrap-treeview/src/css/bootstrap-treeview.css">
+<script src="/app/assets/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
+<script>
+    function loadTree() {
+        $.get('/menu/getMenu', function(res) {
+            var data = JSON.parse(res);
+            if (data.ok) {
+                $('#menu-tree').treeview({
+                    data: data.result,
+                    showTags: true,
+                    highlightSelected: false,
+                    controls: '<a onclick="del(this)" class="badge btn-danger"><i class="fa fa-recycle"></i></a>' +
+                        '<a onclick="edit(this)" class="badge btn-info"><i class="fa fa-edit"></i></a>' +
+                        '<a onclick="add(this)" class="badge btn-success"><i class="fa fa-plus"></i></a>'
+                });
+            } else {
+                alert(data.result);
+            }
+        });
+    }
+
+    function add(target) {
+        var target = $(target.parentNode);
+        var nodeid = target.data('nodeid');
+        var selected = $('#menu-tree').treeview('getNode', nodeid);
+
+    }
+
+    function edit(target) {
+
+    }
+
+    function del(target) {
+
+        var target = $(target.parentNode);
+        var nodeid = target.data('nodeid');
+        var selected = $('#menu-tree').treeview('getNode', nodeid);
+        var id = selected.id;
+        $.post('/menu/delete', {
+            'id': id
+        }, function(res) {
+            var data = JSON.parse(res);
+            if (data.ok) {
+                loadTree();
+            } else {
+                alert(data.result);
+            }
+        })
+
+    }
+
+    (function(document) {
+        loadTree();
+    })(document);
+</script>
+
+{% endblock %}
