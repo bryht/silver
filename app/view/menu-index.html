@@ -1,4 +1,4 @@
-{% extends "common/layout-main.html" %} {% block content %}
+{% extends "common/layout-main-model.html" %} {% block content %}
 
 
 <div class="col-xs-12">
@@ -49,21 +49,24 @@
     }
 
     function del(target) {
+        showInfoModel('Delete', 'Sure delete the menu item?', () => {
 
-        var target = $(target.parentNode);
-        var nodeid = target.data('nodeid');
-        var selected = $('#menu-tree').treeview('getNode', nodeid);
-        var id = selected.id;
-        $.post('/menu/delete', {
-            'id': id
-        }, function(res) {
-            var data = JSON.parse(res);
-            if (data.ok) {
-                loadTree();
-            } else {
-                alert(data.result);
-            }
-        })
+            var target = $(target.parentNode);
+            var nodeid = target.data('nodeid');
+            var selected = $('#menu-tree').treeview('getNode', nodeid);
+            var id = selected.id;
+            $.post('/menu/delete', {
+                'id': id
+            }, function(res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    loadTree();
+                } else {
+                    alert(data.result);
+                }
+            })
+
+        });
 
     }
 

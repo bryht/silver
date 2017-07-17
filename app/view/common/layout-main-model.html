@@ -142,9 +142,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 id="model-info-title" class="modal-title" id="labe"></h4>
+                        <h4 id="modal-info-title" class="modal-title"></h4>
                     </div>
-                    <div id="model-info-body" class="modal-body">
+                    <div id="modal-info-body" class="modal-body">
 
                     </div>
                     <div class="modal-footer">
@@ -177,9 +177,16 @@
 
     <script src="/app/assets/js/util.js"></script>
     <script>
-        function showInfoModel(result) {
-
+        function showInfoModel(title, content, sure) {
+            var model = $('#model-info');
+            model.find('#modal-info-title').html(title);
+            model.find('#modal-info-body').html(content);
+            model.modal('show');
+            model.find('.btn-primary').unbind('click').click(() => {
+                sure();
+            });
         }
+
         (function(document) {
             var path = location.pathname;
             var menuLinks = document.getElementsByClassName('treeview');
@@ -190,10 +197,8 @@
                     if (parentId != 0) {
                         var parent = menuLinks[index].parentElement.parentElement;
                         parent.setAttribute('class', 'treeview active');
-
                     }
                 }
-
             }
         })(document);
     </script>
