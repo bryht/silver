@@ -18,6 +18,7 @@
 {% endblock %} {% block javascript %}
 <link rel="stylesheet" href="/app/assets/bootstrap-treeview/src/css/bootstrap-treeview.css">
 <script src="/app/assets/bootstrap-treeview/src/js/bootstrap-treeview.js"></script>
+<script src="/app/assets/sco/js/sco.confirm.js"></script>
 <script>
     function loadTree() {
         $.get('/menu/getMenu', function(res) {
@@ -49,6 +50,7 @@
     }
 
     function del(target) {
+
         showInfoModel('Delete', 'Sure delete the menu item?', () => {
 
             var target = $(target.parentNode);
@@ -64,7 +66,7 @@
                 } else {
                     alert(data.result);
                 }
-            })
+            });
 
         });
 
