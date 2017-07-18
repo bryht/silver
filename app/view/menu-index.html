@@ -5,7 +5,7 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Menus</h3>
-
+            <a onclick="add(0)" class="badge btn-success"><i class="fa fa-plus"></i></a>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive">
@@ -21,7 +21,7 @@
 <script src="/app/assets/sco/js/sco.confirm.js"></script>
 <script>
     function loadTree() {
-        $.get('/menu/getMenu', function(res) {
+        $.get('/menu/getMenu', function (res) {
             var data = JSON.parse(res);
             if (data.ok) {
                 $('#menu-tree').treeview({
@@ -29,8 +29,8 @@
                     showTags: true,
                     highlightSelected: false,
                     controls: '<a onclick="del(this)" class="badge btn-danger"><i class="fa fa-recycle"></i></a>' +
-                        '<a onclick="edit(this)" class="badge btn-info"><i class="fa fa-edit"></i></a>' +
-                        '<a onclick="add(this)" class="badge btn-success"><i class="fa fa-plus"></i></a>'
+                    '<a onclick="edit(this)" class="badge btn-info"><i class="fa fa-edit"></i></a>' +
+                    '<a onclick="add(this)" class="badge btn-success"><i class="fa fa-plus"></i></a>'
                 });
             } else {
                 alert(data.result);
@@ -38,28 +38,45 @@
         });
     }
 
-    function add(target) {
-        var target = $(target.parentNode);
+    function add(item) {
+
+        var target = $(item.parentNode);
         var nodeid = target.data('nodeid');
         var selected = $('#menu-tree').treeview('getNode', nodeid);
+        var parentId = selected.id == undefined ? 0 : selected.id;
+
+        //TODO: Show Modal
+
+        //TODO: Sure post
+        $.post('/menu/add', {
+            'parentId': parentId
+        }, function (res) {
+            var data = JSON.parse(res);
+            if (data.ok) {
+                loadTree();
+            } else {
+                alert(data.result);
+            }
+        })
+
+
 
     }
 
-    function edit(target) {
+    function edit(item) {
 
     }
 
-    function del(target) {
+    function del(item) {
 
         showInfoModel('Delete', 'Sure delete the menu item?', () => {
-
-            var target = $(target.parentNode);
+            var target = $(item.parentNode);
             var nodeid = target.data('nodeid');
             var selected = $('#menu-tree').treeview('getNode', nodeid);
             var id = selected.id;
             $.post('/menu/delete', {
                 'id': id
-            }, function(res) {
+            }, function (res) {
                 var data = JSON.parse(res);
                 if (data.ok) {
                     loadTree();
@@ -72,9 +89,10 @@
 
     }
 
-    (function(document) {
+    (function (document) {
         loadTree();
     })(document);
+
 </script>
 
 {% endblock %}

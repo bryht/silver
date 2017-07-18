@@ -29,13 +29,24 @@ class MenuControl extends CertControl
     public function delete($para)
     {
         $id = $para['id'];
-        $res=MenuModel::instance()->deleteById($id);
-        if ($res) {
+        $res = MenuModel::instance()->deleteObjById($id);
+        if ($res['ok']) {
+            $this->success($res['id']);
+        } else {
+            $this->error($res->errorInfo());
+        }
+
+    }
+
+    public function add($para)
+    {
+        $res = MenuModel::instance()->insertObj($para);
+        if ($res['ok']) {
             $this->success($res);
         } else {
             $this->error($res->errorInfo());
         }
-        
+
     }
 
     private function setTreeMenu(&$menusTree)

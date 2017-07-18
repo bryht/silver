@@ -37,30 +37,40 @@ class Model extends \Medoo\Medoo
     {
         $res = $this->insert($this->table, $data);
         if ($res->rowCount() > 0) {
-            return $this->id();
+            $res['ok'] = true;
+            $res['id'] = $this->id();
         } else {
-            return $res;
+            $res['ok'] = false;
         }
+        return $res;
     }
 
-    public function updateObj($data, $where=null)
+    public function updateObj($data, $where = null)
     {
         $res = $this->update($this->table, $data, $where);
-       
+
         if ($res->rowCount() > 0) {
-            return true;
+            $res['ok'] = true;
         } else {
-            return $res;
+            $res['ok'] = false;
         }
+        return $res;
     }
 
-    public function updateObjById($data,$id){
-        return $this->updateObj($data,['id'=>$id]);
-    }
-
-    public function deleteById($id)
+    public function updateObjById($data, $id)
     {
-        return $this->delete($this->table, ['id' => $id]);
+        return $this->updateObj($data, ['id' => $id]);
+    }
+
+    public function deleteObjById($id)
+    {
+        $res = $this->delete($this->table, ['id' => $id]);
+        if ($res->rowCount() > 0) {
+            $res['ok'] = true;
+        } else {
+            $res['ok'] = false;
+        }
+        return $res;
     }
 
     public function getById($id)
