@@ -177,13 +177,13 @@
 
     <script src="/app/assets/js/util.js"></script>
     <script>
-        function showInfoModel(title, content, sure) {
+        function showInfoModel(title, content, action) {
             var model = $('#model-info');
             model.find('#modal-info-title').html(title);
             model.find('#modal-info-body').html(content);
             model.modal('show');
             model.find('.btn-primary').unbind('click').click(() => {
-                sure();
+                action();
             });
         }
 
