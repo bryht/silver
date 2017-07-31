@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <label for="text-icon" class="col-xs-2 control-label">Icon</label>
                         <div class="col-xs-10">
-                            <input type="text" class="form-control" id="text-icon" placeholder="fa-files-o">
+                            <input type="text" class="form-control" id="text-icon">
                         </div>
                     </div>
                 </form>
@@ -88,40 +88,67 @@
         var selected = $('#menu-tree').treeview('getNode', nodeid);
         var parentId = selected.id == undefined ? 0 : selected.id;
 
-        //TODO: Show Modal
+        //Show Modal
         var model = $('#model-menu');
-        var form=$('#form-menu');
-        form.attr('action','/menu/add');
+        var form = $('#form-menu');
+        form.find('#text-control').val('');
+        form.find('#text-action').val('');
+        form.find('#text-text').val('');
+        form.find('#text-icon').val('fa fa-files-o');
         model.find('#modal-menu-title').html('Add Menu');
-
         model.modal('show');
+        //Add Menu
         model.find('.btn-primary').unbind('click').click(() => {
-            form.submit();
+            var menuObj = new Object();
+            menuObj.parent_id = parentId;
+            menuObj.control = form.find('#text-control').val();
+            menuObj.action = form.find('#text-action').val();
+            menuObj.text = form.find('#text-text').val();
+            menuObj.icon = form.find('#text-icon').val();
+            $.post('/menu/add', menuObj, function (res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    loadTree();
+                } else {
+                    alert(data.result);
+                }
+            })
         });
-        //TODO: Sure post
-
-        return;
-
-
-
-
     }
 
     function edit(item) {
+        //Get the menu Id
+        var target = $(item.parentNode);
+        var nodeid = target.data('nodeid');
+        var selected = $('#menu-tree').treeview('getNode', nodeid);
+        //Show Modal
+        var model = $('#model-menu');
+        var form = $('#form-menu');
+        form.find('#text-control').val(selected.control);
+        form.find('#text-action').val(selected.action);
+        form.find('#text-text').val(selected.text);
+        form.find('#text-icon').val(selected.icon);
+        model.find('#modal-menu-title').html('Edit Menu');
+        model.modal('show');
 
-    }
+        //Update menu
+        model.find('.btn-primary').unbind('click').click(() => {
+            var menuObj = new Object();
+            menuObj.id = selected.id;
+            menuObj.control = form.find('#text-control').val();
+            menuObj.action = form.find('#text-action').val();
+            menuObj.text = form.find('#text-text').val();
+            menuObj.icon = form.find('#text-icon').val();
+            $.post('/menu/update', menuObj, function (res) {
+                var data = JSON.parse(res);
+                if (data.ok) {
+                    loadTree();
+                } else {
+                    alert(data.result);
+                }
+            })
+        });
 
-    function update(item) {
-        $.post('/menu/add', {
-            'parentId': parentId
-        }, function (res) {
-            var data = JSON.parse(res);
-            if (data.ok) {
-                loadTree();
-            } else {
-                alert(data.result);
-            }
-        })
     }
 
     function del(item) {

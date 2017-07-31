@@ -22,7 +22,7 @@ class MenuControl extends CertControl
             }
             $this->success($res);
         } else {
-            $this->error($res->errorInfo());
+            $this->error('get menu null!');
         }
     }
 
@@ -30,23 +30,19 @@ class MenuControl extends CertControl
     {
         $id = $para['id'];
         $res = MenuModel::instance()->deleteObjById($id);
-        if ($res['ok']) {
-            $this->success($res['id']);
-        } else {
-            $this->error($res->errorInfo());
-        }
-
+        $this->result($res['ok'],'',$res['pdoStatement']->errorInfo());
     }
 
     public function add($para)
     {
         $res = MenuModel::instance()->insertObj($para);
-        if ($res['ok']) {
-            $this->success($res);
-        } else {
-            $this->error($res->errorInfo());
-        }
+        $this->result($res['ok'],$res['id'],$res['pdoStatement']->errorInfo());
+    }
 
+    public function update($para)
+    {
+        $res = MenuModel::instance()->updateObjById($para,$para['id']);
+        $this->result($res['ok'],'update success!',$res['pdoStatement']->errorInfo());
     }
 
     private function setTreeMenu(&$menusTree)

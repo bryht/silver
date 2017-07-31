@@ -1,5 +1,4 @@
 <?php
-
 namespace core;
 
 class Model extends \Medoo\Medoo
@@ -9,6 +8,8 @@ class Model extends \Medoo\Medoo
     {
         if (is_null(static::$_instance) || isset(static::$_instance)) {
             static::$_instance = new static(); //only for php>5.3
+
+
         }
         return static::$_instance;
     }
@@ -23,11 +24,17 @@ class Model extends \Medoo\Medoo
             $this->table = strtolower(
                 substr(
                     end(
-                        explode('\\',
+                        explode(
+                            '\\',
                             get_called_class()
                         )
-                    ), 0, -5));
-        } else {
+                    ),
+                    0,
+                    -5
+                )
+            );
+        }
+        else {
             $this->table = $tableName;
         }
 
@@ -35,25 +42,29 @@ class Model extends \Medoo\Medoo
 
     public function insertObj($data)
     {
-        $res = $this->insert($this->table, $data);
-        if ($res->rowCount() > 0) {
+        $statement = $this->insert($this->table, $data);
+        if ($statement->rowCount() > 0) {
             $res['ok'] = true;
             $res['id'] = $this->id();
-        } else {
+        }
+        else {
             $res['ok'] = false;
         }
+        $res['pdoStatement'] = $statement;
         return $res;
     }
 
     public function updateObj($data, $where = null)
     {
-        $res = $this->update($this->table, $data, $where);
-
-        if ($res->rowCount() > 0) {
+        $statement = $this->update($this->table, $data, $where);
+        $errorInfo=$statement->errorInfo();
+        if ($statement->errorInfo()[0] == '00000') {
             $res['ok'] = true;
-        } else {
+        }
+        else {
             $res['ok'] = false;
         }
+        $res['pdoStatement'] = $statement;
         return $res;
     }
 
@@ -64,12 +75,14 @@ class Model extends \Medoo\Medoo
 
     public function deleteObjById($id)
     {
-        $res = $this->delete($this->table, ['id' => $id]);
-        if ($res->rowCount() > 0) {
+        $statement = $this->delete($this->table, ['id' => $id]);
+        if ($statement->rowCount() > 0) {
             $res['ok'] = true;
-        } else {
+        }
+        else {
             $res['ok'] = false;
         }
+        $res['pdoStatement'] = $statement;
         return $res;
     }
 
@@ -101,13 +114,15 @@ class Model extends \Medoo\Medoo
     public function getNavByPage($pageNum = 0, $pageSize = 0, $where = null)
     {
         $count = $this->count($this->table, $where);
-        $pageCount = ceil($count / (float) $pageSize);
+        $pageCount = ceil($count / (float)$pageSize);
         $pageNav = array();
         array_push($pageNav, ['num' => '«', 'pageIndex' => '0']);
         for ($i = 0; $i < $pageCount; $i++) {
-            array_push($pageNav, ['num' => $i + 1,
+            array_push($pageNav, [
+                'num' => $i + 1,
                 'pageIndex' => $i,
-                'active' => $pageNum == $i]);
+                'active' => $pageNum == $i
+            ]);
         }
         array_push($pageNav, ['num' => '»', 'pageIndex' => ($pageCount - 1)]);
         return $pageNav;
