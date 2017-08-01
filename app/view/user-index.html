@@ -25,7 +25,7 @@
                         <th>Email</th>
                         <th>CreateTime</th>
                         <th>LoginTime</th>
-                        <th>Contorl</th>
+                        <th>Control</th>
                     </tr>
                     {% for user in users%}
                     <tr>
@@ -37,7 +37,7 @@
                         <td>
                             <div class="btn-toolbar">
                                 <button type="button" title="set auth" data-id="{{user.id}}" data-toggle="modal" data-target="#model-user-auth" class="btn btn-primary"><i class="fa fa-group"></i></button>
-                                <button type="button" title="edit" class="btn btn-info"><i class="fa fa-edit "></i></button>
+                                <!--<button type="button" title="edit" class="btn btn-info"><i class="fa fa-edit "></i></button>-->
                                 <button type="button" title="delete" class="btn btn-danger" data-id="{{user.id}}" data-name="{{user.name}}" data-avatar="{{user.avatar}}" data-toggle="modal" data-target="#model-user-delete"><i class="fa fa-recycle"></i></button>
                             </div>
                         </td>
