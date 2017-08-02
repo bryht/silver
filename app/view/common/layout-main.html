@@ -101,7 +101,7 @@
                     {% for item in menu %}
                     <li class="treeview" parent={{item.parent_id}} path="/{{item.control}}/{{item.action}}">
                         <a href="/{{item.control}}/{{item.action}}">
-                            <i class="fa fa-files-o"></i>
+                            <i class="{{item.icon}}"></i>
                             <span>{{item.text}}</span>
                         </a>
                         {% if item.hasChildren %}
@@ -109,7 +109,7 @@
                             {% for child in item.children %}
                             <li class="treeview" parent={{child.parent_id}} path="/{{child.control}}/{{child.action}}">
                                 <a href="/{{child.control}}/{{child.action}}">
-                                    <i class="fa fa-circle-o"></i>
+                                    <i class="{{child.icon}}"></i>
                                     <span>{{child.text}}</span>
                                 </a>
                             </li>

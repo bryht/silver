@@ -20,9 +20,10 @@
                         </div>
                         <div>
                             <a class="btn btn-danger" onclick="{$('#img-file').click();}">
-                             <i class="glyphicon glyphicon-cloud-upload"></i>Change Avatar
+                             <i class="glyphicon glyphicon-folder-open"></i>
+                             Change Avatar
                             </a>
-                            <input id="img-file" style="display:none;" name="img-file" type="file" onchange="fileChanged(this)"/>
+                            <input id="img-file" class="hidden" name="img-file" type="file" onchange="fileChanged(this)"/>
                         </div>
 
                     </div>
@@ -33,11 +34,10 @@
                         <input type="text" class="form-control" id="user-name" name="user-name" placeholder="please input the user name" value="{{user.name}}">
                     </div>
                 </div>
-
-                <input type="text" name="user_id" value="{{user.id}}" style="display:none" />
+                <input type="text" name="user_id" value="{{user.id}}" class="hidden"/>
                 <div class="form-group">
                     <div class="col-xs-10">
-                        <input type="submit" class="btn btn-primary"></input>
+                        <input type="submit" value="Submit" class="btn btn-primary"></input>
                     </div>
                 </div>
             </form>
