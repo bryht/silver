@@ -9,8 +9,13 @@ class UserControl extends CertControl
         if (isset($para['page']) == false) {
             $para['page'] = 0;
         }
-        $this->assign('users', $this->getUsersByPage($para['page'], 10));
-        $this->assign('pageNav', $this->getPageNav($para['page'], 10));
+        if (isset($para['where'])==true) {
+            $where=['OR'=>['name[~]'=>$para['where'],'mail[~]'=>$para['where']]];
+        }else{
+            $where=null;
+        }
+        $this->assign('users', $this->getUsersByPage($para['page'], 10,$where));
+        $this->assign('pageNav', $this->getPageNav($para['page'], 10,$where));
 
         $this->display('user-index.html');
     }

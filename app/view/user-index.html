@@ -6,11 +6,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">Users</h3>
             <div class="box-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                <div class="input-group input-group-sm" style="width: 200px;">
+                    <input type="text" id="text-search" class="form-control pull-right" placeholder="Search">
 
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <button id="btn-search" type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <button id="btn-reset" type="submit" class="btn btn-default"><i class="glyphicon glyphicon-repeat"></i></button>
                     </div>
                 </div>
             </div>
@@ -111,6 +112,16 @@
         }
 
     })(document);
+
+    $('#btn-search').on('click',function (event) {
+       var url=urlUtil.setQueryValue('where',$('#text-search').val());
+       location.href=url;
+    });
+
+    $('#btn-reset').on('click',function (event) {
+       var url=urlUtil.setQueryValue('where','');
+       location.href=url;
+    });
 
     $('#model-user-auth').on('show.bs.modal', function(event) {
         var target = $(event.relatedTarget);
