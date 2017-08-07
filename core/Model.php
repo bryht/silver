@@ -8,8 +8,6 @@ class Model extends \Medoo\Medoo
     {
         if (is_null(static::$_instance) || isset(static::$_instance)) {
             static::$_instance = new static(); //only for php>5.3
-
-
         }
         return static::$_instance;
     }
@@ -21,23 +19,14 @@ class Model extends \Medoo\Medoo
         parent::__construct($database);
         if (is_null($tableName)) {
             //from class name 'app\model\ImageModel' get the name 'Image'
+            $nameList=explode('\\', get_called_class());
+            $nameLast=end($nameList);
             $this->table = strtolower(
-                substr(
-                    end(
-                        explode(
-                            '\\',
-                            get_called_class()
-                        )
-                    ),
-                    0,
-                    -5
-                )
+                substr($nameLast, 0, -5)
             );
-        }
-        else {
+        } else {
             $this->table = $tableName;
         }
-
     }
 
     public function insertObj($data)
@@ -46,8 +35,7 @@ class Model extends \Medoo\Medoo
         if ($statement->rowCount() > 0) {
             $res['ok'] = true;
             $res['id'] = $this->id();
-        }
-        else {
+        } else {
             $res['ok'] = false;
         }
         $res['pdoStatement'] = $statement;
@@ -60,8 +48,7 @@ class Model extends \Medoo\Medoo
         $errorInfo=$statement->errorInfo();
         if ($statement->errorInfo()[0] == '00000') {
             $res['ok'] = true;
-        }
-        else {
+        } else {
             $res['ok'] = false;
         }
         $res['pdoStatement'] = $statement;
@@ -78,8 +65,7 @@ class Model extends \Medoo\Medoo
         $statement = $this->delete($this->table, ['id' => $id]);
         if ($statement->rowCount() > 0) {
             $res['ok'] = true;
-        }
-        else {
+        } else {
             $res['ok'] = false;
         }
         $res['pdoStatement'] = $statement;
