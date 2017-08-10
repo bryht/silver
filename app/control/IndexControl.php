@@ -45,7 +45,7 @@ class IndexControl extends CertControl
 
     public function add()
     {
-        $this->display('index-add.html');
+        $this->display('index-add-edit.html');
     }
 
     public function edit($para)
@@ -53,7 +53,7 @@ class IndexControl extends CertControl
         $id = $para['id'];
         $image = \app\model\ImageModel::instance()->getById($id);
         $this->assign('image', $image);
-        $this->display('index-add.html');
+        $this->display('index-add-edit.html');
     }
 
     public function delete($para)

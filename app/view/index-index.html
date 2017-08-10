@@ -13,15 +13,13 @@
 
         </div>
         <div class="btn-group" role="group">
-            <button id="add-image" type="button" class="btn btn-success"><i class="fa fa-plus"></i>New Photo</button>
+            <a id="add-image" class="btn btn-success"><i class="fa fa-plus"></i>New Photo</a>
             <button id="eidt-album" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit Album</button>
             <button id="delete-album" type="button" class="btn btn-danger"><i class="fa fa-recycle"></i>Delete Album</button>
             <button id="show-album" type="button" class="btn btn-info"><i class="fa fa-tv"></i>Show Album</button>
             <button id="share-album" type="button" class="btn btn-info"><i class="fa fa-share"></i>Share Album</button>
         </div>
         <div class="row">
-
-
 
             {% for image in images%}
             <div class="col-sm-6 col-md-4">
@@ -32,6 +30,7 @@
                         <p>{{image.username}}</p>
                         <p>Create Time：{{image.create_time}}{{image.description}}</p>
                         {% if image.control == true %}
+                        <a href="/index/edit?album_id={{album.id}}&id={{image.id}}"><span class="am-icon-trash-o"></span> Edit</a>
                         <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a> {% endif %}
                     </div>
                 </div>
@@ -63,7 +62,7 @@
             element.setAttribute('href', url);
         }
 
-        var album_id = urlUtil.getQueryValue('album_id');
+        var album_id = '{{album.id}}';
 
         $('#add-image')[0].setAttribute('href', '/index/add?album_id=' + album_id);
         $('#eidt-album')[0].setAttribute('href', '/album/albumEdit?album_id=' + album_id);
