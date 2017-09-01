@@ -37,4 +37,3 @@ if (DEBUG) {
 }
 
 core\Silver::run();
-echo "111";
