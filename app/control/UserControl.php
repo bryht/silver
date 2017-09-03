@@ -23,7 +23,7 @@ class UserControl extends CertControl
     public function getAuth($para)
     {
         $userId = $para['id'];
-        $user=\app\model\UserModel::instance()->getById($userId);
+        $user=\app\model\UserModel::instance()->getObjById($userId);
 
         $userAuth = explode(',', $user['auth']);
         $res = \app\model\MenuModel::instance()->getTreeMenus();
@@ -78,7 +78,7 @@ class UserControl extends CertControl
     public function userEdit($para)
     {
         $id = session_get('user_id');
-        $res = \app\model\UserModel::instance()->getById($id);
+        $res = \app\model\UserModel::instance()->getObjById($id);
 
         $this->assign('user', $res);
         $this->display('user-edit.html');

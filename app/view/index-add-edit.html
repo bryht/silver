@@ -65,10 +65,11 @@
             //Edit mode
             $('box-title').val('Edit Image');
             document.getElementById('img-preview').setAttribute('src', '/index/getImageUrlById?id={{image.id}}');
-            document.getElementById('img-description').value = '{{image.name}}';
-            document.getElementById('img-time').value = '{{image.name}}';
+            document.getElementById('img-description').value = '{{image.description}}';
+            document.getElementById('img-time').value = '{{image.create_time}}';
 
         }else{
+            //Add mode
 
         }
         document.getElementById('album_id').value = urlUtil.getQueryValue('album_id');

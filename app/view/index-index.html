@@ -26,12 +26,14 @@
                 <div class="thumbnail">
                     <img src="{{image.url}}" style="height: 200px;max-width: 100%; display: block;">
                     <div class="caption">
-                        <img src="{{image.avatar}}" class="img-circle" style="width:30px;height:30px;" alt="">
-                        <p>{{image.username}}</p>
-                        <p>Create Time：{{image.create_time}}{{image.description}}</p>
+                        <img src="{{image.avatar}}" class="img-circle" style="width:30px;height:30px;float:left;" alt="">
+                        <p style="height:30px;line-height:30px;float:left;margin-left:10px;">{{image.username}}</p>
+                        <p style="clear:both">Create Time：{{image.create_time}}</p>
                         {% if image.control == true %}
-                        <a href="/index/edit?album_id={{album.id}}&id={{image.id}}"><span class="am-icon-trash-o"></span> Edit</a>
-                        <a onclick="deleteImage('{{image.id}}')"><span class="am-icon-trash-o"></span> Delete</a> {% endif %}
+                        <a href="/index/edit?album_id={{album.id}}&id={{image.id}}"><span class="label label-warning">
+                            <i class="fa fa-edit"></i>Edit</span></a>
+                        <a onclick="deleteImage('{{image.id}}')"><span class="label label-danger">
+                            <i class="fa fa-recycle"></i>Delete</span></a>  {% endif %}
                     </div>
                 </div>
             </div>

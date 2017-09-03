@@ -29,7 +29,7 @@ class UserModel extends \core\Model
 
     public function getUsersByAlbumId($albumId)
     {
-        $album=AlbumModel::instance()->getById($albumId);
+        $album=AlbumModel::instance()->getObjById($albumId);
         $userIds=$album['user_id'];
         $userIdsArray=explode(',',$userIds);
         $userInfo=$this->select($this->table,['name','avatar'],['id'=>$userIdsArray]);

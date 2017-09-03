@@ -19,7 +19,7 @@ class AlbumControl extends CertControl
     public function albumEdit($para)
     {
         $id = $para['album_id'];
-        $res = \app\model\AlbumModel::instance()->getById($id);
+        $res = \app\model\AlbumModel::instance()->getObjById($id);
 
         $this->assign('album', $res);
         $this->display('album-edit.html');
@@ -78,7 +78,7 @@ class AlbumControl extends CertControl
         $email = $value['user-email'];
         $album_id=$value['album-id'];
         $name = session_get('user_name');
-        $album=\app\model\AlbumModel::instance()->getById($album_id);
+        $album=\app\model\AlbumModel::instance()->getObjById($album_id);
         $images=\app\model\ImageModel::instance()->getThreeImagesByAlbumId($album_id);
         //ablum-text image1 mail
 

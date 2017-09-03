@@ -72,7 +72,7 @@ class Model extends \Medoo\Medoo
         return $res;
     }
 
-    public function getById($id)
+    public function getObjById($id)
     {
         return $this->get($this->table, '*', ['id' => $id]);
     }

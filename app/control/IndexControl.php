@@ -30,7 +30,7 @@ class IndexControl extends CertControl
             exit();
         }
 
-        $album = \app\model\AlbumModel::instance()->getById($para['album_id']);
+        $album = \app\model\AlbumModel::instance()->getObjById($para['album_id']);
         $albumUsers = \app\model\UserModel::instance()->getUsersByAlbumId($para['album_id']);
 
         $this->assign('album', $album);
@@ -51,7 +51,7 @@ class IndexControl extends CertControl
     public function edit($para)
     {
         $id = $para['id'];
-        $image = \app\model\ImageModel::instance()->getById($id);
+        $image = \app\model\ImageModel::instance()->getObjById($id);
         $this->assign('image', $image);
         $this->display('index-add-edit.html');
     }
@@ -59,9 +59,8 @@ class IndexControl extends CertControl
     public function delete($para)
     {
         $id = $para['id'];
-        $res = \app\model\ImageModel::instance()->deleteById($id);
-        $count = $res->rowCount();
-        $this->result($count > 0, $id, '删除失败！');
+        $res = \app\model\ImageModel::instance()->deleteObjById($id);
+        $this->result($res['ok'], $id, 'delete error！');
     }
 
     public function upload($para)
@@ -111,7 +110,7 @@ class IndexControl extends CertControl
 
     public function getImageUrlById($para)
     {
-        $res = \app\model\ImageModel::instance()->getById($para['id']);
+        $res = \app\model\ImageModel::instance()->getObjById($para['id']);
         $path = str_replace('\\', '/', $res['path']);
         $filePath = SILVER_BASE . $path;
         $imageForm = getimagesize($filePath)['mime'];
